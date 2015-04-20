@@ -1,11 +1,9 @@
 extends layout
 
 block content
- html
-  head
-    title 
-       Upload
-  body
-    form
-      input(type='file', name='Schedule', action='/uploaded')
-      button#btnSubmit(type='submit') submit
+        h1 Upload
+        p Welcome
+        p
+         form(method='post', enctype='multipart/form-data', action='/')
+           input(type='file', name='filer', id='filer')
+           input(type='submit', class="btn btn-danger")

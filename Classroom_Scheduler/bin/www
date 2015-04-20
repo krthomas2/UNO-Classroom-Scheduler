@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('classroom_scheduler:server');
+var debug = require('debug')('UNO_Classroom_Scheduler:server');
 var http = require('http');
 
 /**

@@ -4,6 +4,6 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Classroom_Scheduler node_modules" level="project" />
+    <orderEntry type="library" name="UNO_Classroom_Scheduler node_modules" level="project" />
   </component>
 </module>
