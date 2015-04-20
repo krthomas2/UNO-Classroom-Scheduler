@@ -4,7 +4,7 @@ function accessDB (){
 	var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
 
 	//Make the connection to the database
-	var db = MongoClient.connect(url function(err, db){
+	var db = MongoClient.connect(url, function(err, db){
 		assert.equal(null, err);
 	});
 	
@@ -39,7 +39,7 @@ function getClass(class_id){
 	db.close();
 	return returnvalue;
 }
-function getClassroom(classroom_id){
+function getClassroom(classroom_id){  //Corresponds to classroom information for scehduler when id not provided.
 	classroom_id = classroom_id || false;
 	db = accessDB();
 	returnvalue = false;
@@ -169,6 +169,8 @@ function getInstructorByName(lname, fname){
 	db.close();
 	return returnvalue;
 
+function getClassroom
+	
 function importExcelToDb(put){
 	var jsonObj = {"Courses": put }//creating the json object
 
@@ -178,16 +180,16 @@ function importExcelToDb(put){
 	for(x = 0; x < jsonObj.Courses.length; x++) {//iterating through courses
 		//Calcuate the credits for this class.
 		var twelveHourOffset = 0;
-		if (jsonObj.Courses[x].["Mtg Start"].split(' ')[1] == "PM") {
+		if (jsonObj.Courses[x]["Mtg Start"].split(' ')[1] == "PM") {
 			twelveHourOffset = 12;
 		}
-		var startTime = new Date (2015, 4, 14, jsonObj.Courses[x].["Mtg Start"].split(':')[0] + twelveHourOffset, jsonObj.Courses[x].["Mtg Start"].split(':')[1]); //Create a date for the start time.
+		var startTime = new Date (2015, 4, 14, jsonObj.Courses[x]["Mtg Start"].split(':')[0] + twelveHourOffset, jsonObj.Courses[x]["Mtg Start"].split(':')[1]); //Create a date for the start time.
 		
 		var twelveHourOffset = 0;
 		if (jsonObj.Courses[x].["Mtg End"].split(' ')[1] == "PM") {
 			twelveHourOffset = 12;
 		}
-		var endTime = new Date (2015, 4, 14, jsonObj.Courses[x].["Mtg End"].split(':')[0] + twelveHourOffset, jsonObj.Courses[x].["Mtg End"].split(':')[1]); //Create a date for the end time.
+		var endTime = new Date (2015, 4, 14, jsonObj.Courses[x]["Mtg End"].split(':')[0] + twelveHourOffset, jsonObj.Courses[x]["Mtg End"].split(':')[1]); //Create a date for the end time.
 		
 		var msec = endTime - startTime;
 		
@@ -197,26 +199,26 @@ function importExcelToDb(put){
 		var class_data = {"Subject": jsonObj.Courses[x].Subject,
 		"Course_ID": jsonObj.Courses[x].Catalog,
 		"Section_ID": jsonObj.Courses[x].Section,
-		"Class_ID": jsonObj.Courses[x].["Class Nbr"],
+		"Class_ID": jsonObj.Courses[x]["Class Nbr"],
 		"Course_Title": jsonObj.Courses[x].Title,
 		"Lecture_Type": jsonObj.Courses[x].Component,
 		"Credits": credits,
 		"Instructor_ID": getInstructorByName(jsonObj.Courses[x].Last, jsonObj.Courses[x].["First Name"]),
-		"Class_Capacity": jsonObj.Courses[x].["Cap Enrl"],
+		"Class_Capacity": jsonObj.Courses[x]["Cap Enrl"],
 		"Description": jsonObj.Courses[x].Descr,
-		"Acad_Group": jsonObj.Courses[x].["Acad Group"],
-		"Tot_Enrl": jsonObj.Courses[x].["Tot Enrl"],
-		"Start_Date": jsonObj.Courses[x].["Start Date"],
-		"End_Date": jsonObj.Courses[x].["End Date"],
+		"Acad_Group": jsonObj.Courses[x]["Acad Group"],
+		"Tot_Enrl": jsonObj.Courses[x]["Tot Enrl"],
+		"Start_Date": jsonObj.Courses[x]["Start Date"],
+		"End_Date": jsonObj.Courses[x]["End Date"],
 		"Session": jsonObj.Courses[x].Session,
 		"Location": jsonObj.Courses[x].Location,
 		"Mode": jsonObj.Courses[x].Mode,
-		"CrsAtr_Val": jsonObj.Courses[x].["CrsAtr_Val"]};
+		"CrsAtr_Val": jsonObj.Courses[x]["CrsAtr_Val"]};
 		
 		var class_id = insertClass(class_data);
 		
 		//We also need to create the class groups from the input data so that combined secitons are scheduled together.
-		if (jsonObj.Courses[x].["Comb Sect"] == 'C'){
+		if (jsonObj.Courses[x]["Comb Sect"] == 'C'){
 			if (jsonObj.Courses[x].Title != lastTitle){
 				groupID++;
 			}
