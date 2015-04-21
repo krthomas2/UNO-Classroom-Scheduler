@@ -8,7 +8,7 @@ var xlsx = require('xlsx');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var multer  = require('multer');
-//var dbactions = require('./public/javascripts/DB_Transactions.js')
+var dbactions = require('./public/javascripts/DB_Transactions.js');
 var app = express();
 
 // view engine setup
@@ -32,7 +32,7 @@ var wsname = wb.SheetNames[0];
 var ws = wb.Sheets[wsname];
 var put = xlsx.utils.sheet_to_json(ws);
   console.log(put);
-//dbactions.importExcelToDb(put);
+  dbactions.importExcelToDb(put);
   res.render('index');
 });
 // catch 404 and forward to error handler
