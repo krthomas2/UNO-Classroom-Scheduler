@@ -9,7 +9,6 @@ module.exports = {
 		instructor_id = instructor_id || false; //see if we received an id.
 		var returnvalue = false;
 		MongoClient.connect(url, function(err, db){
-			db.open(function(err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -21,8 +20,6 @@ module.exports = {
 						returnvalue = db.collection("Instructors").find({_id: instructor_id}); //Give back the specific id asked for.
 					}
 				}
-				db.close(); //Close the database connection.
-			});
 		});
 		return returnvalue; //Return the array, or false if it doesn't exist.
 	},
@@ -30,7 +27,6 @@ module.exports = {
 		class_id = class_id || false;
 		var returnvalue = false;
 		MongoClient.connect(url, function(err, db){
-			db.open(function(err, db) {
 					if (err) {
 						console.log(err);
 					}
@@ -42,8 +38,6 @@ module.exports = {
 							returnvalue = db.collection("Classes").find({_id: class_id});
 						}
 					}
-				db.close();
-			});
 		});
 		return returnvalue;
 	},
@@ -51,7 +45,6 @@ module.exports = {
 		classroom_id = classroom_id || false;
 		var returnvalue = false;
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -63,8 +56,6 @@ module.exports = {
 						returnvalue = db.collection("Classrooms").find({_id: classroom_id});
 					}
 				}
-				db.close();
-			});
 		});
 		return returnvalue;
 	},
@@ -72,7 +63,6 @@ module.exports = {
 		group_id = group_id || false;
 		var returnvalue = false;
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -84,8 +74,6 @@ module.exports = {
 						returnvalue = db.collection("Class_Groups").find({_id: group_id});
 					}
 				}
-				db.close();
-			});
 		});
 		return returnvalue;
 	},
@@ -93,7 +81,6 @@ module.exports = {
 		sched_id = sched_id || false;
 		var returnvalue = false;
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -105,8 +92,6 @@ module.exports = {
 						returnvalue = db.collection("Class_Schedule").find({_id: sched_id});
 					}
 				}
-				db.close();
-			});
 		});
 		return returnvalue;
 	},
@@ -115,7 +100,6 @@ module.exports = {
 	insertInstructors: function (instructor_information){
 		var key = false;
 		MongoClient.connect(url, function(err, db){
-			db.open(function(err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -124,15 +108,12 @@ module.exports = {
 						key = collection.insertOne(instructor_information);
 					});
 				}
-				db.close();
-			});
 		});
 		return key;
 	},
 	insertClass: function (class_information){
 		var key = false;
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -141,15 +122,12 @@ module.exports = {
 						key = collection.insert(class_information);
 					});
 				}
-				db.close();
-			});
 		});
 		return key;
 	},
 	insertClassroom: function (room_information){
 		var key = false;
 		MongoClient.connect(url, function(err, db){
-			db.open(function(err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -158,15 +136,12 @@ module.exports = {
 						key = collection.insertOne(room_information);
 					});
 				}
-				db.close();
-			});
 		});
 		return key;
 	},
 	insertClassGroup: function (group_information){
 		var key = false;
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -175,15 +150,12 @@ module.exports = {
 						key = collection.insertOne(group_information);
 					});
 				}
-				db.close();
-			});
 		});
 		return key;
 	},
 	insertSched: function (schedule_information){
 		var key = false;
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -192,15 +164,12 @@ module.exports = {
 						key = collection.insertOne(schedule_information);
 					});
 				}
-				db.close();
-			});
 		});
 		return key;
 	},
 
 	updateInstructor: function (id, instructor_information){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -209,13 +178,10 @@ module.exports = {
 						collection.updateOne({_id: id}, {$set: instructor_information});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	updateClasses: function (id, class_information){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -224,13 +190,10 @@ module.exports = {
 						collection.updateOne({_id: id}, {$set: class_information});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	updateClassrooms: function (id, room_information){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -239,13 +202,10 @@ module.exports = {
 						collection.updateOne({_id: id}, {$set: room_information});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	updateClassGroups: function (id, group_information){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -254,13 +214,10 @@ module.exports = {
 						collection.updateOne({_id: id}, {$set: group_information});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	updateSched: function (id, sched_information){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -269,14 +226,11 @@ module.exports = {
 						collection.updateOne({_id: id}, {$set: sched_information})
 					});
 				}
-				db.close();
-			});
 		});
 	},
 
 	removeInstructor: function (id){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -285,13 +239,10 @@ module.exports = {
 						collection.removeOne({_id: id});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	removeClasses: function (id){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -300,13 +251,10 @@ module.exports = {
 						collection.removeOne({_id: id});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	removeClassroom: function (id){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -315,13 +263,10 @@ module.exports = {
 						collection.removeOne({_id: id});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	removeClassGroup: function (id){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -330,13 +275,10 @@ module.exports = {
 						collection.removeOne({_id: id});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 	removeSched: function (id){
 		MongoClient.connect(url, function(err, db) {
-			db.open(function (err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -345,15 +287,12 @@ module.exports = {
 						collection.removeOne({_id: id});
 					});
 				}
-				db.close();
-			});
 		});
 	},
 
 	getInstructorByName: function (lname, fname) {
 		var returnvalue = false;
 		MongoClient.connect(url, function(err, db){
-			db.open(function(err, db) {
 				if (err) {
 					console.log(err);
 				}
@@ -364,13 +303,12 @@ module.exports = {
 						}
 					});
 				}
-				db.close();
 			});
-		});
 		return returnvalue;
 	},
 
 	calculateCredits: function(start, end, days){
+		console.log(start);
 		var twelveHourOffset = 0;
 		if (start.split(" ")[1] == "PM") {
 			twelveHourOffset = 12;
@@ -394,7 +332,7 @@ module.exports = {
 		var lastCombined = false;
 		var lastTitle = false;
 		var groupID = 0;
-		for(var x = 0; x < jsonObj.Courses.length; x++) {//iterating through courses
+		for(var x = 0; x < jsonObj.Courses.length - 1; x++) {//iterating through courses
 
 			//This is the array of data needing an insert into the classes table.
 			var class_data = {
@@ -404,7 +342,7 @@ module.exports = {
 				"Class_ID": jsonObj["Courses"][x]["Class Nbr"],
 				"Course_Title": jsonObj["Courses"][x]["Title"],
 				"Lecture_Type": jsonObj["Courses"][x]["Component"],
-				"Credits": this.calculateCredits(jsonObj["Courses"][x]["Mtg Start"], jsonObj["Courses"][x]["Mtg End"], jsonObj["Courses"][x]["Pat"]),
+				//"Credits": this.calculateCredits(jsonObj["Courses"][x]["Mtg Start"], jsonObj["Courses"][x]["Mtg End"], jsonObj["Courses"][x]["Pat"]),
 				"Instructor_ID": this.getInstructorByName(jsonObj["Courses"][x]["Last"], jsonObj["Courses"][x]["First Name"]),
 				"Class_Capacity": jsonObj["Courses"][x]["Cap Enrl"],
 				"Description": jsonObj["Courses"][x]["Descr"],
@@ -420,7 +358,7 @@ module.exports = {
 
 			var class_id = this.insertClass(class_data);
 
-			//We also need to create the class groups from the input data so that combined sections are scheduled together.
+			/*//We also need to create the class groups from the input data so that combined sections are scheduled together.
 			if (jsonObj["Courses"][x]["Comb Sect"] == 'C'){
 				if (jsonObj["Courses"][x]["Title"] != lastTitle){
 					groupID++;
@@ -429,7 +367,7 @@ module.exports = {
 				this.insertClassGroup(groupInfo);
 			}
 
-			lastTitle = jsonObj["Courses"][x]["Title"]; //This allows for the combining of sections.
+			lastTitle = jsonObj["Courses"][x]["Title"]; //This allows for the combining of sections.*/
 		}
 	}
 }
