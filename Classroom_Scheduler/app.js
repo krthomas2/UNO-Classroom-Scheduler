@@ -31,7 +31,7 @@ var wb =  xlsx.readFile(req.files.filer.path);
 var wsname = wb.SheetNames[0];
 var ws = wb.Sheets[wsname];
 var put = xlsx.utils.sheet_to_json(ws);
-  console.log(put);
+ // console.log(put);
   dbactions.importExcelToDb(put);
   res.render('index');
 });
