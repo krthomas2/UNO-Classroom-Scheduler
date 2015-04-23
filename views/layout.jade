@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+  body
+    div.navbar.navbar-default
+      ul.nav.navbar-nav
+        li
+          a(href='./') Home
+        li
+          a(href='./upload') Upload
+        li
+          a(href='./prefs') User Preferences
+        li
+          a(href='./calendar') Calendar
+        li
+          a(href='./rooms') Add/Remove Rooms
+        li
+          a(href='./classes') Add/Remove Classes
+    div.container
+      div.jumbotron
+        block content
