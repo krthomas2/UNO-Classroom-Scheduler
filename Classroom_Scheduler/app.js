@@ -26,6 +26,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use(multer({ dest: './uploads/'}));
+
+
+app.post('/addUser', function(req,res){
+//res.send("You entered: " + req.body.Name + req.body.Password + req.body.Permissions);
+res.redirect('/upload');//just because
+dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
+});
+
+
 app.post('/', function(req, res, next) {
 var wb =  xlsx.readFile(req.files.filer.path);
 var wsname = wb.SheetNames[0];
@@ -34,7 +43,7 @@ var put = xlsx.utils.sheet_to_json(ws);
  // console.log(put);
   dbactions.importExcelToDb(put);
   res.render('index');
-});
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

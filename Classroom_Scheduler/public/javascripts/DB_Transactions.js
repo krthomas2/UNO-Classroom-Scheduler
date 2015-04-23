@@ -23,6 +23,20 @@ module.exports = {
 		});
 		return returnvalue; //Return the array, or false if it doesn't exist.
 	},
+	addUser: function(name,password,level){
+		var uname = name || false;
+		var pw = password || false;
+		var per = level || false;
+		MongoClient.connect(url, function(err, db) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+						db.collection("Users").insert({"Name" : uname, "Password" : pw, "Permissions" : per});
+						db.close;
+				}
+		});
+	},
 	getClass: function (class_id){
 		class_id = class_id || false;
 		var returnvalue = false;
@@ -105,7 +119,7 @@ module.exports = {
 				}
 				else {
 					db.collection("Instructors", function (err, collection) {
-						key = collection.insertOne(instructor_information);
+						key = collection.insert(instructor_information);
 					});
 				}
 		});
@@ -133,7 +147,7 @@ module.exports = {
 				}
 				else {
 					db.collection("Classrooms", function (err, collection) {
-						key = collection.insertOne(room_information);
+						key = collection.insert(room_information);
 					});
 				}
 		});
@@ -147,7 +161,7 @@ module.exports = {
 				}
 				else {
 					db.collection("Class_Groups", function (err, collection) {
-						key = collection.insertOne(group_information);
+						key = collection.insert(group_information);
 					});
 				}
 		});
@@ -161,7 +175,7 @@ module.exports = {
 				}
 				else {
 					db.collection("Class_Schedule", function (err, collection) {
-						key = collection.insertOne(schedule_information);
+						key = collection.insert(schedule_information);
 					});
 				}
 		});

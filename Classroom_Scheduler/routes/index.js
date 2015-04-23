@@ -31,4 +31,9 @@ router.get('/classes', function(req, res, next) {
   res.render('classes', { title: 'Express' });
 });
 
+
+/* GET Classes Page. */
+router.get('/register', function(req, res, next) {
+  res.render('register', { title: 'Express' });
+});
 module.exports = router;
