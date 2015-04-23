@@ -119,7 +119,13 @@ module.exports = {
 				}
 				else {
 					db.collection("Instructors", function (err, collection) {
-						key = collection.insert(instructor_information);
+						var flag = collection.insert(instructor_information);
+						if (flag.nInserted == 1){
+							var cursor = collection.find(instructor_information, {_id: 1});
+							if (cursor.hasContent()) {
+								key = cursor.next()._id;
+							}
+						}
 					});
 				}
 		});
@@ -305,24 +311,27 @@ module.exports = {
 	},
 
 	getInstructorByName: function (lname, fname) {
-		var returnvalue = false;
+		var key = false;
 		MongoClient.connect(url, function(err, db){
 				if (err) {
 					console.log(err);
 				}
 				else {
-					returnvalue = db.collection("Instructors").find({Last_Name: lname}, {First_Name: fname}, {_id: 1}, function(err, db){
-						if (err){
-							returnvalue = this.insertInstructors({First_Name: fname, Last_Name: lname}); //Insert the instructor if they don't exist.
+					db.collection("Instructors", function (err, collection) {
+						var cursor = collection.find({Last_Name: lname, First_Name: fname}, {_id: 1});
+						if (cursor.hasContent()) {
+							key = cursor.next()._id;
+						}
+						else {
+							key = this.insertInstructors({Last_Name: lname, First_Name: fname});
 						}
 					});
 				}
 			});
-		return returnvalue;
+		return key;
 	},
 
 	calculateCredits: function(start, end, days){
-		console.log(start);
 		var twelveHourOffset = 0;
 		if (start.split(" ")[1] == "PM") {
 			twelveHourOffset = 12;
@@ -346,8 +355,10 @@ module.exports = {
 		var lastCombined = false;
 		var lastTitle = false;
 		var groupID = 0;
+		var instructor_id = false;
 		for(var x = 0; x < jsonObj.Courses.length - 1; x++) {//iterating through courses
 
+		//	instructor_id = this.getInstructorByName(jsonObj["Courses"][x]["Last"], jsonObj["Courses"][x]["First Name"]);
 			//This is the array of data needing an insert into the classes table.
 			var class_data = {
 				"Subject": jsonObj["Courses"][x]["Subject"],
@@ -357,7 +368,7 @@ module.exports = {
 				"Course_Title": jsonObj["Courses"][x]["Title"],
 				"Lecture_Type": jsonObj["Courses"][x]["Component"],
 				//"Credits": this.calculateCredits(jsonObj["Courses"][x]["Mtg Start"], jsonObj["Courses"][x]["Mtg End"], jsonObj["Courses"][x]["Pat"]),
-				"Instructor_ID": this.getInstructorByName(jsonObj["Courses"][x]["Last"], jsonObj["Courses"][x]["First Name"]),
+				"Instructor_ID": instructor_id,
 				"Class_Capacity": jsonObj["Courses"][x]["Cap Enrl"],
 				"Description": jsonObj["Courses"][x]["Descr"],
 				"Acad_Group": jsonObj["Courses"][x]["Acad Group"],
