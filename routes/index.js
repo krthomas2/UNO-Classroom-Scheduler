@@ -36,4 +36,9 @@ router.get('/classes', function(req, res, next) {
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Express' });
 });
+
+/* GET Classes Page. */
+router.get('/createSchedule', function(req, res, next) {
+  res.render('createSchedule', { title: 'Express' });
+});
 module.exports = router;
