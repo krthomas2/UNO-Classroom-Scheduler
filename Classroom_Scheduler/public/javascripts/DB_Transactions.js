@@ -3,7 +3,7 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 //URL of database. Change if location of DB changes
 var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
-module.exports = {
+var functions = module.exports = {
 
     addUser: function(name,password,level){
         var uname = name || false;
@@ -14,7 +14,18 @@ module.exports = {
                 console.log(err);
             }
             else {
-                db.collection("Users").insert({"Name" : uname, "Password" : pw, "Permissions" : per});
+				db.collection("Users").find({"Name" : uname}, function(err, returnValue){
+					returnValue.count(function(err, count){
+						if (count == 1){
+							callback("User already in database. Please choose a different username.");
+						}
+						else {
+							db.collection("Users").insert({"Name" : uname, "Password" : pw, "Permissions" : per}, function(err, callback){
+								callback(key.ops[0]._id);
+							}
+						}
+					}
+				}
                 db.close;
             }
         });
@@ -22,7 +33,7 @@ module.exports = {
 
     /*Classes*/
 
-	insertClass: function (class_information, callback){
+	insertClass: function (class_information, lastTitle, combined, callback){
 		MongoClient.connect(url, function(err, db) {
 			if (err) {
 				console.log(err);
@@ -33,7 +44,7 @@ module.exports = {
                         console.log(err);
                     }
                     else {
-                        callback(key.ops[0]._id);
+                        callback(key.ops[0]._id, lastTitle, combined);
                     }
                 });
             }
@@ -306,55 +317,48 @@ module.exports = {
 
     /*Excel Import*/
 
-	importExcelToDb: function (put){
-		var jsonObj = {"Courses": put }//creating the json object
+	importExcelToDb: importExcelToDb
+}
 
-		var lastTitle = false;
-		var groupID = 0;
-		for(var x = 0; x < jsonObj.Courses.length - 1; x++) {//iterating through courses
+function importExcelToDb(put) {
+    var jsonObj = {"Courses": put}//creating the json object
 
-			//This is the array of data needing an insert into the classes table.
-			var class_data = {
-				"Subject": jsonObj["Courses"][x]["Subject"],
-				"Course_ID": jsonObj["Courses"][x]["Catalog"],
-				"Section_ID": jsonObj["Courses"][x]["Section"],
-				"Class_ID": jsonObj["Courses"][x]["Class Nbr"],
-				"Course_Title": jsonObj["Courses"][x]["Title"],
-				"Lecture_Type": jsonObj["Courses"][x]["Component"],
-				"Class_Time": {
-                    "Start": jsonObj["Courses"][x]["Mtg Start"],
-                    "End": jsonObj["Courses"][x]["Mtg End"],
-                    "Days": jsonObj["Courses"][x]["Pat"]
-                },
-				"Instructor": {
-                    First_Name: jsonObj["Courses"][x]["First Name"],
-                    Last_Name: jsonObj["Courses"][x]["Last"]
-                },
-				"Class_Capacity": jsonObj["Courses"][x]["Cap Enrl"],
-				"Description": jsonObj["Courses"][x]["Descr"],
-				"Acad_Group": jsonObj["Courses"][x]["Acad Group"],
-				"Tot_Enrl": jsonObj["Courses"][x]["Tot Enrl"],
-				"Start_Date": jsonObj["Courses"][x]["Start Date"],
-				"End_Date": jsonObj["Courses"][x]["End Date"],
-				"Session": jsonObj["Courses"][x]["Session"],
-				"Location": jsonObj["Courses"][x]["Location"],
-				"Mode": jsonObj["Courses"][x]["Mode"],
-				"CrsAtr_Val": jsonObj["Courses"][x]["CrsAtr_Val"]
-                //"Combined": jsonObj["Courses"][x]["Comb Sect"]
-			};
+    var lastTitle = false;
+    var groupID = 0;
+    for (var x = 0; x < jsonObj.Courses.length - 1; x++) {//iterating through courses
 
-			this.insertClass(class_data, function(ID){
-                if (jsonObj["Courses"][x]["Comb Sect"] == 'C'){
-                    if (jsonObj["Courses"][x]["Title"] != lastTitle){
-                        groupID++;
-                    }
+        //This is the array of data needing an insert into the classes table.
+        var class_data = {
+            "Subject": jsonObj["Courses"][x]["Subject"],
+            "Course_ID": jsonObj["Courses"][x]["Catalog"],
+            "Section_ID": jsonObj["Courses"][x]["Section"],
+            "Class_ID": jsonObj["Courses"][x]["Class Nbr"],
+            "Course_Title": jsonObj["Courses"][x]["Title"],
+            "Lecture_Type": jsonObj["Courses"][x]["Component"],
+            "Class_Time": {
+                "Start": jsonObj["Courses"][x]["Mtg Start"],
+                "End": jsonObj["Courses"][x]["Mtg End"],
+                "Days": jsonObj["Courses"][x]["Pat"]
+            },
+            "Instructor": {
+                First_Name: jsonObj["Courses"][x]["First Name"],
+                Last_Name: jsonObj["Courses"][x]["Last"]
+            },
+            "Class_Capacity": jsonObj["Courses"][x]["Cap Enrl"],
+            "Description": jsonObj["Courses"][x]["Descr"],
+            "Acad_Group": jsonObj["Courses"][x]["Acad Group"],
+            "Tot_Enrl": jsonObj["Courses"][x]["Tot Enrl"],
+            "Start_Date": jsonObj["Courses"][x]["Start Date"],
+            "End_Date": jsonObj["Courses"][x]["End Date"],
+            "Session": jsonObj["Courses"][x]["Session"],
+            "Location": jsonObj["Courses"][x]["Location"],
+            "Mode": jsonObj["Courses"][x]["Mode"],
+            "CrsAtr_Val": jsonObj["Courses"][x]["CrsAtr_Val"],
+            "Combined": jsonObj["Courses"][x]["Comb Sect"]
+        };
 
-                    //this.insertClassGroup({"Group_ID": groupID, "Class_ID": ID}, function(){
-                    //    lastTitle = jsonObj["Courses"][x]["Title"]; //This allows for the combining of sections.
-                    //});
-                }
-            });
+        functions.insertClass(class_data, lastTitle, function (ID, lastTitle) {
 
-		}
-	}
+        });
+    }
 }
