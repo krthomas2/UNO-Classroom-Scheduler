@@ -22,10 +22,10 @@ var functions = module.exports = {
 						else {
 							db.collection("Users").insert({"Name" : uname, "Password" : pw, "Permissions" : per}, function(err, callback){
 								callback(key.ops[0]._id);
-							}
+							});
 						}
-					}
-				}
+					});
+				});
                 db.close;
             }
         });
@@ -58,7 +58,7 @@ var functions = module.exports = {
 			}
 			else {
 				if (class_id == false) {
-                    db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
+                    db.collection("Classes").find().toArray(function(err, data){
                         callback(data);
                     });
 				}
@@ -128,8 +128,8 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                if (class_id == false) {
-                    db.collection("Classes").find({_id: new ObjectId(classroom_id)}).toArray(function(err, data){
+                if (classroom_id == false) {
+                    db.collection("Classes").find().toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -199,13 +199,13 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                if (class_id == false) {
-                    db.collection("Class_Groups").find({_id: new ObjectId(group_id)}).toArray(function(err, data){
+                if (group_id == false) {
+                    db.collection("Class_Groups").find().toArray(function(err, data){
                         callback(data);
                     });
                 }
                 else {
-                    db.collection("Class_Groups").find({_id: new ObjectId(cgroup_id)}).toArray(function(err, data){
+                    db.collection("Class_Groups").find({_id: new ObjectId(group_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -270,8 +270,8 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                if (class_id == false) {
-                    db.collection("Class_Schedule").find({_id: new ObjectId(sched_id)}).toArray(function(err, data){
+                if (sched_id == false) {
+                    db.collection("Class_Schedule").find().toArray(function(err, data){
                         callback(data);
                     });
                 }
