@@ -12,9 +12,9 @@ router.get('/upload', function(req, res, next) {
 });
 
 /* GET Calendar Page. */
-router.get('/calendar', function(req, res, next) {
+/*router.get('/calendar', function(req, res, next) {
   res.render('calendar', { title: 'Express' });
-});
+});*/
 
 /* GET Preferences Page. */
 router.get('/prefs', function(req, res, next) {

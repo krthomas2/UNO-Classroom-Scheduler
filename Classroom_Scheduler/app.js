@@ -43,7 +43,7 @@ var put = xlsx.utils.sheet_to_json(ws);
  // console.log(put);
   dbactions.importExcelToDb(put);
   res.render('index');
-})
+});
 
 app.get('/calendar', function(req, res){
   dbactions.getClassroom(false, function(data){

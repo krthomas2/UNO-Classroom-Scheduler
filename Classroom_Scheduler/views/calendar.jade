@@ -2,9 +2,9 @@ extends layout
 
 block content
     h1 Calendar
-    p.right.col-md-3
+    p.right.col-md-2 Select Room:
         select.form-control
-        #data
+          #rooms
             -each room in rooms
                 option #{room.Room_Number}
     div
