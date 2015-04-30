@@ -44,6 +44,15 @@ var put = xlsx.utils.sheet_to_json(ws);
   dbactions.importExcelToDb(put);
   res.render('index');
 })
+
+app.get('/calendar', function(req, res){
+  dbactions.getClassroom(false, function(data){
+    res.render('calendar', {rooms: data});
+  });
+});
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

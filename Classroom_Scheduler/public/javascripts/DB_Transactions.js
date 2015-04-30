@@ -26,7 +26,7 @@ var functions = module.exports = {
 						}
 					});
 				});
-                db.close;
+                db.close();
             }
         });
     },
@@ -129,12 +129,12 @@ var functions = module.exports = {
             }
             else {
                 if (classroom_id == false) {
-                    db.collection("Classes").find().toArray(function(err, data){
+                    db.collection("Classrooms").find().toArray(function(err, data){
                         callback(data);
                     });
                 }
                 else {
-                    db.collection("Classes").find({_id: new ObjectId(classroom_id)}).toArray(function(err, data){
+                    db.collection("Classrooms").find({_id: new ObjectId(classroom_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -147,7 +147,7 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: room_information}}, function (err) {
+                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: room_information}}, function (err) {
                     if (err) {
                         console.log(err);
                     }

@@ -1,17 +1,12 @@
 extends layout
 
-- var DB = require("C:/Users/Nicholas/Documents/GitHub/UNO-Classroom-Scheduler/Classroom_Scheduler/public/javascripts/DB_Transactions.js");
-- var rooms = "";
-- DB.getClassroom(function(info){
-- for (var i = 0; i < info.count; i++){
--     rooms = rooms + "<option>" + info["i"]["Room_Number"] + "</option>";
-- }});
-
 block content
     h1 Calendar
     p.right.col-md-3
         select.form-control
-            #{rooms}
+        #data
+            -each room in rooms
+                option #{room.Room_Number}
     div
         table.table.table-bordered
             tbody.small
