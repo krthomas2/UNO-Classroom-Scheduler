@@ -35,6 +35,20 @@ dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
 });
 
 
+app.get('/getremoveroom', function(req, res){
+  dbactions.getClassroom(false, function(data){
+    res.render('removeroom', {rooms: data});
+  });
+});
+
+app.get('/getremoveclassy', function(req, res){
+  dbactions.getClass(false, function(data){
+    res.render('removeclassy', {rooms: data});
+  });
+});
+
+
+
 app.post('/', function(req, res, next) {
 var wb =  xlsx.readFile(req.files.filer.path);
 var wsname = wb.SheetNames[0];

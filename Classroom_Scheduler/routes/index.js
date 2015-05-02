@@ -11,10 +11,15 @@ router.get('/upload', function(req, res, next) {
   res.render('upload', { title: 'Express' });
 });
 
-/* GET Calendar Page. */
-/*router.get('/calendar', function(req, res, next) {
-  res.render('calendar', { title: 'Express' });
-});*/
+/* GET AddClass Page */
+router.get('/getaddclass', function(req, res, next) {
+  res.render('addclass', { title: 'Express' });
+});
+
+/* Get addRoom Page */
+router.get('/getaddroom', function(req, res, next) {
+  res.render('addroom', { title: 'Express' });
+});
 
 /* GET Preferences Page. */
 router.get('/prefs', function(req, res, next) {
