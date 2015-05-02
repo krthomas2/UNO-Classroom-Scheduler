@@ -1,0 +1,15 @@
+div.navbar{
+    background-color: #0f0f0f;
+    border-bottom-width: medium;
+    border-bottom-color: #fc271f;
+    text-decoration-color: #9acfea;
+
+}
+ul.nav.navbar-nav li a{
+    color: white;
+
+}
+ul.nav.navbar-nav li a:hover {
+     color: oldlace;
+ }
+
