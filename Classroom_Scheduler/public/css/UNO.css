@@ -7,9 +7,13 @@ div.navbar{
 }
 ul.nav.navbar-nav li a{
     color: white;
-
 }
 ul.nav.navbar-nav li a:hover {
-     color: oldlace;
+    color: white;
+    text-decoration: underline;
+    text-decoration-color: white;
  }
-
+ul.nav.navbar-nav li a:active {
+    color: white;
+    background-color: white;
+}

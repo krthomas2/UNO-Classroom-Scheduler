@@ -3,12 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Home' });
 });
 
 /* GET Upload Page. */
 router.get('/upload', function(req, res, next) {
-  res.render('upload', { title: 'Express' });
+  res.render('upload', { title: 'Upload' });
 });
 
 /* GET AddClass Page */
@@ -23,21 +23,21 @@ router.get('/getaddroom', function(req, res, next) {
 
 /* GET Preferences Page. */
 router.get('/prefs', function(req, res, next) {
-  res.render('prefs', { title: 'Express' });
+  res.render('prefs', { title: 'Requests' });
 });
 
 /* GET Classroom Page. */
 router.get('/rooms', function(req, res, next) {
-  res.render('rooms', { title: 'Express' });
+  res.render('rooms', { title: 'Rooms' });
 });
 
 /* GET Classes Page. */
 router.get('/classes', function(req, res, next) {
-  res.render('classes', { title: 'Express' });
+  res.render('classes', { title: 'Classes' });
 });
 
 
-/* GET Classes Page. */
+/* GET Register Page. */
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Express' });
 });
