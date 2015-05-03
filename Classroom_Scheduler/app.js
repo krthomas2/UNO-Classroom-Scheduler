@@ -84,7 +84,19 @@ app.get('/calendar', function(req, res){
   });
 });
 
-
+app.get('/getCalendarInfo', function(req, res){
+  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){ //Get a list of the class IDS
+    var class_list;
+    for (var x=0; x < class_ids.count(); x++){
+      dbactions.getClass(class_ids[x]['_id'], function(data){ //Get the information for each class.
+        class_list[x] = data;
+        if (x == class_ids.count() - 1){ //Once all the information is retrieved it needs to be returned.
+          res.send({classes: data});
+        }
+      });
+    }
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
