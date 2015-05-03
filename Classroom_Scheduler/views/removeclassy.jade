@@ -1,12 +1,15 @@
 extends layout
 block content
    h1 Remove Class
-   p.right.col-md-3 Select Room:
-    form(method='post' action='/removeclassydata')
-        select(name='class_id')
-            #rooms
-                -each room in rooms
-                    option(value=room._id) #{room.Subject +" "+ room.Course_ID +" "+room.Class_ID}
-        &#09;
-        input(type='submit', value='Submit', class="btn btn-danger")
+   div.row
+       div.class.col-md-3 Select Class
+   div.row
+         form(method='post' action='/removeclassydata')
+            div.class.col-md-3
+                select(name='class_id')
+                    #rooms
+                        -each room in rooms
+                            option(value=room._id) #{room.Subject +" "+ room.Course_ID +" "+room.Class_ID}
+            div.class.col-md-2
+                input(type='submit', value='Submit', class="btn btn-danger", align="class.col-md-2")
 

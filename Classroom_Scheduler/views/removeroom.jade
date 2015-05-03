@@ -1,11 +1,14 @@
 extends layout
 block content
- h1 Remove Room
- p.right.col-md-3 Select Room:
-  form(method='post' action='/removeroomdata')
-   select(name='room_id')
-    #rooms
-     -each room in rooms
-      option(value=room._id) #{room.Room_Number}
-   &#09;
-   input(type='submit', value='Submit', class="btn btn-danger")
+    h1 Remove Room
+    div.row
+        div.class.col-md-3 Select Room
+    div.row
+        form(method='post' action='/removeroomdata')
+            div.class.col-sm-2
+                select(name='room_id')
+                    #rooms
+                        -each room in rooms
+                            option(value=room._id) #{room.Room_Number}
+            div.class.col-md-1
+                input(type='submit', value='Submit', class="btn btn-danger")
