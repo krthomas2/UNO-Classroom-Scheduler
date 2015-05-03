@@ -1,6 +1,9 @@
 extends layout
 block content
+    title #{title}
     h1 Add/Remove Class
     div.row
+        div.class.col-sm-2
             a.btn.btn-primary(href="/getaddclass") Add Class
+        div.class.col-sm-2
             a.btn.btn-primary(href="/getremoveclassy") Remove Class
