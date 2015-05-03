@@ -1,10 +1,14 @@
 extends layout
 
 block content
+<<<<<<< HEAD
     script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
     script
         include getCalendarInfo.js
 
+=======
+    title #{title}
+>>>>>>> fed4e7651954f24de8fdac2bb32dd0693a299311
     h1 Calendar
     p.right.col-md-3 Select Room:
         select.form-control(onchange="getCalendarInfo(this)")

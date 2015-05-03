@@ -8,19 +8,19 @@ html
       ul.nav.navbar-nav
         li
           img(src='images/logoblack.jpg')
-        li
+        li(class=(title === 'Home' ? 'active' : ''))
           a(href='./') Home
-        li
+        li(class=(title === 'Upload' ? 'active' : ''))
           a(href='./upload') Upload
-        li
+        li(class=(title === 'Request' ? 'active' : ''))
           a(href='./prefs') User Preferences
-        li
+        li(class=(title === 'Calendar' ? 'active' : ''))
           a(href='./calendar') Calendar
-        li
+        li(class=(title === 'Rooms' ? 'active' : ''))
           a(href='./rooms') Add/Remove Rooms
-        li
+        li(class=(title === 'Classes' ? 'active' : ''))
           a(href='./classes') Add/Remove Classes
-        li
+        li(class=(title === 'Scheduler' ? 'active' : ''))
           a(href='./createSchedule') Create a Schedule
         li
           a(href='./practice') Practice

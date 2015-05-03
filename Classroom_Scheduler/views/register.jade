@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    title #{title}
         form(method='post', enctype='multipart/form-data', action='/addUser')
             | First name: 
             input(type='text', name='Name')

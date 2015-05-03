@@ -13,17 +13,17 @@ router.get('/upload', function(req, res, next) {
 
 /* GET AddClass Page */
 router.get('/getaddclass', function(req, res, next) {
-  res.render('addclass', { title: 'Express' });
+  res.render('addclass', { title: 'Classes' });
 });
 
 /* Get addRoom Page */
 router.get('/getaddroom', function(req, res, next) {
-  res.render('addroom', { title: 'Express' });
+  res.render('addroom', { title: 'Rooms' });
 });
 
 /* GET Preferences Page. */
 router.get('/prefs', function(req, res, next) {
-  res.render('prefs', { title: 'Requests' });
+  res.render('prefs', { title: 'Request' });
 });
 
 /* GET Classroom Page. */
@@ -44,7 +44,7 @@ router.get('/register', function(req, res, next) {
 
 /* GET Create Schedule. */
 router.get('/createSchedule', function(req, res, next) {
-  res.render('createSchedule', { title: 'Express' });
+  res.render('createSchedule', { title: 'Scheduler' });
 });
 
 /* GET Automate Schedule. */
