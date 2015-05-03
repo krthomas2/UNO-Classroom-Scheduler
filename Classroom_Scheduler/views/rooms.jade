@@ -2,5 +2,8 @@ extends layout
 
 block content
         h1 Add/Remove Room
-        a.btn.btn-success(href="/getaddroom") Add Room
-        a.btn.btn-danger(href="/getremoveroom") Remove Room
+        div.row
+                div.class.col-sm-2
+                        a.btn.btn-success(href="/getaddroom") Add Room
+                div.class.col-sm-2
+                        a.btn.btn-danger(href="/getremoveroom") Remove Room

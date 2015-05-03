@@ -1,11 +1,12 @@
 extends layout
 block content
-   h1 Insert Room Here
-   form(method='post', name = 'addroom', action='/addRoom')
-      | Room Number:
-      input(type='number', name='Room_Number')
-      br
-      |Max Capacity:
-      input(type="number", name='Max_Capacity')
-      &#09;
-      input(type='submit', class="btn btn-danger")
+   div.row
+      h4 Please Fill out the following room information:
+   div.row
+      form(method='post', name = 'addroom', action='/addRoom')
+         div.class.col-lg-3
+            input(type='text', name='Room_Number',value ="Room Number")
+          div.class.col-lg-3
+             input(type="text", name='Max_Capacity', value="Max Capacity")
+         div.class.col-sm-2
+             input(type='submit', class="btn btn-danger")
