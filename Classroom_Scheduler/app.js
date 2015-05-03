@@ -61,6 +61,11 @@ app.get('/getremoveclassy', function(req, res){
   });
 });
 
+app.get('/editSchedule', function(req, res){
+  dbactions.getClass(false, function(data){
+    res.render('editSchedule', {rooms: data});
+  });
+});
 
 
 app.post('/', function(req, res, next) {

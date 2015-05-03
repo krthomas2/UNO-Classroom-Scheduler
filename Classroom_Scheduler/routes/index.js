@@ -41,4 +41,23 @@ router.get('/classes', function(req, res, next) {
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Express' });
 });
+
+/* GET Create Schedule. */
+router.get('/createSchedule', function(req, res, next) {
+  res.render('createSchedule', { title: 'Express' });
+});
+
+/* GET Automate Schedule. */
+router.get('/automateSchedule', function(req, res, next) {
+  res.render('automateSchedule', { title: 'Express' });
+});
+
+/* GET Edit Schedule. */
+router.get('/editSchedule', function(req, res, next) {
+  res.render('editSchedule', { title: 'Express' });
+});
+/* GET Practice. */
+router.get('/practice', function(req, res, next) {
+  res.render('practice', { title: 'Express' });
+});
 module.exports = router;

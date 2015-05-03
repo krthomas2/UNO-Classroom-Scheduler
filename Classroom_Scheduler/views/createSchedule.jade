@@ -1,0 +1,32 @@
+//
+   Created by Kenneth on 4/25/2015.
+
+extends layout
+block content
+   h1 Schedule
+   p Run the Scheduler
+   title Jade Intro
+   p
+      form(method='post', enctype='multipart/form-data', action='/')
+         input(type='file', name='filer', id='filer')
+         p
+         input(type='submit', class="btn btn-success")
+
+   p Click below to destory the previous schedule
+      h1(id="title") Welcome to Jade
+      button(class="btn", data-action="beta").
+       Be Awesome
+      input(type='submit', class="btn btn-danger")
+
+      .container
+         ul#my-list.bucket-list.pull-right
+         li
+          a(href="/upload") something
+
+
+   - var navElements = ['about', 'contact', 'support']
+      each el in navElements
+         li
+         a(href='#')= el
+   a.btn.btn-primary(href="/automateSchedule") Run the Scheduler
+   a.btn.btn-primary(href="/editSchedule") Edit the Schedule
