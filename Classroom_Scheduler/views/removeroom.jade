@@ -1,8 +1,11 @@
 extends layout
 block content
-    h1 Calendar
-    p.right.col-md-2 Select Room:
-     select.form-control
-        #rooms
-            -each room in rooms
-                option #{room.Room_Number}
+ h1 Remove Room
+ p.right.col-md-3 Select Room:
+  form(method='post' action='/removeroomdata')
+   select(name='room_id')
+    #rooms
+     -each room in rooms
+      option(value=room._id) #{room.Room_Number}
+   &#09;
+   input(type='submit', value='Submit', class="btn btn-danger")

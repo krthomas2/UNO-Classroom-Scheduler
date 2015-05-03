@@ -1,11 +1,12 @@
 extends layout
 block content
-   h1 Calendar
+   h1 Remove Class
    p.right.col-md-3 Select Room:
     form(method='post' action='/removeclassydata')
         select(name='class_id')
             #rooms
                 -each room in rooms
                     option(value=room._id) #{room.Subject +" "+ room.Course_ID +" "+room.Class_ID}
-        input(type='submit', value='Submit')
+        &#09;
+        input(type='submit', value='Submit', class="btn btn-danger")
 

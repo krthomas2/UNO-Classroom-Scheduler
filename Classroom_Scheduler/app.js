@@ -33,11 +33,15 @@ app.post('/addUser', function(req,res){
 res.redirect('/upload');//just because
 dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
 });
-app.post('/removeclassydata', function(req,res){
+app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure
   console.log(req.body.class_id);
-  res.redirect('/upload');//just because
+  res.redirect('/');//just because...should go to scheduler page when added
  dbactions.removeClass(req.body.class_id);
- // addUser(req.body.Name, req.body.Password, req.body.Permissions);
+});
+app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
+  console.log(req.body.class_id);
+  res.redirect('/');//just because...should go to scheduler page when added
+  dbactions.removeClassroom(req.body.room_id);
 });
 
 app.get('/getremoveroom', function(req, res){
