@@ -2,6 +2,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 //URL of database. Change if location of DB changes
+//var url = 'mongodb://admin:Password2015@ds029317.mongolab.com:29317/testing';
 var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
 var functions = module.exports = {
 
@@ -33,7 +34,7 @@ var functions = module.exports = {
 
     /*Classes*/
 
-	insertClass: function (class_information, lastTitle, combined, callback){
+	insertClass: function (class_information, callback){
 		MongoClient.connect(url, function(err, db) {
 			if (err) {
 				console.log(err);
@@ -44,7 +45,7 @@ var functions = module.exports = {
                         console.log(err);
                     }
                     else {
-                        callback(key.ops[0]._id, lastTitle, combined);
+                        callback(key.ops[0]._id, {Instructor: class_information.Instructor, Class_Time: class_information.Class_Time});
                     }
                 });
             }
@@ -94,7 +95,7 @@ var functions = module.exports = {
 			}
 			else {
 				db.collection("Classes", function (err, collection) {
-					collection.removeOne({_id: id}, function(){
+					collection.removeOne({_id: new ObjectId(id)}, function(){
                         callback();
                     });
 				});
@@ -141,6 +142,18 @@ var functions = module.exports = {
             }
         });
 	},
+    getClassroomByNumber: function (room_number, callback){  //Corresponds to classroom information for scehduler when id not provided.
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                db.collection("Classrooms").find({Room_Number: room_number}).toArray(function(err, data){
+                    callback(data);
+                });
+            }
+        });
+    },
     updateClassroom: function (id, room_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
@@ -165,7 +178,7 @@ var functions = module.exports = {
             }
             else {
                 db.collection("Classrooms", function (err, collection) {
-                    collection.removeOne({_id: id}, function () {
+                    collection.removeOne({_id: new ObjectId(id)}, function () {
                         callback();
                     });
                 });
@@ -236,7 +249,7 @@ var functions = module.exports = {
             }
             else {
                 db.collection("Class_Groups", function (err, collection) {
-                    collection.removeOne({_id: id}, function () {
+                    collection.removeOne({_id: new ObjectId(id)}, function () {
                         callback();
                     });
                 });
@@ -307,7 +320,7 @@ var functions = module.exports = {
 				}
 				else {
                     db.collection("Class_Schedule", function (err, collection) {
-                        collection.removeOne({_id: id}, function () {
+                        collection.removeOne({_id: new ObjectId(id)}, function () {
                             callback();
                         });
                     });
@@ -323,8 +336,7 @@ var functions = module.exports = {
 function importExcelToDb(put) {
     var jsonObj = {"Courses": put}//creating the json object
 
-    var lastTitle = false;
-    var groupID = 0;
+    var group = {};
     for (var x = 0; x < jsonObj.Courses.length - 1; x++) {//iterating through courses
 
         //This is the array of data needing an insert into the classes table.
@@ -353,12 +365,31 @@ function importExcelToDb(put) {
             "Session": jsonObj["Courses"][x]["Session"],
             "Location": jsonObj["Courses"][x]["Location"],
             "Mode": jsonObj["Courses"][x]["Mode"],
-            "CrsAtr_Val": jsonObj["Courses"][x]["CrsAtr_Val"],
-            "Combined": jsonObj["Courses"][x]["Comb Sect"]
+            "CrsAtr_Val": jsonObj["Courses"][x]["CrsAtr_Val"]
         };
 
-        functions.insertClass(class_data, lastTitle, function (ID, lastTitle) {
+        functions.insertClass(class_data, function (ID, returnData) {
+            var pushed = false;
+            for(var y = 0; y < group.count; y++){
+                if (group[y]["Instructor"]["First_Name"] == returnData["Instructor"]["First_Name"] && group[y]["Instructor"]["Last_Name"] == returnData["Instructor"]["Last_Name"] &&
+                    group[y]["Class_Time"]["Pat"] == returnData["Class_Time"]["Pat"] && group[y]["Class_Time"]["Start"] == returnData["Class_Time"]["Start"]){
+                    //Sorry for the long if statement, but basically it checks to see if all the traits for the class, being the instructor and the class time are the same, and the only way to do this
+                    //is to make sure all the traits of these two things are equal (except for end time, as that information is dependent on start time)
+                    group[y]["ids"].push(ID); //This adds the id to the relative group.
+                    pushed = true;
+                }
+            }
+            if (!pushed){
+                group[group.count] = returnData;
+                group[group.count]["ids"] = {0: ID};
+            }
 
+            //Fortunately this shouldn't be a concurrency issue here :)
+            //Now that the group list is populated, we have the groups we need to add to the groups table, even groups with just one item should be added for consistency sake.
+            if (x == jsonObj.Courses.length - 2) //We only execute this on the last iteration of the loop.
+            for (var y = 0; y < group.count; y++){
+                functions.insertClassGroup(group[y]["ids"], function(ID){}); //Callback function only here to keep program from crashing.
+            }
         });
     }
 }
