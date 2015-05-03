@@ -1,3 +1,10 @@
 extends layout
 block content
    h1 Insert Room Here
+   form(method='post', name = 'addroom', action='/addRoom')
+      | Room Number:
+      input(type='number', name='Room_Number')
+      br
+      |   Max Capacity:
+      input(type="number", name='Max_Capacity')
+      input(type='submit', class="btn btn-danger")
