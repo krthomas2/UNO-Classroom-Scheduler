@@ -33,7 +33,12 @@ app.post('/addUser', function(req,res){
 res.redirect('/upload');//just because
 dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
 });
-
+app.post('/removeclassydata', function(req,res){
+  console.log(req.body.class_id);
+  res.redirect('/upload');//just because
+ dbactions.removeClass(req.body.class_id);
+ // addUser(req.body.Name, req.body.Password, req.body.Permissions);
+});
 
 app.get('/getremoveroom', function(req, res){
   dbactions.getClassroom(false, function(data){
