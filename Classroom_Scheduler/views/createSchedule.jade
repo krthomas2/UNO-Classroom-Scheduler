@@ -3,9 +3,9 @@
 
 extends layout
 block content
+   title #{title}
    h1 Schedule
    p Run the Scheduler
-   title Jade Intro
    p
       form(method='post', enctype='multipart/form-data', action='/')
          input(type='file', name='filer', id='filer')

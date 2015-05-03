@@ -1,8 +1,9 @@
 extends layout
 block content
-   div.row
+    title #{title}
+    div.row
       h4 Please Fill out the following room information:
-   div.row
+    div.row
       form(method='post', name = 'addroom', action='/addRoom')
          div.class.col-lg-3
             input(type='text', name='Room_Number',value ="Room Number")

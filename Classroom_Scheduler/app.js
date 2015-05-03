@@ -51,13 +51,13 @@ app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick
 
 app.get('/getremoveroom', function(req, res){
   dbactions.getClassroom(false, function(data){
-    res.render('removeroom', {rooms: data});
+    res.render('removeroom', {rooms: data, title: "Rooms"});
   });
 });
 
 app.get('/getremoveclassy', function(req, res){
   dbactions.getClass(false, function(data){
-    res.render('removeclassy', {rooms: data});
+    res.render('removeclassy', {rooms: data,title: "Classes"});
   });
 });
 
@@ -80,7 +80,7 @@ var put = xlsx.utils.sheet_to_json(ws);
 
 app.get('/calendar', function(req, res){
   dbactions.getClassroom(false, function(data){
-    res.render('calendar', {rooms: data});
+    res.render('calendar', {rooms: data,title: "Calendar"});
   });
 });
 
