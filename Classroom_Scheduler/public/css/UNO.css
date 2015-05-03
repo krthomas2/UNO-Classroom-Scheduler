@@ -9,7 +9,7 @@ ul.nav.navbar-nav li a{
     color: white;
 }
 
-ul.nav.navbar-nav > .active{
+ul.navbar-nav.class :active{
     background-color: yellow;
     color:red;
 }

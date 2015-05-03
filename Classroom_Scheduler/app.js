@@ -27,26 +27,25 @@ app.use('/', routes);
 app.use('/users', users);
 app.use(multer({ dest: './uploads/'}));
 
+//Get Methods below
+app.get('/calendar', function(req, res){
+  dbactions.getClassroom(false, function(data){
+    res.render('calendar', {rooms: data,title: "Calendar"});
+  });
+});
 
-app.post('/addUser', function(req,res){
-//res.send("You entered: " + req.body.Name + req.body.Password + req.body.Permissions);
-res.redirect('/upload');//just because
-dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
-});
-app.post('/addRoom', function(req,res){//doesnt work callback next tick failure
-  console.log(req.body);
-  res.redirect('/');//just because...should go to scheduler page when added
-  dbactions.insertClassroom(req.body);
-});
-app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure
-  console.log(req.body.class_id);
-  res.redirect('/');//just because...should go to scheduler page when added
- dbactions.removeClass(req.body.class_id);
-});
-app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
-  console.log(req.body.class_id);
-  res.redirect('/');//just because...should go to scheduler page when added
-  dbactions.removeClassroom(req.body.room_id);
+app.get('/getCalendarInfo', function(req, res){
+  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){ //Get a list of the class IDS
+    var class_list;
+    for (var x=0; x < class_ids.count(); x++){
+      dbactions.getClass(class_ids[x]['_id'], function(data){ //Get the information for each class.
+        class_list[x] = data;
+        if (x == class_ids.count() - 1){ //Once all the information is retrieved it needs to be returned.
+          res.send({classes: data});
+        }
+      });
+    }
+  });
 });
 
 app.get('/getremoveroom', function(req, res){
@@ -68,6 +67,36 @@ app.get('/editSchedule', function(req, res){
 });
 
 
+//Post Methods Below
+
+app.post('/addUser', function(req,res){
+//res.send("You entered: " + req.body.Name + req.body.Password + req.body.Permissions);
+res.redirect('/upload');//just because
+dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
+});
+
+app.post('/addRoom', function(req,res){//doesnt work callback next tick failure
+  console.log(req.body);
+  res.redirect('/');//just because...should go to scheduler page when added
+  dbactions.insertClassroom(req.body,function(){
+  //empty function for callback
+  });
+});
+
+app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure
+  console.log(req.body.class_id);
+  res.redirect('/');//just because...should go to scheduler page when added
+ dbactions.removeClass(req.body.class_id,function(){
+ //empty function for callback
+ });
+});
+
+app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
+  console.log(req.body.class_id);
+  res.redirect('/');//just because...should go to scheduler page when added
+  dbactions.removeClassroom(req.body.room_id);
+});
+
 app.post('/', function(req, res, next) {
 var wb =  xlsx.readFile(req.files.filer.path);
 var wsname = wb.SheetNames[0];
@@ -78,25 +107,6 @@ var put = xlsx.utils.sheet_to_json(ws);
   res.render('index');
 });
 
-app.get('/calendar', function(req, res){
-  dbactions.getClassroom(false, function(data){
-    res.render('calendar', {rooms: data,title: "Calendar"});
-  });
-});
-
-app.get('/getCalendarInfo', function(req, res){
-  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){ //Get a list of the class IDS
-    var class_list;
-    for (var x=0; x < class_ids.count(); x++){
-      dbactions.getClass(class_ids[x]['_id'], function(data){ //Get the information for each class.
-        class_list[x] = data;
-        if (x == class_ids.count() - 1){ //Once all the information is retrieved it needs to be returned.
-          res.send({classes: data});
-        }
-      });
-    }
-  });
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
