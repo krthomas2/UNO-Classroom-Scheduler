@@ -35,9 +35,12 @@ app.get('/calendar', function(req, res){
 });
 
 app.get('/getCalendarInfo', function(req, res){
-  console.log(req.query.room_number);
   dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
-    console.log(class_ids);
+    for (var x = 0; x < class_ids.length; x++) {
+      dbactions.getClass(class_ids[x]["class_id"], function (classInfo) {
+        res.send(classInfo[0]);
+      });
+    }
   });
 });
 
