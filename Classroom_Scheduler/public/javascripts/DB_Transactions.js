@@ -148,7 +148,7 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                db.collection("Classrooms").find({Room_Number: room_number}).toArray(function(err, data){
+                db.collection("Class_Schedule").find({Room_Number: room_number}).toArray(function(err, data){
                     callback(data);
                 });
             }
@@ -171,7 +171,7 @@ var functions = module.exports = {
             }
         });
     },
-    removeClassroom: function (id){
+    removeClassroom: function (id, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
                 console.log(err);

@@ -35,16 +35,9 @@ app.get('/calendar', function(req, res){
 });
 
 app.get('/getCalendarInfo', function(req, res){
-  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){ //Get a list of the class IDS
-    var class_list;
-    for (var x=0; x < class_ids.count(); x++){
-      dbactions.getClass(class_ids[x]['_id'], function(data){ //Get the information for each class.
-        class_list[x] = data;
-        if (x == class_ids.count() - 1){ //Once all the information is retrieved it needs to be returned.
-          res.send({classes: data});
-        }
-      });
-    }
+  console.log(req.query.room_number);
+  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
+    console.log(class_ids);
   });
 });
 
@@ -84,7 +77,6 @@ app.post('/addRoom', function(req,res){//doesnt work callback next tick failure
 });
 
 app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure
-  console.log(req.body.class_id);
   res.redirect('/');//just because...should go to scheduler page when added
  dbactions.removeClass(req.body.class_id,function(){
  //empty function for callback
@@ -92,9 +84,10 @@ app.post('/removeclassydata', function(req,res){//doesnt work callback next tick
 });
 
 app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
-  console.log(req.body.class_id);
-  res.redirect('/');//just because...should go to scheduler page when added
-  dbactions.removeClassroom(req.body.room_id);
+  console.log(req.body.room_id);
+  dbactions.removeClassroom(req.body.room_id, function(){
+    res.redirect('/');//just because...should go to scheduler page when added
+  });
 });
 
 app.post('/', function(req, res, next) {
