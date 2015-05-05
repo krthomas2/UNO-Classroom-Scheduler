@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var multer  = require('multer');
 var dbactions = require('./public/javascripts/DB_Transactions.js');
+var fs = require('fs');
 var app = express();
 
 // view engine setup
@@ -106,12 +107,61 @@ app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick
 });
 
 app.post('/', function(req, res, next) {
-var wb =  xlsx.readFile(req.files.filer.path);
-var wsname = wb.SheetNames[0];
-var ws = wb.Sheets[wsname];
-var put = xlsx.utils.sheet_to_json(ws);
- // console.log(put);
-  dbactions.importExcelToDb(put);
+  var temp_path = req.files.filer.path;
+  var wb,wsname,ws,put;//local variables for parsing the document
+  if(req.files.filer.extension == 'xlsx') {//type xlsx
+    if('uploads/ScheduleOld.xlsx'!=null)
+    {
+      fs.unlink('uploads/ScheduleOld.xlsx',function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    if('uploads/ScheduleOld.xls'!=null)
+    {
+      fs.unlink('uploads/ScheduleOld.xls',function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    wb = xlsx.readFile(req.files.filer.path);//create the workbook
+    wsname = wb.SheetNames[0];//get the first sheet name
+    ws = wb.Sheets[wsname];//get the first sheet data
+    put = xlsx.utils.sheet_to_json(ws);//convert data to json
+    // console.log(ws);
+    fs.rename(temp_path,'uploads/ScheduleOld.xlsx',function(err){
+      if(err) throw err;
+    });
+    dbactions.importExcelToDb(put);
+  }
+  else if(req.files.filer.extension =='xls'){//same as above just creates a .xls file in uploads vs .xlsx
+    if('uploads/ScheduleOld.xls'!=null)
+    {
+      fs.unlink('uploads/ScheduleOld.xls',function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    if('uploads/ScheduleOld.xlsx' != null)//remove any other schedule format
+    {
+      fs.unlink('uploads/ScheduleOld.xlsx',function(err){
+        //if(err) throw err;
+      });
+    }
+    wb = xlsx.readFile(req.files.filer.path);
+    wsname = wb.SheetNames[0];
+    ws = wb.Sheets[wsname];
+    put = xlsx.utils.sheet_to_json(ws);
+    // console.log(ws);
+    fs.rename(temp_path,'uploads/ScheduleOld.xls',function(err){
+      if(err) throw err;
+    });
+    dbactions.importExcelToDb(put);
+
+  }
+  else{//if file is not xlsx or xls then don't delete the old schedule, but delete the temp file of what was just uploaded
+    console.log("Test failed");
+    fs.unlink(temp_path,function(err){
+      if(err) throw err;
+    });
+  }
   res.render('index');
 });
 
