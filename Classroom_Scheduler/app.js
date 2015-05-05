@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var multer  = require('multer');
 var dbactions = require('./public/javascripts/DB_Transactions.js');
 var fs = require('fs');
+var j2xls = require('json2xls');
 var app = express();
 
 // view engine setup
@@ -67,7 +68,85 @@ app.get('/geteditSchedule', function(req, res){
   });
 });
 
+app.get('/downloadSchedule', function(req, res) {
+  var classy;
+  var jsonObjs;
+  var y = 0;
+  var groupy ="";
+  var roomy ="";
 
+  console.log("Home");
+console.log(roomy);
+  dbactions.getClass(false, function (data) {
+    dbactions.getSchedule(false,function(room) {
+      dbactions.getClassGroup(false,function(group){
+        for (x in data) {
+          group = "";
+          /*   dbactions.getClassGroup(false,function(group){
+           for(x in group)
+           if(group[x]._id == data[x]._id) {
+           group = 'C';
+           }
+           })*/
+          roomy = "";
+          groupy ="";
+//console.log(room);
+          for (y in room) {//wish I could just get index of
+//        console.log(room[y].class_id +" != " + data[x]._id)
+            if (room[y].class_id.equals(data[x]._id)) {
+//console.log(room[y].class_id +" == " + data[x]._id);
+              roomy = room[y].Room_Number;
+              break;
+            }
+            else {
+              //move along this is not the data you are looking for
+            }
+          }
+          for( z in group) {//wish I could just get index of
+            if(group[x].Class_ID.equals(data[x]._id)){
+              groupy = 'C';
+              break;
+            }
+          }
+
+
+          data[x] = ({
+            "ClassNbr": data[x].Class_ID,
+            Subject: data[x].Subject,
+            Catalog: data[x].Course_ID,
+            "Section": data[x].Section_ID,
+            "Combined Section": groupy,
+            "Title": data[x].Course_Title,
+            "Descr": data[x].Description,
+            "Acad Group": data[x].Acad_Group,
+            "Cap Enrl": data[x].Class_Capacity,
+            "Tot Enrl": data[x].Tot_Enrl,
+            "Pat": data[x].Class_Time.Days,
+            "MtgStart": data[x].Class_Time.Start,
+            "MtgEnd": data[x].Class_Time.End,
+            "Last": data[x].Instructor.Last_Name,
+            "First Name": data[x].Instructor.First_Name,
+            "Start Date": data[x].Start_Date,
+            "End Date": data[x].End_Date,
+            Session: data[x].Session,
+            Location: data[x].Location,
+            Mode: data[x].Mode,
+            "CrsAtr Val": data[x].CrsAtr_Val,
+            "Component": data[x].Lecture_Type,
+            "Room Number": roomy
+          });
+        }
+        var xls = j2xls(data);
+
+        // console.log(xls);
+        fs.writeFileSync('Scheduler.xlsx', xls, 'binary');
+        res.download('Scheduler.xlsx');
+      });
+      });
+
+//stays on page with link, but downloads excel file
+  });
+});
 //Post Methods Below
 
 app.post('/addUser', function(req,res){
