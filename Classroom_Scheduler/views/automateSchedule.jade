@@ -6,3 +6,17 @@ block content
    h1 Schedule
    p Run the Scheduler
    title Jade Intro
+   div.row
+      div.class.col-md-3 Select Zoom
+   div.row
+      form(method='post' action='/editScheduledata')
+         div.class.col-sm-2
+            select(name='room_id')
+               #rooms
+                  -each room in rooms
+                  option(value=room._id, room.Title, room.Instructor.FirstName, room.Instructor.LastName, rooms.Days) #{room.Class_ID} #{room.Course_Title} #{room.Instructor.First_Name} #{room.Instructor.Last_Name}
+                  input(type='text', name='Course_ID',placeholder ="#option")
+                  input(type='text', name='Time_Assigned',placeholder ="Room Number")
+         div.class.col-md-1
+
+            input(type='submit', value='Submit', class="btn btn-danger")

@@ -54,7 +54,7 @@ router.get('/automateSchedule', function(req, res, next) {
 
 /* GET Edit Schedule. */
 router.get('/editSchedule', function(req, res, next) {
-  res.render('editSchedule', { title: 'Express' });
+  res.render('editSchedule', { title: 'Rooms' });
 });
 /* GET Practice. */
 router.get('/practice', function(req, res, next) {

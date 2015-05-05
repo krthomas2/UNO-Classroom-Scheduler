@@ -56,9 +56,9 @@ app.get('/getremoveclassy', function(req, res){
   });
 });
 
-app.get('/editSchedule', function(req, res){
+app.get('/geteditSchedule', function(req, res){
   dbactions.getClass(false, function(data){
-    res.render('editSchedule', {rooms: data});
+    res.render('editSchedule', {rooms: data,title: "Classes"});
   });
 });
 
@@ -84,6 +84,14 @@ app.post('/removeclassydata', function(req,res){//doesnt work callback next tick
  dbactions.removeClass(req.body.class_id,function(){
  //empty function for callback
  });
+});
+
+app.post('/editScheduledata', function(req,res){//doesnt work callback next tick failure
+  console.log(req.body.class_id);
+  res.redirect('/');//just because...should go to scheduler page when added
+  dbactions.removeClass(req.body.class_id,function(){
+    //empty function for callback
+  });
 });
 
 app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
