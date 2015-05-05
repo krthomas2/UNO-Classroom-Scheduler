@@ -104,7 +104,6 @@ app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick
 
 app.post('/', function(req, res, next) {
   var temp_path = req.files.filer.path;
-  console.log(temp_path);
   var wb,wsname,ws,put;//local variables for parsing the document
   if(req.files.filer.extension == 'xlsx') {//type xlsx
     if('uploads/ScheduleOld.xlsx'!=null)
@@ -127,7 +126,7 @@ app.post('/', function(req, res, next) {
     fs.rename(temp_path,'uploads/ScheduleOld.xlsx',function(err){
       if(err) throw err;
     });
-    // dbactions.importExcelToDb(put);
+    dbactions.importExcelToDb(put);
   }
   else if(req.files.filer.extension =='xls'){//same as above just creates a .xls file in uploads vs .xlsx
     if('uploads/ScheduleOld.xls'!=null)
@@ -150,7 +149,7 @@ app.post('/', function(req, res, next) {
     fs.rename(temp_path,'uploads/ScheduleOld.xls',function(err){
       if(err) throw err;
     });
-    // dbactions.importExcelToDb(put);
+    dbactions.importExcelToDb(put);
 
   }
   else{//if file is not xlsx or xls then don't delete the old schedule, but delete the temp file of what was just uploaded
