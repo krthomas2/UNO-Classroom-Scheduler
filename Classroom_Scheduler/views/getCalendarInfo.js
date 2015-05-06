@@ -1,5 +1,5 @@
 function getCalendarInfo(info) {
-    $('td').removeClass("hidden").removeClass("danger").html('');
+    $('td').removeClass("hidden").removeClass("danger").html('').attr("rowspan", 1);
     $.get('/getCalendarInfo', {room_number: info.value}, function (class_list) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
         for (var classes in class_list) { //Iterate through all the classes.
             var days = class_list[classes][0].Class_Time.Days.split('');
