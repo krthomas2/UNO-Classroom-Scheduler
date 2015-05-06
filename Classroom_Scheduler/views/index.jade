@@ -2,17 +2,4 @@ extends layout
 block content
     title #{title}
     h1 Hello!
-
-        if user
-          p Welcome, #{user.fullName}
-          p
-            a.small(href="profile") Edit my profile
-          a.btn.btn-primary(href="/logout") Logout
-        else
-          p Welcome
-          p
-            a.btn.btn-primary(href="/login") Login now
-          p
-            span.small Don't have an account?
-            span &nbsp;
-            a.small(href="/register") Register now
+         p Welcome to the UNO Scheduler

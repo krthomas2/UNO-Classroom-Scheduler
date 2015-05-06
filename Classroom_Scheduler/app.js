@@ -149,38 +149,38 @@ console.log(roomy);
 });
 //Post Methods Below
 
-app.post('/addUser', function(req,res){
+/*app.post('/addUser', function(req,res){
 //res.send("You entered: " + req.body.Name + req.body.Password + req.body.Permissions);
 res.redirect('/upload');//just because
 dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
-});
+});*/
 
 app.post('/addRoom', function(req,res){//doesnt work callback next tick failure
   console.log(req.body);
-  res.redirect('/');//just because...should go to scheduler page when added
+  res.redirect('/rooms');//just because...should go to scheduler page when added
   dbactions.insertClassroom(req.body,function(){
   //empty function for callback
   });
 });
 
 app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure
-  res.redirect('/');//just because...should go to scheduler page when added
+  res.redirect('/classes');//just because...should go to scheduler page when added
  dbactions.removeClass(req.body.class_id,function(){
  //empty function for callback
  });
 });
 
 app.post('/editScheduledata', function(req,res){//doesnt work callback next tick failure
-  console.log(req.body.class_id);
+  console.log(req.body);
   res.redirect('/');//just because...should go to scheduler page when added
-  dbactions.updateSched(req.body.class_id,function(){
+  dbactions.updateSched(req.body.room_id,req.body,function(){
     //empty function for callback
   });
 });
 
 app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
   console.log(req.body.class_id);
-  res.redirect('/');//just because...should go to scheduler page when added
+  res.redirect('/rooms');//just because...should go to scheduler page when added
   dbactions.removeClass(req.body.class_id,function(){
     //empty function for callback
   });
@@ -189,7 +189,7 @@ app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick
 app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
   console.log(req.body.room_id);
   dbactions.removeClassroom(req.body.room_id, function(){
-    res.redirect('/');//just because...should go to scheduler page when added
+    res.redirect('/rooms');//just because...should go to scheduler page when added
   });
 });
 
@@ -241,7 +241,6 @@ app.post('/', function(req, res, next) {
       if(err) throw err;
     });
     dbactions.importExcelToDb(put);
-
   }
   else{//if file is not xlsx or xls then don't delete the old schedule, but delete the temp file of what was just uploaded
     console.log("Test failed");
@@ -249,7 +248,8 @@ app.post('/', function(req, res, next) {
       if(err) throw err;
     });
   }
-  res.render('index');
+  res.redirect('/createSchedule');
+
 });
 
 
