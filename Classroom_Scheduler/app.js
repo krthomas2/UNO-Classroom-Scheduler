@@ -157,10 +157,10 @@ dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
 
 app.post('/addRoom', function(req,res){//doesnt work callback next tick failure
   console.log(req.body);
-  res.redirect('/rooms');//just because...should go to scheduler page when added
   dbactions.insertClassroom(req.body,function(){
   //empty function for callback
   });
+  res.redirect('/classes');
 });
 
 app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure

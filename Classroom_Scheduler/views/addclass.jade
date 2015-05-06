@@ -1,5 +1,43 @@
 extends layout
 block content
    title #{title}
-   h1 Insert Class Here
-
+   div.row
+        form(method='post', name = 'addroom', action='/addRoom')
+            div.class.col-lg-3
+               input(type='text', name='Subject',placeholder ="Subject")
+            div.class.col-lg-3
+               input(type="text", name='Course_ID', placeholder="Course_ID")
+            div.class.col-lg-3
+               input(type='text', name='Section_ID',placeholder ="Section_ID")
+            div.class.col-lg-3
+               input(type="text", name='Class_ID', placeholder="Class_ID")
+            div.class.col-lg-3
+               input(type='text', name='Course_Title',placeholder ="Course_Title")
+            div.class.col-lg-3
+               input(type="text", name='Lecture_Type', placeholder="Lecture_Type")
+            div.class.col-lg-3
+               input(type='text', name='Class_Time.Start',placeholder ="Start")
+            div.class.col-lg-3
+               input(type="text", name='Class_Time.End', placeholder="End")
+            div.class.col-lg-3
+               input(type='text', name='Class_Time.Days',placeholder ="Days")
+            div.class.col-lg-3
+               input(type="text", name='Class_Capacity', placeholder="Class_Capacity")
+            div.class.col-lg-3
+               input(type='text', name='Description',placeholder ="Description")
+            div.class.col-lg-3
+               input(type="text", name='Acad_Group', placeholder="Acad_Group")
+            div.class.col-lg-3
+               input(type='text', name='Tot_Enrl',placeholder ="Total Enrolled")
+            div.class.col-lg-3
+               input(type="text", name='Start_Date', placeholder="Start_Date")
+            div.class.col-lg-3
+               input(type='text', name='End_Date',placeholder ="End_Date")
+            div.class.col-lg-3
+               input(type="text", name='Session', placeholder="Session")
+            div.class.col-lg-3
+               input(type='text', name='Location',placeholder ="Location")
+            div.class.col-lg-3
+               input(type="text", name='Mode', placeholder="Mode")
+            div.class.col-sm-2
+                input(type='submit', class="btn btn-danger")
