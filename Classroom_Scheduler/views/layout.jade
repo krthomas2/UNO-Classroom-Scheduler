@@ -12,8 +12,6 @@ html
           a(href='./') Home
         li(class=(title === 'Upload' ? 'active' : ''))
           a(href='./upload') Upload
-        li(class=(title === 'Request' ? 'active' : ''))
-          a(href='./prefs') User Preferences
         li(class=(title === 'Calendar' ? 'active' : ''))
           a(href='./calendar') Calendar
         li(class=(title === 'Rooms' ? 'active' : ''))
@@ -22,8 +20,6 @@ html
           a(href='./classes') Add/Remove Classes
         li(class=(title === 'Scheduler' ? 'active' : ''))
           a(href='./createSchedule') Create a Schedule
-        li
-          a(href='./practice') Practice
     div.container
       div.jumbotron
         block content
