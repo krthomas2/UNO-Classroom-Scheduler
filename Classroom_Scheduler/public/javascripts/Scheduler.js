@@ -1,3 +1,6 @@
+/**
+ * Created by Kenneth on 5/4/2015.
+ */
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
@@ -15,18 +18,18 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-				db.collection("Users").find({"Name" : uname}, function(err, returnValue){
-					returnValue.count(function(err, count){
-						if (count == 1){
-							callback("User already in database. Please choose a different username.");
-						}
-						else {
-							db.collection("Users").insert({"Name" : uname, "Password" : pw, "Permissions" : per}, function(err, callback){
-								callback(key.ops[0]._id);
-							});
-						}
-					});
-				});
+                db.collection("Users").find({"Name" : uname}, function(err, returnValue){
+                    returnValue.count(function(err, count){
+                        if (count == 1){
+                            callback("User already in database. Please choose a different username.");
+                        }
+                        else {
+                            db.collection("Users").insert({"Name" : uname, "Password" : pw, "Permissions" : per}, function(err, callback){
+                                callback(key.ops[0]._id);
+                            });
+                        }
+                    });
+                });
                 db.close();
             }
         });
@@ -34,12 +37,12 @@ var functions = module.exports = {
 
     /*Classes*/
 
-	insertClass: function (class_information, callback){
-		MongoClient.connect(url, function(err, db) {
-			if (err) {
-				console.log(err);
-			}
-			else {
+    insertClass: function (class_information, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log(err);
+            }
+            else {
                 db.collection("Classes").insertOne(class_information, function (err, key) {
                     if (err) {
                         console.log(err);
@@ -49,29 +52,29 @@ var functions = module.exports = {
                     }
                 });
             }
-		});
-	},
-	getClass: function (class_id, callback){
-		class_id = class_id || false;
-		MongoClient.connect(url, function(err, db){
-			if (err) {
-				console.log(err);
-			}
-			else {
-				if (class_id == false) {
+        });
+    },
+    getClass: function (class_id, callback){
+        class_id = class_id || false;
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                if (class_id == false) {
                     db.collection("Classes").find().toArray(function(err, data){
                         callback(data);
                     });
-				}
-				else {
+                }
+                else {
                     db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
-                       callback(data);
+                        callback(data);
                     });
                 }
-			}
-		});
-	},
-	updateClass: function (id, class_information, callback){
+            }
+        });
+    },
+    updateClass: function (id, class_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
@@ -87,21 +90,21 @@ var functions = module.exports = {
                 });
             }
         });
-	},
-	removeClass: function (id, callback){
-		MongoClient.connect(url, function(err, db) {
-			if (err) {
-				console.log(err);
-			}
-			else {
-				db.collection("Classes", function (err, collection) {
-					collection.removeOne({_id: new ObjectId(id)}, function(){
+    },
+    removeClass: function (id, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                db.collection("Classes", function (err, collection) {
+                    collection.removeOne({_id: new ObjectId(id)}, function(){
                         callback();
                     });
-				});
-			}
-		});
-	},
+                });
+            }
+        });
+    },
 
     /*Classrooms*/
 
@@ -141,7 +144,7 @@ var functions = module.exports = {
                 }
             }
         });
-	},
+    },
     getClassroomByNumber: function (room_number, callback){  //Corresponds to classroom information for scehduler when id not provided.
         MongoClient.connect(url, function(err, db){
             if (err) {
@@ -205,7 +208,7 @@ var functions = module.exports = {
             }
         });
     },
-	getClassGroup: function (group_id, callback){
+    getClassGroup: function (group_id, callback){
         group_id = group_id || false;
         MongoClient.connect(url, function(err, db){
             if (err) {
@@ -224,7 +227,7 @@ var functions = module.exports = {
                 }
             }
         });
-	},
+    },
     updateClassGroups: function (id, group_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
@@ -276,7 +279,7 @@ var functions = module.exports = {
             }
         });
     },
-	getSchedule: function (sched_id, callback){
+    getSchedule: function (sched_id, callback){
         sched_id = sched_id || false;
         MongoClient.connect(url, function(err, db){
             if (err) {
@@ -295,14 +298,14 @@ var functions = module.exports = {
                 }
             }
         });
-	},
-	updateSched: function (id, sched_information, callback){
+    },
+    updateSched: function (id, sched_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
             }
             else {
-                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: sched_information}}, function (err) {
+                db.collection("Class_Schedule").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: sched_information}}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -312,25 +315,25 @@ var functions = module.exports = {
                 });
             }
         });
-	},
-	removeSched: function (id, callback){
-		MongoClient.connect(url, function(err, db) {
-				if (err) {
-					console.log(err);
-				}
-				else {
-                    db.collection("Class_Schedule", function (err, collection) {
-                        collection.removeOne({_id: new ObjectId(id)}, function () {
-                            callback();
-                        });
+    },
+    removeSched: function (id, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                db.collection("Class_Schedule", function (err, collection) {
+                    collection.removeOne({_id: new ObjectId(id)}, function () {
+                        callback();
                     });
-                }
-		});
-	},
+                });
+            }
+        });
+    },
 
     /*Excel Import*/
 
-	importExcelToDb: importExcelToDb
+    importExcelToDb: importExcelToDb
 }
 
 function importExcelToDb(put) {
@@ -387,9 +390,9 @@ function importExcelToDb(put) {
             //Fortunately this shouldn't be a concurrency issue here :)
             //Now that the group list is populated, we have the groups we need to add to the groups table, even groups with just one item should be added for consistency sake.
             if (x == jsonObj.Courses.length - 2) //We only execute this on the last iteration of the loop.
-            for (var y = 0; y < group.count; y++){
-                functions.insertClassGroup(group[y]["ids"], function(ID){}); //Callback function only here to keep program from crashing.
-            }
+                for (var y = 0; y < group.count; y++){
+                    functions.insertClassGroup(group[y]["ids"], function(ID){}); //Callback function only here to keep program from crashing.
+                }
         });
     }
 }

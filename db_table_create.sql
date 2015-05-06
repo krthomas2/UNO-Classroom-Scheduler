@@ -22,7 +22,8 @@ CREATE TABLE Classes (
 	Class_Capacity int(3),
 	primary key (Class_ID),
 	foreign key (Instructor_ID) references Instructors (Instructor_ID),
-	index (Class_Capacity) asc
+	index (Class_Capacity) asc,
+	Room_Number varchar(8)
 );
 
 CREATE TABLE Classrooms (
