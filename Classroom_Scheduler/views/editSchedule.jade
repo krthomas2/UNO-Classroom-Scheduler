@@ -15,4 +15,10 @@ block content
          div.class.col-sm-12
              input(type='text', name='Room Assigned',placeholder ="Room Number")
          div.class.col-md-1
+
+                     console.log(#{room.Class_ID})
+                     option(value=room._id, room.Title, room.Instructor.FirstName, room.Instructor.LastName, rooms.Days) #{room.Class_ID} #{room.Course_Title} #{room.Instructor.First_Name} #{room.Instructor.Last_Name}
+                     input(type='text', name='Course_ID',placeholder ="#option")
+                     input(type='text', name='Time_Assigned',placeholder ="Room Number")
+         div.class.col-md-1
             input(type='submit', value='Submit', class="btn btn-danger")

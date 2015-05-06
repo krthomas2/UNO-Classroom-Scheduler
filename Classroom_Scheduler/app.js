@@ -9,6 +9,8 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var multer  = require('multer');
 var dbactions = require('./public/javascripts/DB_Transactions.js');
+var fs = require('fs');
+var j2xls = require('json2xls');
 var app = express();
 
 // view engine setup
@@ -35,13 +37,13 @@ app.get('/calendar', function(req, res){
 });
 
 app.get('/getCalendarInfo', function(req, res){
-  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){ //Get a list of the class IDS
-    var class_list;
-    for (var x=0; x < class_ids.count(); x++){
-      dbactions.getClass(class_ids[x]['_id'], function(data){ //Get the information for each class.
-        class_list[x] = data;
-        if (x == class_ids.count() - 1){ //Once all the information is retrieved it needs to be returned.
-          res.send({classes: data});
+  var class_list = [];
+  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
+    for (var x = 0; x < class_ids.length; x++) {
+      dbactions.getClass(class_ids[x]["class_id"], function (classInfo) {
+        class_list.push(classInfo);
+        if (class_ids.length == class_list.length) {
+          res.send(class_list);
         }
       });
     }
@@ -66,7 +68,85 @@ app.get('/geteditSchedule', function(req, res){
   });
 });
 
+app.get('/downloadSchedule', function(req, res) {
+  var classy;
+  var jsonObjs;
+  var y = 0;
+  var groupy ="";
+  var roomy ="";
 
+  console.log("Home");
+console.log(roomy);
+  dbactions.getClass(false, function (data) {
+    dbactions.getSchedule(false,function(room) {
+      dbactions.getClassGroup(false,function(group){
+        for (x in data) {
+          group = "";
+          /*   dbactions.getClassGroup(false,function(group){
+           for(x in group)
+           if(group[x]._id == data[x]._id) {
+           group = 'C';
+           }
+           })*/
+          roomy = "";
+          groupy ="";
+//console.log(room);
+          for (y in room) {//wish I could just get index of
+//        console.log(room[y].class_id +" != " + data[x]._id)
+            if (room[y].class_id.equals(data[x]._id)) {
+//console.log(room[y].class_id +" == " + data[x]._id);
+              roomy = room[y].Room_Number;
+              break;
+            }
+            else {
+              //move along this is not the data you are looking for
+            }
+          }
+          for( z in group) {//wish I could just get index of
+            if(group[x].Class_ID.equals(data[x]._id)){
+              groupy = 'C';
+              break;
+            }
+          }
+
+
+          data[x] = ({
+            "ClassNbr": data[x].Class_ID,
+            Subject: data[x].Subject,
+            Catalog: data[x].Course_ID,
+            "Section": data[x].Section_ID,
+            "Combined Section": groupy,
+            "Title": data[x].Course_Title,
+            "Descr": data[x].Description,
+            "Acad Group": data[x].Acad_Group,
+            "Cap Enrl": data[x].Class_Capacity,
+            "Tot Enrl": data[x].Tot_Enrl,
+            "Pat": data[x].Class_Time.Days,
+            "MtgStart": data[x].Class_Time.Start,
+            "MtgEnd": data[x].Class_Time.End,
+            "Last": data[x].Instructor.Last_Name,
+            "First Name": data[x].Instructor.First_Name,
+            "Start Date": data[x].Start_Date,
+            "End Date": data[x].End_Date,
+            Session: data[x].Session,
+            Location: data[x].Location,
+            Mode: data[x].Mode,
+            "CrsAtr Val": data[x].CrsAtr_Val,
+            "Component": data[x].Lecture_Type,
+            "Room Number": roomy
+          });
+        }
+        var xls = j2xls(data);
+
+        // console.log(xls);
+        fs.writeFileSync('Scheduler.xlsx', xls, 'binary');
+        res.download('Scheduler.xlsx');
+      });
+      });
+
+//stays on page with link, but downloads excel file
+  });
+});
 //Post Methods Below
 
 app.post('/addUser', function(req,res){
@@ -84,7 +164,6 @@ app.post('/addRoom', function(req,res){//doesnt work callback next tick failure
 });
 
 app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure
-  console.log(req.body.class_id);
   res.redirect('/');//just because...should go to scheduler page when added
  dbactions.removeClass(req.body.class_id,function(){
  //empty function for callback
@@ -102,16 +181,74 @@ app.post('/editScheduledata', function(req,res){//doesnt work callback next tick
 app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
   console.log(req.body.class_id);
   res.redirect('/');//just because...should go to scheduler page when added
-  dbactions.removeClassroom(req.body.room_id);
+  dbactions.removeClass(req.body.class_id,function(){
+    //empty function for callback
+  });
+});
+
+app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
+  console.log(req.body.room_id);
+  dbactions.removeClassroom(req.body.room_id, function(){
+    res.redirect('/');//just because...should go to scheduler page when added
+  });
 });
 
 app.post('/', function(req, res, next) {
-var wb =  xlsx.readFile(req.files.filer.path);
-var wsname = wb.SheetNames[0];
-var ws = wb.Sheets[wsname];
-var put = xlsx.utils.sheet_to_json(ws);
- // console.log(put);
-  dbactions.importExcelToDb(put);
+  var temp_path = req.files.filer.path;
+  var wb,wsname,ws,put;//local variables for parsing the document
+  if(req.files.filer.extension == 'xlsx') {//type xlsx
+    if('uploads/ScheduleOld.xlsx'!=null)
+    {
+      fs.unlink('uploads/ScheduleOld.xlsx',function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    if('uploads/ScheduleOld.xls'!=null)
+    {
+      fs.unlink('uploads/ScheduleOld.xls',function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    wb = xlsx.readFile(req.files.filer.path);//create the workbook
+    wsname = wb.SheetNames[0];//get the first sheet name
+    ws = wb.Sheets[wsname];//get the first sheet data
+    put = xlsx.utils.sheet_to_json(ws);//convert data to json
+    // console.log(ws);
+    fs.rename(temp_path,'uploads/ScheduleOld.xlsx',function(err){
+      if(err) throw err;
+    });
+    dbactions.importExcelToDb(put);
+  }
+  else if(req.files.filer.extension =='xls'){//same as above just creates a .xls file in uploads vs .xlsx
+    if('uploads/ScheduleOld.xls'!=null)
+    {
+      fs.unlink('uploads/ScheduleOld.xls',function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    if('uploads/ScheduleOld.xlsx' != null)//remove any other schedule format
+    {
+      fs.unlink('uploads/ScheduleOld.xlsx',function(err){
+        //if(err) throw err;
+      });
+    }
+    wb = xlsx.readFile(req.files.filer.path);
+    wsname = wb.SheetNames[0];
+    ws = wb.Sheets[wsname];
+    put = xlsx.utils.sheet_to_json(ws);
+    // console.log(ws);
+    fs.rename(temp_path,'uploads/ScheduleOld.xls',function(err){
+      if(err) throw err;
+    });
+    dbactions.importExcelToDb(put);
+
+  }
+  else{//if file is not xlsx or xls then don't delete the old schedule, but delete the temp file of what was just uploaded
+    console.log("Test failed");
+    fs.unlink(temp_path,function(err){
+      if(err) throw err;
+    });
+  }
   res.render('index');
 });
 

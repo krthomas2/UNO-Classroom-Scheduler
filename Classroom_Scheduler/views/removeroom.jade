@@ -6,10 +6,8 @@ block content
         div.class.col-md-3 Select Room
     div.row
         form(method='post' action='/removeroomdata')
-            div.class.col-sm-2
-                select(name='room_id')
-                    #rooms
-                        -each room in rooms
-                            option(value=room._id) #{room.Room_Number}
-            div.class.col-md-1
-                input(type='submit', value='Submit', class="btn btn-danger")
+            select(name='room_id')
+                #rooms
+                    -each room in rooms
+                        option(value= room._id) #{room.Room_Number}
+            input(type='submit', value='Submit', class="btn btn-danger")
