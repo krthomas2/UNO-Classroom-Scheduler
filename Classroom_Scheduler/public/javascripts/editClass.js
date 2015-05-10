@@ -20,5 +20,6 @@ function editClass(info) {
             $("#Mode").val(data[0].Mode);
             $("#CrsAtr_Val").val(data[0].CrsAtr_Val);
             $("#ID").val(data[0]._id);
+            $("Room_Assigned").val(data[0].Room_Assigned);
         });
     };
