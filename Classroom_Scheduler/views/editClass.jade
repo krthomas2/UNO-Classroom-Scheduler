@@ -13,7 +13,9 @@ block content
                  -each room in rooms
                     option(value = room._id) #{room.Class_ID}
       div.row
-         form(method='post', name = 'edit', action='/editClass')
+         form(method='post', name = 'edit', action='/editClassData')
+            div.class.row
+               input(type="hidden", name='_id',id="ID",value="")
             div.class.row
                input(type="number", name='Class',id ="Class", placeholder="Class Nbr",value="")
             div.class.row

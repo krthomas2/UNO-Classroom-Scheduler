@@ -209,8 +209,47 @@ app.post('/addClass', function(req,res){
     "CrsAtr_Val": req.body.CrsAtr_Val
   };
   dbactions.insertClass(class_data, function(){
-       //empty for return
-      });
+    //empty for return
+  });
+  res.redirect('/rooms');
+});
+
+app.post('/editClassData', function(req,res){
+  console.log(req.body);
+  var class_data = {
+    "_id": req.body._id,
+    "Subject": req.body.Subject,
+    "Course_ID": req.body.Catalog,
+    "Section_ID": req.body.Section,
+    "Class_ID": req.body.Class,
+    "Course_Title": req.body.Title,
+    "Lecture_Type": req.body.Component,
+    "Class_Time": {
+      "Start": req.body.MtgS,
+      "End": req.body.MtgE,
+      "Days": req.body.Pat
+    },
+    "Instructor": {
+      First_Name: req.body.First,
+      Last_Name: req.body.Last
+    },
+    "Class_Capacity": req.body.Cap,
+    "Description": req.body.Descr,
+    "Acad_Group": req.body.Acad,
+    "Tot_Enrl": req.body.Tot,
+    "Start_Date": req.body.Start,
+    "End_Date": req.body.End,
+    "Session": req.body.Session,
+    "Location": req.body.Location,
+    "Mode": req.body.Mode,
+    "CrsAtr_Val": req.body.CrsAtr_Val
+  };
+  dbactions.removeClass(req.body._id, function(){
+
+  });
+  dbactions.insertClass(class_data,function(){
+    //empty for return
+  });
   res.redirect('/rooms');
 });
 app.post('/editRoomdata',function(req,res){

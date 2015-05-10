@@ -19,5 +19,6 @@ function editClass(info) {
             $("#Location").val(data[0].Location);
             $("#Mode").val(data[0].Mode);
             $("#CrsAtr_Val").val(data[0].CrsAtr_Val);
+            $("#ID").val(data[0]._id);
         });
     };
