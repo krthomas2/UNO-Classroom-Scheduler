@@ -2,12 +2,13 @@ extends layout
 block content
    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
    script
-      include editInfo.js
+      include ../public/javascripts/editRoom.js
    title #{title}
    div.row
       h4 Please select a room and change the data:
       p.right.col-md-3 Select Room:
-         select.form-control(onchange="editInfo(this)")
+      div(Hi = "room")
+         select.form-control(onchange="editRoom(value)")
             #rooms
                -each room in rooms
                   option(value = room._id) #{room.Room_Number}

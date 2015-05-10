@@ -18,3 +18,19 @@ ul.nav.navbar-nav li a:hover {
     color: Black;
     background-color: White;
 }
+/*
+.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+    color: #FFF;
+    background-color: Black;
+    border-color: #204D74;
+}
+.btn-default.active, .btn-default.focus, .btn-default:active, .btn-default:focus, .btn-default:hover, .open > .dropdown-toggle.btn-default {
+    color: White;
+    background-color: #080808;
+    border-color: #ADADAD;
+}
+.btn-default {
+    color: White;
+    background-color: #222222;
+    border-color: #CCC;
+}*/

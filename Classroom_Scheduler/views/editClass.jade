@@ -1,0 +1,56 @@
+extends layout
+block content
+   script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+   script
+      include ../public/javascripts/editClass.js
+   title #{title}
+   center
+      div.row
+          h4 Please select a room and change the data:
+         p.right.col-md-3 Select Class ID#:
+            select.form-control(onchange="editClass(value)")
+               #rooms
+                 -each room in rooms
+                    option(value = room._id) #{room.Class_ID}
+      div.row
+         form(method='post', name = 'edit', action='/editClass')
+            div.class.row
+               input(type="number", name='Class',id ="Class", placeholder="Class Nbr",value="")
+            div.class.row
+               input(type="text", name='Catalog', id ="Catalog", placeholder="Catalog",value="")
+            div.class.row
+               input(type='text', name='Subject',id="Subject",placeholder ="Subject",value="")
+            div.class.row
+               input(type='text', name='Title',id ="Title",placeholder ="Title",value="")
+            div.class.row
+               input(type='number', name='Section',id = "Section",placeholder ="Section",value="")
+            div.class.row
+               input(type="text", name='Component',id = "Component", placeholder="Component",value="")
+            div.class.row
+               input(type='text', name='MtgS',id ="MtgS",placeholder ="Mtg Start",value="")
+            div.class.row
+               input(type="text", name='MtgE',id ="MtgE", placeholder="Mtg End",value="")
+            div.class.row
+               input(type='text', name='Pat',id ="Pat",placeholder ="Pat",value="")
+            div.class.row
+               input(type="text", name='First',id="First", placeholder="First Name",value="")
+            div.class.row
+               input(type='text', name='Last',id ="Last", placeholder="Last Name",value="")
+            div.class.row
+               input(type="number", name='Cap',id ="Cap", placeholder="Cap Enrl",value="")
+            div.class.row
+               input(type='number', name='Tot',id ="Tot",placeholder ="Total Enrolled",value="")
+            div.class.row
+               input(type="text", name='Start',id="Start", placeholder="Start_Date",value="")
+            div.class.row
+               input(type='text', name='End',id = "End",placeholder ="End_Date",value="")
+            div.class.row
+               input(type="number", name='Session',id ="Session", placeholder="Session",value="")
+            div.class.row
+               input(type='text', name='Location',id = "Location",placeholder ="Location",value="")
+            div.class.row
+               input(type="text", name='Mode',id = "Mode", placeholder="Mode",value="")
+            div.class.row
+               input(type="text", name='CrsAtr_Val',id = "CrsAtr_Val", placeholder='CrsAtr_Val',value="")
+            div.class.row.btn-group-vertical
+               input(type='submit', class="btn btn-danger")

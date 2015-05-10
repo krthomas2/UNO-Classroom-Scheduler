@@ -40,11 +40,24 @@ app.get('/editroom',function(req,res){
     res.render('editroom',{rooms: data, title:"Rooms"});
   });
 });
+app.get('/editclass',function(req,res){
+  dbactions.getClass(false,function(data){
+    res.render('editClass',{rooms: data, title:"rooms"});
+  });
+});
 app.get('/getRoomInfo', function(req, res){//set values for class room data
   dbactions.getClassroom(req.query.room_number, function(class_ids){
+   console.log(class_ids);
      res.send(class_ids);
   });
 });
+app.get('/getClassInfo', function(req, res){//set values for class room data
+  dbactions.getClass(req.query.id, function(data){
+   console.log(data);
+    res.send(data);
+  });
+});
+
 app.get('/getCalendarInfo', function(req, res){
   var class_list = [];
   dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
@@ -202,6 +215,7 @@ app.post('/addClass', function(req,res){
 });
 app.post('/editRoomdata',function(req,res){
   console.log(req.body);
+  res.redirect('/rooms');
 });
 app.post('/editScheduledata', function(req,res){
   console.log(req.body);
