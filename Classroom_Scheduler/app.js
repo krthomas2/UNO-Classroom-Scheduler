@@ -210,7 +210,7 @@ app.post('/addClass', function(req,res){
   dbactions.insertClass(class_data, function(){
     //empty for return
   });
-  res.redirect('/rooms');
+  res.redirect('/classes');
 });
 
 app.post('/editClassData', function(req,res){
