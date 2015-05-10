@@ -47,13 +47,11 @@ app.get('/editclass',function(req,res){
 });
 app.get('/getRoomInfo', function(req, res){//set values for class room data
   dbactions.getClassroom(req.query.room_number, function(class_ids){
-   console.log(class_ids);
      res.send(class_ids);
   });
 });
 app.get('/getClassInfo', function(req, res){//set values for class room data
   dbactions.getClass(req.query.id, function(data){
-   console.log(data);
     res.send(data);
   });
 });
@@ -97,8 +95,6 @@ app.get('/downloadSchedule', function(req, res) {
   var groupy ="";
   var roomy ="";
 
-  console.log("Home");
-console.log(roomy);
   dbactions.getClass(false, function (data) {
     dbactions.getSchedule(false,function(room) {
       dbactions.getClassGroup(false,function(group){
@@ -112,11 +108,8 @@ console.log(roomy);
            })*/
           roomy = "";
           groupy ="";
-//console.log(room);
           for (y in room) {//wish I could just get index of
-//        console.log(room[y].class_id +" != " + data[x]._id)
             if (room[y].class_id.equals(data[x]._id)) {
-//console.log(room[y].class_id +" == " + data[x]._id);
               roomy = room[y].Room_Number;
               break;
             }
@@ -160,7 +153,6 @@ console.log(roomy);
         }
         var xls = j2xls(data);
 
-        // console.log(xls);
         fs.writeFileSync('Scheduler.xlsx', xls, 'binary');
         res.download('Scheduler.xlsx');
       });
@@ -173,7 +165,6 @@ console.log(roomy);
 
 
 app.post('/addRoom', function(req,res){
-  console.log(req.body);
   dbactions.insertClassroom(req.body,function(){
   //empty function for callback
   });
@@ -277,14 +268,12 @@ app.post('/editRoomdata',function(req,res){
     "Max_Capacity": req.body.Max_Cap,
     "Spec_Trait": req.body.Spec
   };
-  console.log(room_data);
   dbactions.updateClassroom(req.body.Room_ID,room_data,function(){
-    //just in case
+    //empty for return
   });
   res.redirect('/rooms');
 });
 app.post('/editScheduledata', function(req,res){
-  console.log(req.body);
   res.redirect('/');//should go to scheduler page when added
   dbactions.updateSched(req.body.room_id,req.body,function(){
     //empty function for callback
@@ -292,14 +281,12 @@ app.post('/editScheduledata', function(req,res){
 });
 
 app.post('/removeroomdata', function(req,res){
-  console.log(req.body.room_id);
   res.redirect('/rooms');//should go to scheduler page when added
   dbactions.removeClassroom(req.body.room_id,function(){
     //empty function for callback
   });
 });
 app.post('/removeclassydata', function(req,res){
-  console.log(req.body.class_id);
   res.redirect('/classes');//should go to scheduler page when added
   dbactions.removeClassroom(req.body.class_id,function(){
     //empty function for callback
@@ -326,7 +313,6 @@ app.post('/', function(req, res, next) {
     wsname = wb.SheetNames[0];//get the first sheet name
     ws = wb.Sheets[wsname];//get the first sheet data
     put = xlsx.utils.sheet_to_json(ws);//convert data to json
-    // console.log(ws);
     fs.rename(temp_path,'uploads/ScheduleOld.xlsx',function(err){
       if(err) throw err;
     });
@@ -349,14 +335,12 @@ app.post('/', function(req, res, next) {
     wsname = wb.SheetNames[0];
     ws = wb.Sheets[wsname];
     put = xlsx.utils.sheet_to_json(ws);
-    // console.log(ws);
     fs.rename(temp_path,'uploads/ScheduleOld.xls',function(err){
       if(err) throw err;
     });
     dbactions.importExcelToDb(put);
   }
   else{//if file is not xlsx or xls then don't delete the old schedule, but delete the temp file of what was just uploaded
-    console.log("Test failed");
     fs.unlink(temp_path,function(err){
       if(err) throw err;
     });
