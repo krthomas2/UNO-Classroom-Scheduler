@@ -33,7 +33,23 @@ var functions = module.exports = {
     },
 
     /*Classes*/
-
+    reinsertClass: function (id,class_information, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                db.collection("Classes").insertOne({_id: new ObjectId(id)},class_information, function (err, key) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        callback(key.ops[0]._id, {Instructor: class_information.Instructor, Class_Time: class_information.Class_Time});
+                    }
+                });
+            }
+        });
+    },
 	insertClass: function (class_information, callback){
 		MongoClient.connect(url, function(err, db) {
 			if (err) {
@@ -71,13 +87,13 @@ var functions = module.exports = {
 			}
 		});
 	},
-	updateClass: function (id, class_information, callback){
+    updateClass: function (id, class_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
             }
             else {
-                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: class_information}}, function (err) {
+                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: class_information}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -87,7 +103,7 @@ var functions = module.exports = {
                 });
             }
         });
-	},
+    },
 	removeClass: function (id, callback){
 		MongoClient.connect(url, function(err, db) {
 			if (err) {

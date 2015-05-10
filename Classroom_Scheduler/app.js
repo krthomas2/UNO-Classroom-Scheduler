@@ -180,7 +180,6 @@ app.post('/addRoom', function(req,res){
   res.redirect('/rooms');
 });
 app.post('/addClass', function(req,res){
-  console.log(req.body);
   var class_data = {
     "Subject": req.body.Subject,
     "Course_ID": req.body.Catalog,
@@ -215,9 +214,7 @@ app.post('/addClass', function(req,res){
 });
 
 app.post('/editClassData', function(req,res){
-  console.log(req.body);
   var class_data = {
-    "_id": req.body._id,
     "Subject": req.body.Subject,
     "Course_ID": req.body.Catalog,
     "Section_ID": req.body.Section,
@@ -244,13 +241,10 @@ app.post('/editClassData', function(req,res){
     "Mode": req.body.Mode,
     "CrsAtr_Val": req.body.CrsAtr_Val
   };
-  dbactions.removeClass(req.body._id, function(){
-
-  });
-  dbactions.insertClass(class_data,function(){
+  dbactions.updateClass(req.body._id,class_data,function(){
     //empty for return
   });
-  res.redirect('/rooms');
+  res.redirect('/classes');
 });
 app.post('/editRoomdata',function(req,res){
   console.log(req.body);
