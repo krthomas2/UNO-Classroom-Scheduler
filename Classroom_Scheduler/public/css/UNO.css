@@ -9,12 +9,12 @@ ul.nav.navbar-nav li a{
     color: white;
 }
 
-ul.navbar-nav.class :active{
-    background-color: yellow;
-    color:red;
-}
 ul.nav.navbar-nav li a:hover {
     color: white;
     text-decoration: underline;
     text-decoration-color: white;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    color: Black;
+    background-color: White;
 }

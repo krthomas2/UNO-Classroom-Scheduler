@@ -35,7 +35,16 @@ app.get('/calendar', function(req, res){
     res.render('calendar', {rooms: data,title: "Calendar"});
   });
 });
-
+app.get('/editroom',function(req,res){
+  dbactions.getClassroom(false,function(data){
+    res.render('editroom',{rooms: data, title:"Rooms"});
+  });
+});
+app.get('/getRoomInfo', function(req, res){//set values for class room data
+  dbactions.getClassroom(req.query.room_number, function(class_ids){
+     res.send(class_ids);
+  });
+});
 app.get('/getCalendarInfo', function(req, res){
   var class_list = [];
   dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
@@ -191,8 +200,10 @@ app.post('/addClass', function(req,res){
       });
   res.redirect('/rooms');
 });
-
-app.post('/editScheduledata', function(req,res){//doesnt work callback next tick failure
+app.post('/editRoomdata',function(req,res){
+  console.log(req.body);
+});
+app.post('/editScheduledata', function(req,res){
   console.log(req.body);
   res.redirect('/');//should go to scheduler page when added
   dbactions.updateSched(req.body.room_id,req.body,function(){

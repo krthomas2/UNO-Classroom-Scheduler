@@ -1,0 +1,23 @@
+extends layout
+block content
+   script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+   script
+      include editInfo.js
+   title #{title}
+   div.row
+      h4 Please select a room and change the data:
+      p.right.col-md-3 Select Room:
+         select.form-control(onchange="editInfo(this)")
+            #rooms
+               -each room in rooms
+                  option(value = room._id) #{room.Room_Number}
+   div.row
+      form(method='post', name = 'editroom', action='/editRoomdata')
+         div.class.col-lg-3
+            input(type = "hidden",name="Room_ID",id="Room_ID",value ="")
+         div.class.col-lg-3
+            input(type = "hidden",name="Room_Number",id="Room_Number",value ="")
+         div.class.col-lg-3
+            input(type="text", name='Max_Capacity',id ="Max_Cap", Placeholder="Max Capacity")
+         div.class.col-sm-2
+            input(type='submit', class="btn btn-danger")
