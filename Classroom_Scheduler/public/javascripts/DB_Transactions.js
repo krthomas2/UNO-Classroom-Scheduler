@@ -87,6 +87,27 @@ var functions = module.exports = {
 			}
 		});
 	},
+
+    getAllClass: function (class_id, callback){
+        class_id = class_id || false;
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                if (class_id == false) {
+                    db.collection("Classes").find().toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+                else {
+                    db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+            }
+        });
+    },
     updateClass: function (id, class_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
