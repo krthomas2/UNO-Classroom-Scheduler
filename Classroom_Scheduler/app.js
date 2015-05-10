@@ -247,7 +247,15 @@ app.post('/editClassData', function(req,res){
   res.redirect('/classes');
 });
 app.post('/editRoomdata',function(req,res){
-  console.log(req.body);
+  var room_data = {
+    "Room_Number": req.body.Room_Number,
+    "Max_Capacity": req.body.Max_Cap,
+    "Spec_Trait": req.body.Spec
+  };
+  console.log(room_data);
+  dbactions.updateClassroom(req.body.Room_ID,room_data,function(){
+    //just in case
+  });
   res.redirect('/rooms');
 });
 app.post('/editScheduledata', function(req,res){

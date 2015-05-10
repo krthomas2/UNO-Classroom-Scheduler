@@ -176,7 +176,7 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: room_information}}, function (err) {
+                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: room_information}, function (err) {
                     if (err) {
                         console.log(err);
                     }
