@@ -318,7 +318,7 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: sched_information}}, function (err) {
+                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: {Room_Assigned: sched_information.Room_Assigned}},{upsert:true}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -329,6 +329,8 @@ var functions = module.exports = {
             }
         });
 	},
+
+
 	removeSched: function (id, callback){
 		MongoClient.connect(url, function(err, db) {
 				if (err) {

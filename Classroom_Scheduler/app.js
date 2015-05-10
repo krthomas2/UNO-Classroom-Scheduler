@@ -246,6 +246,31 @@ app.post('/editClassData', function(req,res){
   });
   res.redirect('/classes');
 });
+
+app.post('/runScheduler', function(req,res){
+  console.log(req.body);
+  console.log("cheeseburger!")
+  var class_data = {
+    "_id": req.body._id,
+    "Course_ID": req.body.Catalog,
+    "Lecture_Type": req.body.Component,
+    "Class_Time": {
+      "Start": req.body.MtgS,
+      "End": req.body.MtgE,
+      "Days": req.body.Pat
+    },
+    "Class_Capacity": req.body.Cap,
+    "Mode": req.body.Mode,
+    "CrsAtr_Val": req.body.CrsAtr_Val,
+    "Room_Assigned": req.body.Room_Assigned
+  };
+  dbactions.getClass(req.body._id, function(){
+      //empty for return
+  });
+    console.log("cheeseburger in paradise!")
+    res.redirect('/createSchedule');
+});
+
 app.post('/editRoomdata',function(req,res){
   var room_data = {
     "Room_Number": req.body.Room_Number,

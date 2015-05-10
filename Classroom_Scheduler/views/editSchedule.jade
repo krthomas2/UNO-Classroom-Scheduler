@@ -2,6 +2,45 @@
    Created by Kenneth on 5/2/2015.
 extends layout
 block content
+   script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+   script
+      include ../public/javascripts/editSchedule.js
+   title #{title}
+   center
+      div.row
+         h4 Please select a room and change the data:
+      p.right.col-md-3 Select Class ID#:
+         select.form-control(onchange="editClass(value)")
+            #rooms
+               -each room in rooms
+               option(value = room._id) #{room.Class_ID}
+      div.row
+         form(method='post', name = 'edit', action='/editClassData')
+            div.class.row
+               input(type="hidden", name='_id',id="ID",value="")
+            div.class.row
+               input(type="number", name='Class',id ="Class", placeholder="Class Nbr",value="")
+            div.class.row
+               input(type="text", name='Catalog', id ="Catalog", placeholder="Catalog",value="")
+            div.class.row
+               input(type='text', name='Subject',id="Subject",placeholder ="Subject",value="")
+            div.class.row
+               input(type='text', name='Title',id ="Title",placeholder ="Title",value="")
+            div.class.row
+               input(type='number', name='Section',id = "Section",placeholder ="Section",value="")
+            div.class.row
+               input(type="text", name='Component',id = "Component", placeholder="Component",value="")
+            div.class.row
+               input(type='text', name='MtgS',id ="MtgS",placeholder ="Mtg Start",value="")
+            div.class.row
+               input(type="text", name='MtgE',id ="MtgE", placeholder="Mtg End",value="")
+            div.class.row.btn-group-vertical
+               input(type='submit', class="btn btn-danger")
+
+
+
+extends layout
+block content
    h1 Schedule
    div.row
       div.class.col-md-3 Select Zoom
@@ -12,6 +51,16 @@ block content
                #rooms
                   -each room in rooms
                      option(value=room._id) #{room.Course_Title +" "+ room.Instructor.First_Name +" "+ room.Instructor.Last_Name +" "+ room.Class_Time.Days) #{room.class_id}
+   div.row
+      form(method='post', name = 'editschedule', action='/editSchedule')
+         div.class.col-lg-3
+            input(type = "hidden",name="Room_Assigned",id="Room_Assigned", Placeholder=Room_Assigned)
+         div.class.col-lg-3
+            input(type = "hidden",name="startTime",id="startTime",Placeholder =startTime)
+         div.class.col-lg-3
+            input(type='text', name='Time_Assigned',placeholder ="Time of Day")
+         div.class.col-sm-2
+            input(type='submit', class="btn btn-danger")
             input(type='text', name='Room Assigned',placeholder ="Room Number")
             input(type='text', name='Course_ID',placeholder ="Course Id")
             input(type='text', name='Time_Assigned',placeholder ="Time of Day")
