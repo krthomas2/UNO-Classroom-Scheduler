@@ -2,42 +2,44 @@ extends layout
 block content
    title #{title}
    div.row
-        form(method='post', name = 'addroom', action='/addRoom')
+        form(method='post', name = 'addroom', action='/addClass')
             div.class.col-lg-3
                input(type='text', name='Subject',placeholder ="Subject")
             div.class.col-lg-3
-               input(type="text", name='Course_ID', placeholder="Course_ID")
+               input(type="text", name='Catalog', placeholder="Catalog")
             div.class.col-lg-3
-               input(type='text', name='Section_ID',placeholder ="Section_ID")
+               input(type='text', name='Section',placeholder ="Section")
             div.class.col-lg-3
-               input(type="text", name='Class_ID', placeholder="Class_ID")
+               input(type="text", name='Class', placeholder="Class Nbr")
             div.class.col-lg-3
-               input(type='text', name='Course_Title',placeholder ="Course_Title")
+               input(type='text', name='Title',placeholder ="Title")
             div.class.col-lg-3
-               input(type="text", name='Lecture_Type', placeholder="Lecture_Type")
+               input(type="text", name='Component', placeholder="Component")
             div.class.col-lg-3
-               input(type='text', name='Class_Time.Start',placeholder ="Start")
+               input(type='text', name='MtgS',placeholder ="Mtg Start")
             div.class.col-lg-3
-               input(type="text", name='Class_Time.End', placeholder="End")
+               input(type="text", name='MtgE', placeholder="Mtg End")
             div.class.col-lg-3
-               input(type='text', name='Class_Time.Days',placeholder ="Days")
+               input(type='text', name='Pat',placeholder ="Pat")
             div.class.col-lg-3
-               input(type="text", name='Class_Capacity', placeholder="Class_Capacity")
+               input(type="text", name='First', placeholder="First Name")
             div.class.col-lg-3
-               input(type='text', name='Description',placeholder ="Description")
+               input(type='text', name='Last',placeholder ="Last Name")
             div.class.col-lg-3
-               input(type="text", name='Acad_Group', placeholder="Acad_Group")
+               input(type="text", name='Cap', placeholder="Cap Enrl")
             div.class.col-lg-3
-               input(type='text', name='Tot_Enrl',placeholder ="Total Enrolled")
+               input(type='text', name='Tot',placeholder ="Total Enrolled")
             div.class.col-lg-3
-               input(type="text", name='Start_Date', placeholder="Start_Date")
+               input(type="text", name='Start', placeholder="Start_Date")
             div.class.col-lg-3
-               input(type='text', name='End_Date',placeholder ="End_Date")
+               input(type='text', name='End',placeholder ="End_Date")
             div.class.col-lg-3
                input(type="text", name='Session', placeholder="Session")
             div.class.col-lg-3
                input(type='text', name='Location',placeholder ="Location")
             div.class.col-lg-3
                input(type="text", name='Mode', placeholder="Mode")
+            div.class.col-lg-3
+               input(type="text", name='CrsAtr_Val', placeholder='CrsAtr_Val')
             div.class.col-sm-2
                 input(type='submit', class="btn btn-danger")

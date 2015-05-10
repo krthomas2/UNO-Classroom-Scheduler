@@ -149,45 +149,67 @@ console.log(roomy);
 });
 //Post Methods Below
 
-/*app.post('/addUser', function(req,res){
-//res.send("You entered: " + req.body.Name + req.body.Password + req.body.Permissions);
-res.redirect('/upload');//just because
-dbactions.addUser(req.body.Name, req.body.Password, req.body.Permissions);
-});*/
 
-app.post('/addRoom', function(req,res){//doesnt work callback next tick failure
+app.post('/addRoom', function(req,res){
   console.log(req.body);
   dbactions.insertClassroom(req.body,function(){
   //empty function for callback
   });
-  res.redirect('/classes');
+  res.redirect('/rooms');
 });
-
-app.post('/removeclassydata', function(req,res){//doesnt work callback next tick failure
-  res.redirect('/classes');//just because...should go to scheduler page when added
- dbactions.removeClass(req.body.class_id,function(){
- //empty function for callback
- });
+app.post('/addClass', function(req,res){
+  console.log(req.body);
+  var class_data = {
+    "Subject": req.body.Subject,
+    "Course_ID": req.body.Catalog,
+    "Section_ID": req.body.Section,
+    "Class_ID": req.body.Class,
+    "Course_Title": req.body.Title,
+    "Lecture_Type": req.body.Component,
+    "Class_Time": {
+      "Start": req.body.MtgS,
+      "End": req.body.MtgE,
+      "Days": req.body.Pat
+    },
+    "Instructor": {
+      First_Name: req.body.First,
+      Last_Name: req.body.Last
+    },
+    "Class_Capacity": req.body.Cap,
+    "Description": req.body.Descr,
+    "Acad_Group": req.body.Acad,
+    "Tot_Enrl": req.body.Tot,
+    "Start_Date": req.body.Start,
+    "End_Date": req.body.End,
+    "Session": req.body.Session,
+    "Location": req.body.Location,
+    "Mode": req.body.Mode,
+    "CrsAtr_Val": req.body.CrsAtr_Val
+  };
+  dbactions.insertClass(class_data, function(){
+       //empty for return
+      });
+  res.redirect('/rooms');
 });
 
 app.post('/editScheduledata', function(req,res){//doesnt work callback next tick failure
   console.log(req.body);
-  res.redirect('/');//just because...should go to scheduler page when added
+  res.redirect('/');//should go to scheduler page when added
   dbactions.updateSched(req.body.room_id,req.body,function(){
     //empty function for callback
   });
 });
 
-app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
+app.post('/removeroomdata', function(req,res){
   console.log(req.body.room_id);
-  res.redirect('/rooms');//just because...should go to scheduler page when added
+  res.redirect('/rooms');//should go to scheduler page when added
   dbactions.removeClassroom(req.body.room_id,function(){
     //empty function for callback
   });
 });
-app.post('/removeclassydata', function(req,res){//doesnt work...callback next tick failure
+app.post('/removeclassydata', function(req,res){
   console.log(req.body.class_id);
-  res.redirect('/classes');//just because...should go to scheduler page when added
+  res.redirect('/classes');//should go to scheduler page when added
   dbactions.removeClassroom(req.body.class_id,function(){
     //empty function for callback
   });
