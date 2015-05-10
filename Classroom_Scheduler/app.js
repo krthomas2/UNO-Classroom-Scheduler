@@ -179,17 +179,17 @@ app.post('/editScheduledata', function(req,res){//doesnt work callback next tick
 });
 
 app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
-  console.log(req.body.class_id);
+  console.log(req.body.room_id);
   res.redirect('/rooms');//just because...should go to scheduler page when added
-  dbactions.removeClass(req.body.class_id,function(){
+  dbactions.removeClassroom(req.body.room_id,function(){
     //empty function for callback
   });
 });
-
-app.post('/removeroomdata', function(req,res){//doesnt work...callback next tick failure
-  console.log(req.body.room_id);
-  dbactions.removeClassroom(req.body.room_id, function(){
-    res.redirect('/rooms');//just because...should go to scheduler page when added
+app.post('/removeclassydata', function(req,res){//doesnt work...callback next tick failure
+  console.log(req.body.class_id);
+  res.redirect('/classes');//just because...should go to scheduler page when added
+  dbactions.removeClassroom(req.body.class_id,function(){
+    //empty function for callback
   });
 });
 
