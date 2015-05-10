@@ -35,6 +35,17 @@ app.get('/calendar', function(req, res){
     res.render('calendar', {rooms: data,title: "Calendar"});
   });
 });
+app.get('/addgroup',function(req,res){
+  dbactions.getClass(false,function(data){
+    var courses;
+    for(x in data){
+      courses : data[x];
+      console.log(courses);
+
+    }
+    res.render('addgroup',{classys: data.unique, classys2: data,title:"Groups"});
+  });
+});
 app.get('/editroom',function(req,res){
   dbactions.getClassroom(false,function(data){
     res.render('editroom',{rooms: data, title:"Rooms"});
@@ -196,7 +207,8 @@ app.post('/addClass', function(req,res){
     "Session": req.body.Session,
     "Location": req.body.Location,
     "Mode": req.body.Mode,
-    "CrsAtr_Val": req.body.CrsAtr_Val
+    "CrsAtr_Val": req.body.CrsAtr_Val,
+    "Group_ID": req.body.Class
   };
   dbactions.insertClass(class_data, function(){
     //empty for return
@@ -230,7 +242,8 @@ app.post('/editClassData', function(req,res){
     "Session": req.body.Session,
     "Location": req.body.Location,
     "Mode": req.body.Mode,
-    "CrsAtr_Val": req.body.CrsAtr_Val
+    "CrsAtr_Val": req.body.CrsAtr_Val,
+    "Group": req.body.group
   };
   dbactions.updateClass(req.body._id,class_data,function(){
     //empty for return
