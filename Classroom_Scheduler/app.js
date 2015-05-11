@@ -94,10 +94,18 @@ app.get('/getremoveclassy', function(req, res){
 });
 
 app.get('/geteditSchedule', function(req, res){
-  dbactions.getClass(false, function(data){
-    res.render('editSchedule', {rooms: data,title: "Classes"});
-  });
+    db.collection.update({},{$set : {"Room_Assigned":1}},false,true);
+  dbactions.getClass(false, function(data) {
+        res.render('editClass',{rooms: data, title:"rooms"});
+    });
 });
+
+
+
+ // dbactions.getClass(false, function(data){
+ //   res.render('editSchedule', {rooms: data,title: "Classes"});
+//})
+//);
 
 app.get('/downloadSchedule', function(req, res) {
   var classy;
@@ -243,6 +251,7 @@ app.post('/editClassData', function(req,res){
     "Location": req.body.Location,
     "Mode": req.body.Mode,
     "CrsAtr_Val": req.body.CrsAtr_Val,
+    "Room_Assigned": req.body.Room_Assigned,
     "Group": req.body.group
   };
   dbactions.updateClass(req.body._id,class_data,function(){
@@ -254,6 +263,7 @@ app.post('/editClassData', function(req,res){
 app.post('/runScheduler', function(req,res){
   console.log(req.body);
   console.log("cheeseburger!")
+
   var class_data = {
     "_id": req.body._id,
     "Course_ID": req.body.Catalog,
@@ -268,12 +278,13 @@ app.post('/runScheduler', function(req,res){
     "CrsAtr_Val": req.body.CrsAtr_Val,
     "Room_Assigned": req.body.Room_Assigned
   };
-  dbactions.getClass(req.body._id, function(){
-      //empty for return
-  });
+    dbactions.getAllClass(false, function (data) {
+        console.log(req.body._id);
+    });
     console.log("cheeseburger in paradise!")
     res.redirect('/createSchedule');
 });
+
 
 app.post('/editRoomdata',function(req,res){
   var room_data = {
