@@ -6,6 +6,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
 
+/* GET group page. */
+router.get('/group', function(req, res, next) {
+  res.render('group', { title: 'Groups' });
+});
+
 /* GET Upload Page. */
 router.get('/upload', function(req, res, next) {
   res.render('upload', { title: 'Upload' });
