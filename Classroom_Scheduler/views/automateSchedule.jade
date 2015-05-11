@@ -13,3 +13,7 @@ block content
          div.class.col-sm-2
          div.class.col-md-1
             input(type='submit', value='Submit', class="btn btn-danger")
+   div.row
+       #rooms
+           -each room in rooms
+                console.log(room.Class_Time.Start)

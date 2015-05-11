@@ -6,3 +6,19 @@ function editSchedule(info) {
         $("#Pat").val(data[0].Class_Time.Days);
     });
 };
+
+db.open(function(err, db) {
+    db.collection('Customers', function(err, collection) {
+        collection.find(function(err, cursor) {
+            cursor.each(function(err, customer) {
+                if(customer != null){
+                    console.log('First Name: ' + customer.firstName);
+                    console.log('Last Name: ' + customer.lastName);
+                }
+                else{
+                    db.close();
+                }
+            });
+        });
+    });
+});

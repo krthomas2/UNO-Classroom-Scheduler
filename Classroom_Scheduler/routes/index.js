@@ -52,11 +52,6 @@ router.get('/createSchedule', function(req, res, next) {
   res.render('createSchedule', { title: 'Scheduler' });
 });
 
-/* GET Automate Schedule. */
-router.get('/automateSchedule', function(req, res, next) {
-  res.render('automateSchedule', { title: 'Express' });
-});
-
 /* GET Edit Schedule. */
 router.get('/editSchedule', function(req, res, next) {
   res.render('editSchedule', { title: 'Rooms' });

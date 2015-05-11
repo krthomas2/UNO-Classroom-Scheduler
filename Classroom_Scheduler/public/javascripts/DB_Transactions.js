@@ -51,26 +51,66 @@ var functions = module.exports = {
 		});
 	},
 	getClass: function (class_id, callback){
-		class_id = class_id || false;
-		MongoClient.connect(url, function(err, db){
-			if (err) {
-				console.log(err);
-			}
-			else {
-				if (class_id == false) {
+        class_id = class_id || false;
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                if (class_id == false) {
                     db.collection("Classes").find().toArray(function(err, data){
                         callback(data);
                     });
-				}
-				else {
+                }
+                else {
                     db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
-                       callback(data);
+                        callback(data);
                     });
                 }
-			}
-		});
-	},
+            }
+        });
+    },
 
+    getClassStart: function (class_id, callback){
+        class_id = class_id || false;
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                if (class_id == false) {
+                    db.collection("Classes").find().sort({ "Class_Time.Start": 1 }).toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+                else {
+                    db.collection("Classes").find({_id: new ObjectId(class_id)}).sort({ "Class_Time.Start": 1 }).toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+            }
+        });
+    },
+    autoSched: function (class_id, req, callback){
+        class_id = class_id || false;
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                if (class_id == false) {
+                    collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {
+                        callback(data);
+                    });
+                }
+                else {
+                    db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+            }
+        });
+    },
     getAllClass: function (class_id, callback){
         class_id = class_id || false;
         MongoClient.connect(url, function(err, db){

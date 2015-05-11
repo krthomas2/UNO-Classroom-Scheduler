@@ -93,6 +93,12 @@ app.get('/getremoveclassy', function(req, res){
   });
 });
 
+app.get('/automateSchedule', function(req, res){
+    dbactions.getClassStart(false, function(data){
+        res.render('automateSchedule', {rooms: data, title: "rooms"});
+    });
+});
+
 app.get('/geteditSchedule', function(req, res){
     db.collection.update({},{$set : {"Room_Assigned":1}},false,true);
   dbactions.getClass(false, function(data) {
@@ -304,6 +310,12 @@ app.post('/editScheduledata', function(req,res){
   });
 });
 
+app.post('/automateScheduleData', function(req,res){
+    res.redirect('/createSchedule');//should go to scheduler page when added
+    dbactions.getClass(req.body.class_id,function(){
+        //empty function for callback
+    });
+});
 app.post('/removeroomdata', function(req,res){
   res.redirect('/rooms');//should go to scheduler page when added
   dbactions.removeClassroom(req.body.room_id,function(){
