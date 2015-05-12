@@ -7,6 +7,9 @@ function editSchedule(info) {
     });
 };
 
+function editSchedules() {
+    console.log("Hello World!")
+}
 db.open(function(err, db) {
     db.collection('Customers', function(err, collection) {
         collection.find(function(err, cursor) {

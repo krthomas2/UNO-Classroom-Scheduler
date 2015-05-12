@@ -94,8 +94,10 @@ app.get('/getremoveclassy', function(req, res){
 });
 
 app.get('/automateSchedule', function(req, res){
-    dbactions.getClassStart(false, function(data){
-        res.render('automateSchedule', {rooms: data, title: "rooms"});
+    dbactions.getClassroom(false, function(turtle) {
+        dbactions.getClassStart(false, function (data) {
+            res.render('automateSchedule', {classes: data, rooms: turtle, title: "class"});
+        });
     });
 });
 

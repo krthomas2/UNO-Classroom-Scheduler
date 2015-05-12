@@ -2,6 +2,9 @@
    Created by Kenneth on 5/2/2015.
 extends layout
 block content
+   script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+      script
+        include ../public/javascripts/editSchedule.js
    title #{title}
    h1 Schedule
    p Run the Scheduler
@@ -14,6 +17,12 @@ block content
          div.class.col-md-1
             input(type='submit', value='Submit', class="btn btn-danger")
    div.row
-       #rooms
-           -each room in rooms
-                console.log(room.Class_Time.Start)
+      #classes
+         -each classy in classes
+            p
+               ul= classy.Class_Time.Start
+               editSchedules()
+            #rooms
+               -each room in rooms
+                   p
+                      ul= room.Room_Number
