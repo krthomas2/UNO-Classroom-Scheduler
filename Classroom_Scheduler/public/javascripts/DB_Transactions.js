@@ -390,68 +390,115 @@ var functions = module.exports = {
 		});
 	},
 
+    clearScheduler: function(callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                db.collection("Classes").remove({});
+                db.collection("Class_Groups").remove({});
+                db.collection("Class_Schedule").remove({});
+                callback();
+            }
+        });
+    },
+
     /*Excel Import*/
 
 	importExcelToDb: importExcelToDb
 }
 
 function importExcelToDb(put) {
-    var jsonObj = {"Courses": put}//creating the json object
+    var dbAdditions = [];
 
-    var group = {};
-    for (var x = 0; x < jsonObj.Courses.length - 1; x++) {//iterating through courses
-
+    for (var x = 0; x < put.length; x++) {//iterating through courses
         //This is the array of data needing an insert into the classes table.
-        var class_data = {
-            "Subject": jsonObj["Courses"][x]["Subject"],
-            "Course_ID": jsonObj["Courses"][x]["Catalog"],
-            "Section_ID": jsonObj["Courses"][x]["Section"],
-            "Class_ID": jsonObj["Courses"][x]["Class Nbr"],
-            "Course_Title": jsonObj["Courses"][x]["Title"],
-            "Lecture_Type": jsonObj["Courses"][x]["Component"],
+        dbAdditions[x] = {
+            "Subject": put[x]["Subject"],
+            "Course_ID": put[x]["Catalog"],
+            "Section_ID": put[x]["Section"],
+            "Class_ID": put[x]["Class Nbr"],
+            "Course_Title": put[x]["Title"],
+            "Lecture_Type": put[x]["Component"],
             "Class_Time": {
-                "Start": jsonObj["Courses"][x]["Mtg Start"],
-                "End": jsonObj["Courses"][x]["Mtg End"],
-                "Days": jsonObj["Courses"][x]["Pat"]
+                "Start": put[x]["Mtg Start"],
+                "End": put[x]["Mtg End"],
+                "Days": put[x]["Pat"]
             },
             "Instructor": {
-                First_Name: jsonObj["Courses"][x]["First Name"],
-                Last_Name: jsonObj["Courses"][x]["Last"]
+                First_Name: put[x]["First Name"],
+                Last_Name: put[x]["Last"]
             },
-            "Class_Capacity": jsonObj["Courses"][x]["Cap Enrl"],
-            "Description": jsonObj["Courses"][x]["Descr"],
-            "Acad_Group": jsonObj["Courses"][x]["Acad Group"],
-            "Tot_Enrl": jsonObj["Courses"][x]["Tot Enrl"],
-            "Start_Date": jsonObj["Courses"][x]["Start Date"],
-            "End_Date": jsonObj["Courses"][x]["End Date"],
-            "Session": jsonObj["Courses"][x]["Session"],
-            "Location": jsonObj["Courses"][x]["Location"],
-            "Mode": jsonObj["Courses"][x]["Mode"],
-            "CrsAtr_Val": jsonObj["Courses"][x]["CrsAtr_Val"]
+            "Class_Capacity": put[x]["Cap Enrl"],
+            "Description": put[x]["Descr"],
+            "Acad_Group": put[x]["Acad Group"],
+            "Tot_Enrl": put[x]["Tot Enrl"],
+            "Start_Date": put[x]["Start Date"],
+            "End_Date": put[x]["End Date"],
+            "Session": put[x]["Session"],
+            "Location": put[x]["Location"],
+            "Mode": put[x]["Mode"],
+            "CrsAtr_Val": put[x]["CrsAtr_Val"]
         };
-
-        functions.insertClass(class_data, function (ID, returnData) {
-            var pushed = false;
-            for(var y = 0; y < group.count; y++){
-                if (group[y]["Instructor"]["First_Name"] == returnData["Instructor"]["First_Name"] && group[y]["Instructor"]["Last_Name"] == returnData["Instructor"]["Last_Name"] &&
-                    group[y]["Class_Time"]["Pat"] == returnData["Class_Time"]["Pat"] && group[y]["Class_Time"]["Start"] == returnData["Class_Time"]["Start"]){
-                    //Sorry for the long if statement, but basically it checks to see if all the traits for the class, being the instructor and the class time are the same, and the only way to do this
-                    //is to make sure all the traits of these two things are equal (except for end time, as that information is dependent on start time)
-                    group[y]["ids"].push(ID); //This adds the id to the relative group.
-                    pushed = true;
-                }
-            }
-            if (!pushed){
-                group[group.count] = returnData;
-                group[group.count]["ids"] = {0: ID};
-            }
-
-            //Fortunately this shouldn't be a concurrency issue here :)
-            //Now that the group list is populated, we have the groups we need to add to the groups table, even groups with just one item should be added for consistency sake.
-            if (x == jsonObj.Courses.length - 2) //We only execute this on the last iteration of the loop.
-            for (var y = 0; y < group.count; y++){
-                functions.insertClassGroup(group[y]["ids"], function(ID){}); //Callback function only here to keep program from crashing.
-            }
-        });
     }
+    MongoClient.connect(url, function (err, db) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            db.collection("Classes").insertMany(dbAdditions, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                else { /*Ok, we now have all the classes into the database, so we need to do the same thing with the class groups,
+                 because apparently the idea of making the groups decided through human interaction, like was suggested
+                 isn't good enough for this project, even though there isn't any intuitive way to solve this problem.*/
+                    var groups = [];
+                    var group_ids = [];
+                    for (var x = 0; x < dbAdditions.length; x++) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            if (group_ids == []){
+                                group_ids[0] = [dbAdditions[x]["_id"]];
+                            }
+                            else {
+                                var found = false;
+                                for (var y = 0; y < groups.length; y++) {
+                                    if (groups[y]["First_Name"].valueOf() == dbAdditions[x]["Instructor"]["First_Name"].valueOf() &&
+                                        groups[y]["Last_Name"].valueOf() == dbAdditions[x]["Instructor"]["Last_Name"].valueOf() &&
+                                        groups[y]["Pat"].valueOf() == dbAdditions[x]["Class_Time"]["Days"].valueOf() &&
+                                        groups[y]["Start"].valueOf() == dbAdditions[x]["Class_Time"]["Start"].valueOf()) {
+                                        try {
+                                            group_ids[y].push(dbAdditions[x]["_id"]);
+                                        }
+                                        catch(err){
+                                            console.log(err);
+                                        }
+                                        found = true;
+                                    }
+                                }
+                                if (!found) {
+                                    groups[groups.length] = {
+                                        "First_Name": dbAdditions[x]["Instructor"]["First_Name"],
+                                        "Last_Name": dbAdditions[x]["Instructor"]["Last_Name"],
+                                        "Pat": dbAdditions[x]["Class_Time"]["Days"],
+                                        "Start": dbAdditions[x]["Class_Time"]["Start"]
+                                    };
+                                    group_ids[groups.length] = [dbAdditions[x]["_id"]];
+                                }
+                            }
+                        }
+                    }//The code past this point may not be functioning, as I can't seem to get the corect format for inserting to the db.
+                    /*db.collection("Class_Groups").insertMany(group_ids, function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });*/
+                }
+            });
+        }
+    });
 }

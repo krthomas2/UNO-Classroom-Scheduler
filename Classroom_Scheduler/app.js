@@ -10,7 +10,7 @@ var users = require('./routes/users');
 var multer  = require('multer');
 var dbactions = require('./public/javascripts/DB_Transactions.js');
 var fs = require('fs');
-var j2xls = require('json2xls');
+//var j2xls = require('json2xls');
 var app = express();
 
 // view engine setup
@@ -106,7 +106,11 @@ app.get('/geteditSchedule', function(req, res){
     });
 });
 
-
+app.get('/clearScheduler', function(req, res){
+  dbactions.clearScheduler(function(){
+    res.redirect('/');
+  });
+});
 
  // dbactions.getClass(false, function(data){
  //   res.render('editSchedule', {rooms: data,title: "Classes"});

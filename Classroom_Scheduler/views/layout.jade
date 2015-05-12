@@ -22,6 +22,8 @@ html
           a(href='./group') Add/Remove Groups
         li(class=(title === 'Scheduler' ? 'active' : ''))
           a(href='./createSchedule') Create a Schedule
+        li(class=(title === 'Clear Scheduler' ? 'active' : ''))
+          a(href='./clearScheduler') Clear Schedule
     div.container
       div.jumbotron
         block content
