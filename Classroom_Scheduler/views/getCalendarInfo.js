@@ -1,3 +1,13 @@
+/*getCalendarInfo
+ * Created by: Nick Boeckman
+ * Parameters:
+ *   the room number requested to get information for.
+ * Returns: Technically nothing... Really though it updates the table in calendar.jade to have all the information from
+ *  the database for the room number passed in.
+ * Description:
+ *   This function takes a given room number, and gets all the class information for all the classes scheduled in that room
+ *   placing it into the table in calendar.jade where required to make a correct looking calendar view.*/
+
 function getCalendarInfo(info) {
     $('td').removeClass("hidden").removeClass("danger").html('').attr("rowspan", 1);
     $.get('/getCalendarInfo', {room_number: info.value}, function (class_list) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
