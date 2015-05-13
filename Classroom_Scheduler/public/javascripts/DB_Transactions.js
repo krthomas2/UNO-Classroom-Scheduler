@@ -422,13 +422,13 @@ function importExcelToDb(put) {
             "Course_Title": put[x]["Title"],
             "Lecture_Type": put[x]["Component"],
             "Class_Time": {
-                "Start": put[x]["Mtg Start"],
+                "Start": put[x]["Mtg Start"] || "",
                 "End": put[x]["Mtg End"],
-                "Days": put[x]["Pat"]
+                "Days": put[x]["Pat"] || ""
             },
             "Instructor": {
-                First_Name: put[x]["First Name"],
-                Last_Name: put[x]["Last"]
+                First_Name: put[x]["First Name"] ||"",
+                Last_Name: put[x]["Last"]||""
             },
             "Class_Capacity": put[x]["Cap Enrl"],
             "Description": put[x]["Descr"],
