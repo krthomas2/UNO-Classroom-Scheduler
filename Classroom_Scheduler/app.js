@@ -92,19 +92,59 @@ app.get('/getremoveclassy', function(req, res){
     res.render('removeclassy', {rooms: data,title: "Classes"});
   });
 });
-
 app.get('/automateSchedule', function(req, res){
-    dbactions.getClassroom(false, function(turtle) {
+    var g;
+    var classy;
+
+    dbactions.getClassroom(false, function(starter) {
         dbactions.getClassStart(false, function (data) {
-            res.render('automateSchedule', {classes: data, rooms: turtle, title: "class"});
+            for (var y in starter) {
+                dbactions.updateClassroomAssigns(starter[y]._id, starter[y], function (starter) {
+                });
+            }
+            dbactions.updateClassroomAssigns(false, function(rooms) {
+                for (x in data) {
+              if (data[x].Class_Time != "" && data[x].Class_Time.Start != "") {
+                  var placeholder = "Class_Time"
+                  var days = data[x].Class_Time.Days;  //.split('');
+                  var start = data[x].Class_Time.Start.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
+                  console.log(start);
+                  var startHour = parseInt(start[0]); //gets the number for the hour
+                  var startMinute = parseInt(start[1]); //gets the number for the minute
+                  if (startMinute % 15 != 0) {
+                      startMinute -= (startMinute % 15);
+                  }
+                  var startAP = (start[2].split(' ')[1] == 'AM') ? 'A' : 'P';
+                  var end = data[x].Class_Time.End.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
+                  var endHour = parseInt(end[0]); //gets the number for the hour
+                  classy = "";
+                  // if (data[x].Class_Time.Start != null) {
+                  console.log(data[x].placeholder = 12);
+                  data[x].Room_Assigned = 102;
+                  dbactions.updateClass(data[x]._id, data[x], function () {
+                      //empty for return
+                  });
+                  //  }
+                  for (y in room) {
+                      console.log(room[y].Room_Number);
+                  }
+                }
+              }
+          });
+          res.render('automateSchedule', {classes: data, rooms: room, title: "class"});
         });
     });
 });
 
-app.get('/geteditSchedule', function(req, res){
-    db.collection.update({},{$set : {"Room_Assigned":1}},false,true);
-  dbactions.getClass(false, function(data) {
-        res.render('editClass',{rooms: data, title:"rooms"});
+app.get('/unassignSchedule', function(req, res){
+    dbactions.getClassStart(false, function (data) {
+        for (x in data) {
+            data[x].Room_Assigned = "";
+            dbactions.updateClass(data[x]._id, data[x], function () {
+                //empty for return
+            });
+        }
+      res.redirect('/');
     });
 });
 

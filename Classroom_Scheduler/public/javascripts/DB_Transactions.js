@@ -231,6 +231,33 @@ var functions = module.exports = {
             }
         });
     },
+    updateClassroomAssigns: function (id, room_information, callback){
+        room_information.M
+        {
+            room_information.M.sevenAM = "blank";
+            room_information.M.sevenfifteenAM = "";
+            room_information.M.seventhirtyAM = "";
+            room_information.M.sevenfortyfiveAM = "";
+            room_information.M.eightAM = "";
+            room_information.M.eightfifteenAM = "";
+        }
+        MongoClient.connect(url, function(err, db) {
+            if (err){
+                console.log(err);
+            }
+            else {
+                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: room_information}, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        callback();
+                    }
+                });
+            }
+        });
+    },
+
     removeClassroom: function (id, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
@@ -422,13 +449,13 @@ function importExcelToDb(put) {
             "Course_Title": put[x]["Title"],
             "Lecture_Type": put[x]["Component"],
             "Class_Time": {
-                "Start": put[x]["Mtg Start"],
+                "Start": put[x]["Mtg Start"] || "",
                 "End": put[x]["Mtg End"],
-                "Days": put[x]["Pat"]
+                "Days": put[x]["Pat"] || ""
             },
             "Instructor": {
-                First_Name: put[x]["First Name"],
-                Last_Name: put[x]["Last"]
+                First_Name: put[x]["First Name"] ||"",
+                Last_Name: put[x]["Last"]||""
             },
             "Class_Capacity": put[x]["Cap Enrl"],
             "Description": put[x]["Descr"],
