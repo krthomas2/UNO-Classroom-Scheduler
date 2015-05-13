@@ -2,8 +2,8 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 //URL of database. Change if location of DB changes
-//var url = 'mongodb://admin:Password2015@ds029317.mongolab.com:29317/testing';
-var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
+var url = 'mongodb://admin:Password2015@ds029317.mongolab.com:29317/testing';
+//var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
 var functions = module.exports = {
 
     addUser: function(name,password,level){
@@ -842,13 +842,13 @@ function importExcelToDb(put) {
             "Course_Title": put[x]["Title"],
             "Lecture_Type": put[x]["Component"],
             "Class_Time": {
-                "Start": put[x]["Mtg Start"] || "",
+                "Start": put[x]["Mtg Start"],
                 "End": put[x]["Mtg End"],
-                "Days": put[x]["Pat"] || ""
+                "Days": put[x]["Pat"]
             },
             "Instructor": {
-                First_Name: put[x]["First Name"] ||"",
-                Last_Name: put[x]["Last"]||""
+                First_Name: put[x]["First Name"],
+                Last_Name: put[x]["Last"]
             },
             "Class_Capacity": put[x]["Cap Enrl"],
             "Description": put[x]["Descr"],
@@ -872,7 +872,7 @@ function importExcelToDb(put) {
                     console.log(err);
                 }
                 else { /*Ok, we now have all the classes into the database, so we need to do the same thing with the class groups,
-                 because apparently the idea of making the groups decided through human interaction, like was suggested
+                 because apparently the idea of making the groups decided through human interaction, like was suggested,
                  isn't good enough for this project, even though there isn't any intuitive way to solve this problem.*/
                     var groups = [];
                     var group_ids = [];
@@ -881,10 +881,6 @@ function importExcelToDb(put) {
                             console.log(err);
                         }
                         else {
-                            if (group_ids == []){
-                                group_ids[0] = [dbAdditions[x]["_id"]];
-                            }
-                            else {
                                 var found = false;
                                 for (var y = 0; y < groups.length; y++) {
                                     if (groups[y]["First_Name"].valueOf() == dbAdditions[x]["Instructor"]["First_Name"].valueOf() &&
@@ -892,7 +888,7 @@ function importExcelToDb(put) {
                                         groups[y]["Pat"].valueOf() == dbAdditions[x]["Class_Time"]["Days"].valueOf() &&
                                         groups[y]["Start"].valueOf() == dbAdditions[x]["Class_Time"]["Start"].valueOf()) {
                                         try {
-                                            group_ids[y].push(dbAdditions[x]["_id"]);
+                                            group_ids[y]["id" + Object.keys(group_ids[y]).length] = dbAdditions[x]["_id"];
                                         }
                                         catch(err){
                                             console.log(err);
@@ -907,16 +903,29 @@ function importExcelToDb(put) {
                                         "Pat": dbAdditions[x]["Class_Time"]["Days"],
                                         "Start": dbAdditions[x]["Class_Time"]["Start"]
                                     };
-                                    group_ids[groups.length] = [dbAdditions[x]["_id"]];
+                                    try {
+                                        group_ids[groups.length] = new Object();
+                                        group_ids[groups.length]["id0"] = dbAdditions[x]["_id"];
+                                    }
+                                    catch(err){
+                                        console.log(err);
+                                    }
                                 }
-                            }
                         }
-                    }//The code past this point may not be functioning, as I can't seem to get the corect format for inserting to the db.
-                    /*db.collection("Class_Groups").insertMany(group_ids, function (err) {
+                    }
+                    MongoClient.connect(url, function (err, db) {
                         if (err) {
                             console.log(err);
                         }
-                    });*/
+                        else {
+                            console.log(group_ids);
+                            db.collection("Class_Groups").insertOne(group_ids[1], function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
