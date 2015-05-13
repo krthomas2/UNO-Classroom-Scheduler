@@ -7,8 +7,8 @@ block content
    center
       div.row
           h4 Please select a room and change the data:
-         p.right.col-md-3 Select Class ID#:
-            select.form-control(onchange="editClass(value)")
+         p.right.col-md-3 Select Class ID#: &nbsp;
+            select(onchange="editClass(value)")
                #rooms
                  -each room in rooms
                     option(value = room._id) #{room.Class_ID}
@@ -17,44 +17,64 @@ block content
             div.class.row
                input(type="hidden", name='_id',id="ID",value="")
             div.class.row
+               label(for="Class") Class Number:&nbsp;
                input(type="number", name='Class',id ="Class", placeholder="Class Nbr",value="")
             div.class.row
+               label(for="Catalog") Catalog:&nbsp;
                input(type="text", name='Catalog', id ="Catalog", placeholder="Catalog",value="")
             div.class.row
+               label(for="Subject") Subject:&nbsp;
                input(type='text', name='Subject',id="Subject",placeholder ="Subject",value="")
             div.class.row
+               label(for="Title") Title:&nbsp;
                input(type='text', name='Title',id ="Title",placeholder ="Title",value="")
             div.class.row
+               label(for="Section") Section:&nbsp;
                input(type='number', name='Section',id = "Section",placeholder ="Section",value="")
             div.class.row
+               label(for="Component") Component:&nbsp;
                input(type="text", name='Component',id = "Component", placeholder="Component",value="")
             div.class.row
+               label(for="MtgS") Mtg Start:&nbsp;
                input(type='text', name='MtgS',id ="MtgS",placeholder ="Mtg Start",value="")
             div.class.row
+               label(for="MtgE") Mtg End:&nbsp;
                input(type="text", name='MtgE',id ="MtgE", placeholder="Mtg End",value="")
             div.class.row
+               label(for="Pat") Pat:&nbsp;
                input(type='text', name='Pat',id ="Pat",placeholder ="Pat",value="")
             div.class.row
+               label(for="First") First Name:&nbsp;
                input(type="text", name='First',id="First", placeholder="First Name",value="")
             div.class.row
+               label(for="Last") Last Name:&nbsp;
                input(type='text', name='Last',id ="Last", placeholder="Last Name",value="")
             div.class.row
+               label(for="Cap") Enrollment Cap:&nbsp;
                input(type="number", name='Cap',id ="Cap", placeholder="Cap Enrl",value="")
             div.class.row
+               label(for="Tot") Total Enrolled:&nbsp;
                input(type='number', name='Tot',id ="Tot",placeholder ="Total Enrolled",value="")
             div.class.row
+               label(for="Start") Start Date:&nbsp;
                input(type="text", name='Start',id="Start", placeholder="Start_Date",value="")
             div.class.row
+               label(for="End") End Date:&nbsp;
                input(type='text', name='End',id = "End",placeholder ="End_Date",value="")
             div.class.row
+               label(for="Session") Session:&nbsp;
                input(type="number", name='Session',id ="Session", placeholder="Session",value="")
             div.class.row
+               label(for="Location") Location:&nbsp;
                input(type='text', name='Location',id = "Location",placeholder ="Location",value="")
             div.class.row
+               label(for="Mode") Mode:&nbsp;
                input(type="text", name='Mode',id = "Mode", placeholder="Mode",value="")
             div.class.row
+               label(for="CrsAtr_Val") CrsAtr_Val:&nbsp;
                input(type="text", name='CrsAtr_Val',id = "CrsAtr_Val", placeholder="CrsAtr_Val",value="")
             div.class.row
+               label(for="Room_Assigned") Assigned Room:&nbsp;
                input(type="text", name='Room_Assigned',id = "Room_Assigned", placeholder="Room_Assigned",value="")
             div.class.row.btn-group-vertical
                input(type='submit', class="btn btn-danger")

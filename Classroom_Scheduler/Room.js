@@ -11,6 +11,7 @@ function Room(room_number, max_cap){
     }
 
     /*addClass
+    * Created by: Nick Boeckman
     * Parameters:
     *   class_id (id of class to store in the database)
     *   end_time (the time when the class ends, provided from classes table)
@@ -55,6 +56,7 @@ function Room(room_number, max_cap){
         }
     }
     /*convertTime
+     * Created by: Nick Boeckman
      * Parameters:
      *   time (the time when the class ends, provided from classes table)
      * Returns: Date object set to the time passed.
@@ -73,6 +75,7 @@ function Room(room_number, max_cap){
         return new Date(0, 0, 0, hour, minute);
     }
     /*compareTimes
+     * Created by: Nick Boeckman
      * Parameters:
      *   timeA (the time when the class begins, provided from classes table)
      *   timeB (the time of the latest class, stored in the time array of the room object)

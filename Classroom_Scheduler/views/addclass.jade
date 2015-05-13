@@ -5,42 +5,61 @@ block content
         h1 Add a Class
         form(method='post', name = 'addroom', action='/addClass')
             div.class.row
-               input(type="number", name='Class', placeholder="Class Nbr")
+                label(for="Class") Class:&nbsp;
+                input(type="number", name='Class', placeholder="Class Nbr" id="Class")
             div.class.row
-               input(type="text", name='Catalog', placeholder="Catalog")
+               label(for="Catalog") Catalog:&nbsp;
+               input(type="text", name='Catalog', placeholder="Catalog" id="Catalog")
             div.class.row
-               input(type='text', name='Subject',placeholder ="Subject")
+               label(for="Subject") Subject:&nbsp;
+               input(type='text', name='Subject',placeholder ="Subject" id="Subject")
             div.class.row
-               input(type='text', name='Title',placeholder ="Title")
+               label(for="Title") Title:&nbsp;
+               input(type='text', name='Title',placeholder ="Title" id="Title")
             div.class.row
-               input(type='number', name='Section',placeholder ="Section")
+               label(for="Section") Section:&nbsp;
+               input(type='number', name='Section',placeholder ="Section" id="Section")
             div.class.row
-               input(type="text", name='Component', placeholder="Component")
+               label(for="Component") Component:&nbsp;
+               input(type="text", name='Component', placeholder="Component" id="Component")
             div.class.row
-               input(type='text', name='MtgS',placeholder ="Mtg Start")
+               label(for="MtgS") Mtg Start:&nbsp;
+               input(type='text', name='MtgS',placeholder ="Mtg Start" id="MtgS")
             div.class.row
-               input(type="text", name='MtgE', placeholder="Mtg End")
+               label(for="MtgE") Mtg End:&nbsp;
+               input(type="text", name='MtgE', placeholder="Mtg End" id="MtgE")
             div.class.row
-               input(type='text', name='Pat',placeholder ="Pat")
+               label(for="Pat") Pat:&nbsp;
+               input(type='text', name='Pat',placeholder ="Pat" id="Pat")
             div.class.row
-               input(type="text", name='First', placeholder="First Name")
+               label(for="First") First Name:&nbsp;
+               input(type="text", name='First', placeholder="First Name" id="First")
             div.class.row
-               input(type='text', name='Last',placeholder ="Last Name")
+               label(for="Last") Last Name:&nbsp;
+               input(type='text', name='Last',placeholder ="Last Name" id="Last")
             div.class.row
-               input(type="number", name='Cap', placeholder="Cap Enrl")
+               label(for="Cap") Enrollment Cap:&nbsp;
+               input(type="number", name='Cap', placeholder="Cap Enrl" id="Cap")
             div.class.row
-               input(type='number', name='Tot',placeholder ="Total Enrolled")
+               label(for="Tot") Total Enrolled:&nbsp;
+               input(type='number', name='Tot',placeholder ="Total Enrolled" id="Tot")
             div.class.row
-               input(type="text", name='Start', placeholder="Start_Date")
+               label(for="Start") Start Date:&nbsp;
+               input(type="text", name='Start', placeholder="Start_Date" id="Start")
             div.class.row
-               input(type='text', name='End',placeholder ="End_Date")
+               label(for="End") End Date:&nbsp;
+               input(type='text', name='End',placeholder ="End_Date" id="End")
             div.class.row
-               input(type="number", name='Session', placeholder="Session")
+               label(for="Session") Session:&nbsp;
+               input(type="number", name='Session', placeholder="Session" id="Session")
             div.class.row
-               input(type='text', name='Location',placeholder ="Location")
+               label(for="Location") Location:&nbsp;
+               input(type='text', name='Location',placeholder ="Location" id="Location")
             div.class.row
-               input(type="text", name='Mode', placeholder="Mode")
+               label(for="Mode") Mode:&nbsp;
+               input(type="text", name='Mode', placeholder="Mode" id="Mode")
             div.class.row
-               input(type="text", name='CrsAtr_Val', placeholder='CrsAtr_Val')
+               label(for="CrsAtr_Val") CrtAtr_Val:&nbsp;
+               input(type="text", name='CrsAtr_Val', placeholder='CrsAtr_Val' id="CrsAtr_Val")
             div.class.row.btn-group-vertical
-                input(type='submit', class="btn btn-danger")
+               input(type='submit', class="btn btn-danger")

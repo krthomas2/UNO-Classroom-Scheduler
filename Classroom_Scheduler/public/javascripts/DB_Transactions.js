@@ -2,8 +2,8 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 //URL of database. Change if location of DB changes
-var url = 'mongodb://admin:Password2015@ds029317.mongolab.com:29317/testing';
-//var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
+//var url = 'mongodb://admin:Password2015@ds029317.mongolab.com:29317/testing';
+var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
 var functions = module.exports = {
 
     addUser: function(name,password,level){

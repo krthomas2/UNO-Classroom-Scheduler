@@ -7,8 +7,8 @@ block content
 
     title #{title}
     h1 Calendar
-    p.right.col-md-3 Select Room:
-        select.form-control(onchange="getCalendarInfo(this)")
+    p.right.col-md-3 Select Room: &nbsp;
+        select(onchange="getCalendarInfo(this)" id="selectRoom")
           #rooms
             -each room in rooms
                 option #{room.Room_Number}

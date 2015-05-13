@@ -7,7 +7,7 @@ block content
    div.row
          form(method='post' action='/removeclassydata')
             div.class.col-md-3
-                select(name='class_id')
+                select(name='class_id' id="ClassToRemove")
                     #rooms
                         -each room in rooms
                             option(value=room._id) #{room.Subject +" "+ room.Course_ID +" "+room.Class_ID}
