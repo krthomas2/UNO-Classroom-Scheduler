@@ -231,6 +231,33 @@ var functions = module.exports = {
             }
         });
     },
+    updateClassroomAssigns: function (id, room_information, callback){
+        room_information.M
+        {
+            room_information.M.sevenAM = "blank";
+            room_information.M.sevenfifteenAM = "";
+            room_information.M.seventhirtyAM = "";
+            room_information.M.sevenfortyfiveAM = "";
+            room_information.M.eightAM = "";
+            room_information.M.eightfifteenAM = "";
+        }
+        MongoClient.connect(url, function(err, db) {
+            if (err){
+                console.log(err);
+            }
+            else {
+                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: room_information}, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        callback();
+                    }
+                });
+            }
+        });
+    },
+
     removeClassroom: function (id, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
