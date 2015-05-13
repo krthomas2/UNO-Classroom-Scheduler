@@ -146,6 +146,14 @@ app.get('/unassignSchedule', function(req, res){
         }
       res.redirect('/');
     });
+    dbactions.getClassroom(false, function(rooms) {
+        for (y in rooms) {
+            dbactions.updateClassroomAssigns(rooms[y]._id,rooms[y],function(){
+                //empty for return
+            });
+        };
+
+    });
 });
 
 app.get('/clearScheduler', function(req, res){
@@ -306,6 +314,9 @@ app.post('/editClassData', function(req,res){
     "Room_Assigned": req.body.Room_Assigned,
     "Group": req.body.group
   };
+  dbactions.getClassroomByNumber(class_data.Room_Assigned, function(rooms) {
+     console.log(rooms.Room_Number);
+  })
   dbactions.updateClass(req.body._id,class_data,function(){
     //empty for return
   });
