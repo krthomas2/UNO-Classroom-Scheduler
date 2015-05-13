@@ -7,7 +7,7 @@ function editSchedule(info) {
     });
 };
 
-function editSchedules() {
+function editSchedule() {
     console.log("Hello World!")
 }
 db.open(function(err, db) {
