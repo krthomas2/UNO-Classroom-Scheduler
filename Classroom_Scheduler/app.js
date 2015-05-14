@@ -57,28 +57,18 @@ app.get('/addgroup',function(req,res){
 app.get('/automateSchedule', function(req, res){
     var g;
     var classy;
-    var arr = [];
-    arr[0] = "Jani";
-    arr[1] = "Hege";
-    arr[2] = "Stale";
-    arr[3] = "Kai Jim";
-    arr[4] = "Borge";
+    var array;
+    var validstart;
+    var validend;
 
-    console.log(arr.join());//
-    arr.splice(2, 1);
-    console.log(arr.join()); //
-
-    dbactions.getClassroom(false, function(starter) {   //obtains a list of all the classes
+    dbactions.getClassroom(false, function(rooms) {   //obtains a list of all the classes
         dbactions.getClassStart(false, function (data) {   //Obtains an order of all the classes based on start time
-            for (var y in starter) {
-                dbactions.updateClassroomAssigns(starter[y]._id, starter[y], function (starter) {
-                starter.M.splice(2,1);
-                });
+            for (var x in data) {
+                console.log(data[x].Class_Time.Start);
             }
                 for (x in data) {
               if (data[x].Class_Time != "" && data[x].Class_Time.Start != "") {  //Does not assign rooms to classes without any time assigned
-                  var placeholder = "Class_Time"
-                  var days = data[x].Class_Time.Days;  //.split('');
+                  var days = data[x].Class_Time.Days.split('');
                   var start = data[x].Class_Time.Start.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
                   console.log(start);
                   var startHour = parseInt(start[0]); //gets the number for the hour
@@ -89,19 +79,42 @@ app.get('/automateSchedule', function(req, res){
                   var startAP = (start[2].split(' ')[1] == 'AM') ? 'A' : 'P';
                   var end = data[x].Class_Time.End.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
                   var endHour = parseInt(end[0]); //gets the number for the hour
+                  var endMinute = parseInt(start[1]); //gets the total minutes
+                  if (endMinute % 15 != 0) {
+                      endMinute -= (endMinute % 15);
+                  }
+                  var endAP = (end[2].split(' ')[1] == 'AM') ? 'A' : 'P';
                   classy = "";
-                  // if (data[x].Class_Time.Start != null) {
-                  data[x].Room_Assigned = 102;   //testing data, makes all rooms assigned to 12
-                  dbactions.updateClass(data[x]._id, data[x], function () {
-                      //empty for return
-                  });
-                  //  }
-                  for (y in room) {
-                      console.log(room[y].Room_Number);
+                  for (var y in rooms) {   //Loop through all possible rooms
+                      for (var day in days) {  //Loop through each day to check for a valid solution
+                          validstart = dbactions.RoomAvailability(rooms[y]._id, rooms[y], startHour, startMinute, startAP, days[day])  //check that starting position is valid
+                          console.log(validstart);
+                          validend = dbactions.RoomAvailability(rooms[y]._id, rooms[y], endHour, endMinute, endAP, days[day])  //check that the ending position is valid
+                          console.log(validend);
+                          if (validstart != -1 && validend != -1)  //If a day doesn't work, go on to the next room and try again
+                              break;
+                      }
+                      if (validstart != -1 && validend != -1) {  //If a solution was found in the previous loop
+                          data[x].Room_Assigned = rooms[y].Room_Number;
+                          for (var day in days) {
+                              if (day == 0) {
+                                  dbactions.AssignClass(rooms[y]._id, rooms[y], data[x].Course_ID, validstart, validend, days[day], function () {
+                                  });
+                              }
+                          }
+                          dbactions.updateClass(data[x]._id, data[x], function() {   //Give room Assignment to class and update it
+                          });
+                          dbactions.updateClassroom(rooms[y]._id, rooms[y], function() {  //Pass the class assigned to the room to the timeslots
+                          });
+                          break;
+                      }
+                      else {
+                          continue;  //Check next room if possible
+                      }
                   }
                 }
               }
-          res.render('automateSchedule', {classes: data, rooms: starter, title: "class"});
+          res.render('automateSchedule', {classes: data, rooms: rooms, title: "class"});
         });
     });
 });

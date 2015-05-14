@@ -301,7 +301,7 @@ var functions = module.exports = {
         var room_data = {
             "Room_Number": room_information.Room_Number,
             "Max_Capacity": room_information.Max_Capacity,
-            "Spec_Trait": room_information.Spec_Trait,
+            "Spec_Trait": room_information.Spec_Trait
         };
         MongoClient.connect(url, function(err, db) {
             if (err){
@@ -319,407 +319,303 @@ var functions = module.exports = {
             }
         });
     },
-    updateClassroomAssigns: function (id, room_information, callback){
+    /*AssignClass
+     * Created by: Kenneth Thomas
+     * Parameters:
+     *   1) the id of the classroom to update.
+     *   2) the room the class is being assigned.
+     *   3) The unique course ID to be assigned
+     *   4) The start positon to be filled
+     *   5) The end position to be filled
+     *   6) Callback of the function
+     * Returns: Nothing
+     * Description:
+     *   This function takes a valid class assignment and adds it to the database*/
+    AssignClass: function (id, room_information, course_ID, start, end, day, callback) {
+        while (start < end) {
+            switch (day) {
+                case "M":
+                    console.log(room_information.M[start]);
+                    room_information.M[start] = course_ID;
+                    break;
+                case "T":
+                    console.log(room_information.T[start]);
+                    room_information.T[start] = course_ID;
+                    break;
+                case "W":
+                    console.log(room_information.W[start]);
+                    room_information.W[start] = course_ID;
+                    break;
+                case "H":
+                    console.log(room_information.H[start]);
+                    room_information.H[start] = course_ID;
+                    break;
+                case "F":
+                    console.log(room_information.F[start]);
+                    room_information.F[start] = course_ID;
+                    break;
+                case "S":
+                    console.log(room_information.S[start]);
+                    room_information.S[start] = course_ID;
+                    break;
+            }
+            start++;
+        }
+    },
+    /*RoomAvailability
+     * Created by: Kenneth Thomas
+     * Parameters:
+     *   1) the id of the class to update.
+     *   2) The room information of being checked
+     *   3) The hour the classroom begins
+     *   4) The minutes in the hour the class begins
+     *   5) Whether the time is A:M or P.M
+     *   6) The day on which the room is being requested.
+     * Returns: Value of class assigned to a timeslot
+     * Description:
+     *   This function checks the beggining or end time to see if it has been taken for a room. A value of "" means it is free to assign, otherwise this room can't go to that class*/
+    RoomAvailability: function (id, room_information, hour, minute, startAP, day) {
+        var total = hour + ":" + minute + ":" + startAP;  //designates which time slot to check
+        var position; //Designates which array slot a time corresponds to
+        switch (total) {   //find array slot to check
+            case "7:0:A":
+                position = 0;
+                break;
+            case "7:15:A":
+                position = 1;
+                break;
+            case "7:30:A":
+                position = 2;
+                break;
+            case "7:45:A":
+                position = 3;
+                break;
+            case "8:0:A":
+                position = 4;
+                break;
+            case "8:15:A":
+                position = 5;
+                break;
+            case "8:30:A":
+                position = 6;
+                break;
+            case "8:45:A":
+                position = 7;
+                break;
+            case "9:0:A":
+                position = 8;
+                break;
+            case "9:15:A":
+                position = 9;
+                break;
+            case "9:30:A":
+                position = 10;
+                break;
+            case "9:45:A":
+                position = 11;
+                break;
+            case "10:0:A":
+                position = 12;
+                break;
+            case "10:15:A":
+                position = 13;
+                break;
+            case "10:30:A":
+                position = 14;
+                break;
+            case "10:45:A":
+                position = 15;
+            case "11:0:A":
+                position = 16;
+                break;
+            case "11:15:A":
+                position = 17;
+                break;
+            case "11:30:A":
+                position = 18;
+                break;
+            case "11:45:A":
+                position = 19;
+                break;
+            case "12:0:P":
+                position = 20;
+                break;
+            case "12:15:P":
+                position = 21;
+                break;
+            case "12:30:P":
+                position = 22;
+                break;
+            case "12:45:P":
+                position = 23;
+                break;
+            case "1:0:P":
+                position = 24;
+                break;
+            case "1:15:P":
+                position = 25;
+                break;
+            case "1:30:P":
+                position = 26;
+                break;
+            case "1:45:P":
+                position = 27;
+                break;
+            case "2:0:P":
+                position = 28;
+                break;
+            case "2:15:P":
+                position = 29;
+                break;
+            case "2:30:P":
+                position = 30;
+                break;
+            case "2:45:P":
+                position = 31;
+                break;
+            case "3:0:P":
+                position = 32;
+                break;
+            case "3:15:P":
+                position = 33;
+                break;
+            case "3:30:P":
+                position = 34;
+                break;
+            case "3:45:P":
+                position = 35;
+            case "4:0:P":
+                position = 36;
+                break;
+            case "4:15:P":
+                position = 37;
+                break;
+            case "4:30:P":
+                position = 38;
+                break;
+            case "4:45:P":
+                position = 39;
+                break;
+            case "5:0:P":
+                position = 40;
+                break;
+            case "5:15:P":
+                position = 41;
+                break;
+            case "5:30:P":
+                position = 42;
+                break;
+            case "5:45:P":
+                position = 43;
+                break;
+            case "6:0:P":
+                position = 44;
+                break;
+            case "6:15:P":
+                position = 45;
+                break;
+            case "6:30:P":
+                position = 46;
+                break;
+            case "6:45:P":
+                position = 47;
+                break;
+            case "7:0:P":
+                position = 48;
+                break;
+            case "7:15:P":
+                position = 49;
+                break;
+            case "7:30:P":
+                position = 50;
+                break;
+            case "7:45:P":
+                position = 51;
+                break;
+            case "8:0:P":
+                position = 52;
+                break;
+            case "8:15:P":
+                position = 53;
+                break;
+            case "8:30:P":
+                position = 54;
+                break;
+            case "8:45:P":
+                position = 55;
+                break;
+            case "9:0:P":
+                position = 56;
+                break;
+            case "9:15:P":
+                position = 57;
+                break;
+            case "9:30:P":
+                position = 58;
+                break;
+            case "9:45:P":
+                position = 59;
+                break;
+            default:
+                return -1;  //invalid entry entered
+                break;
+        }
+        switch (day) {
+            case "M":
+                console.log(room_information.M[position]);
+                if (room_information.M[position] == "")
+                return position;
+                else
+                return -1  //Already Assigned
+                break;
+            case "T":
+                console.log(room_information.T[position]);
+                if (room_information.T[position] == "")
+                    return position;
+                else
+                    return -1  //Already Assigned
+                break;
+            case "W":
+                console.log(room_information.W[position]);
+                if (room_information.W[position] == "")
+                    return position;
+                else
+                    return -1  //Already Assigned
+                break;
+            case "H":
+                console.log(room_information.H[position]);
+                if (room_information.H[position] == "")
+                    return position;
+                else
+                    return -1  //Already Assigned
+                break;
+            case "F":
+                console.log(room_information.F[position]);
+                if (room_information.F[position] == "")
+                    return position;
+                else
+                    return -1  //Already Assigned
+                break;
+            case "S":
+                console.log(room_information.S[position]);
+                if (room_information.S[position] == "")
+                    return position;
+                else
+                    return -1  //Already Assigned
+                break;
+        }
+    },
+updateClassroomAssigns: function (id, room_information, callback){
         var room_data = {
             "Room_Number": room_information.Room_Number,
             "Max_Capacity": room_information.Max_Capacity,
             "Spec_Trait": room_information.Spec_Trait,
-            "M": {
-                "sevenAM": "",
-                "sevenfifteenAM": "",
-                "seventhirtyAM": "",
-                "sevenfortyfiveAM": "",
-                "eightAM": "",
-                "eightfifteenAM": "",
-                "eightthirtyAM": "",
-                "eightfortyfiveAM": "",
-                "nineAM": "",
-                "ninefifteenAM": "",
-                "ninthirtyAM": "",
-                "ninefortyfiveAM": "",
-                "tenAM": "",
-                "teenfifteenAM": "",
-                "tenthirtyAM": "",
-                "tenfortyfiveAM": "",
-                "elevenAM": "",
-                "elevenfifteenAM": "",
-                "eleventhirtyAM": "",
-                "elevenfortyfiveAM": "",
-                "twelvePM": "",
-                "twelvefifteenPM": "",
-                "twelvethirtyPM": "",
-                "twelvefortyfivePM": "",
-                "onePM": "",
-                "onefifteenPM": "",
-                "onethirtyPM": "",
-                "onefortyfivePM": "",
-                "twoPM": "",
-                "twofifteenPM": "",
-                "twothirtyPM": "",
-                "twofortyfivePM": "",
-                "threePM": "",
-                "threefifteenPM": "",
-                "threethirtyPM": "",
-                "threefortyfivePM": "",
-                "fourPM": "",
-                "fourfifteenPM": "",
-                "fourthirtyPM": "",
-                "fourfortyfivePM": "",
-                "fivePM": "",
-                "fivefifteenPM": "",
-                "fivethirtyPM": "",
-                "fivefortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sevenPM": "",
-                "sevenfifteenPM": "",
-                "seventhirtyPM": "",
-                "sevenfortyfivePM": "",
-                "eightPM": "",
-                "eightfifteenPM": "",
-                "eightthirtyPM": "",
-                "eightfortyfivePM": "",
-                "ninePM": "",
-                "ninefifteenPM": "",
-                "ninethirtyPM": "",
-                "ninefortyfivePM": ""
-            },
-            "T": {
-                "sevenAM": "",
-                "sevenfifteenAM": "",
-                "seventhirtyAM": "",
-                "sevenfortyfiveAM": "",
-                "eightAM": "",
-                "eightfifteenAM": "",
-                "eightthirtyAM": "",
-                "eightfortyfiveAM": "",
-                "nineAM": "",
-                "ninefifteenAM": "",
-                "ninthirtyAM": "",
-                "ninefortyfiveAM": "",
-                "tenAM": "",
-                "teenfifteenAM": "",
-                "tenthirtyAM": "",
-                "tenfortyfiveAM": "",
-                "elevenAM": "",
-                "elevenfifteenAM": "",
-                "eleventhirtyAM": "",
-                "elevenfortyfiveAM": "",
-                "twelvePM": "",
-                "twelvefifteenPM": "",
-                "twelvethirtyPM": "",
-                "twelvefortyfivePM": "",
-                "onePM": "",
-                "onefifteenPM": "",
-                "onethirtyPM": "",
-                "onefortyfivePM": "",
-                "twoPM": "",
-                "twofifteenPM": "",
-                "twothirtyPM": "",
-                "twofortyfivePM": "",
-                "threePM": "",
-                "threefifteenPM": "",
-                "threethirtyPM": "",
-                "threefortyfivePM": "",
-                "fourPM": "",
-                "fourfifteenPM": "",
-                "fourthirtyPM": "",
-                "fourfortyfivePM": "",
-                "fivePM": "",
-                "fivefifteenPM": "",
-                "fivethirtyPM": "",
-                "fivefortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sevenPM": "",
-                "sevenfifteenPM": "",
-                "seventhirtyPM": "",
-                "sevenfortyfivePM": "",
-                "eightPM": "",
-                "eightfifteenPM": "",
-                "eightthirtyPM": "",
-                "eightfortyfivePM": "",
-                "ninePM": "",
-                "ninefifteenPM": "",
-                "ninethirtyPM": "",
-                "ninefortyfivePM": ""
-            },
-            "W": {
-                "sevenAM": "",
-                "sevenfifteenAM": "",
-                "seventhirtyAM": "",
-                "sevenfortyfiveAM": "",
-                "eightAM": "",
-                "eightfifteenAM": "",
-                "eightthirtyAM": "",
-                "eightfortyfiveAM": "",
-                "nineAM": "",
-                "ninefifteenAM": "",
-                "ninthirtyAM": "",
-                "ninefortyfiveAM": "",
-                "tenAM": "",
-                "teenfifteenAM": "",
-                "tenthirtyAM": "",
-                "tenfortyfiveAM": "",
-                "elevenAM": "",
-                "elevenfifteenAM": "",
-                "eleventhirtyAM": "",
-                "elevenfortyfiveAM": "",
-                "twelvePM": "",
-                "twelvefifteenPM": "",
-                "twelvethirtyPM": "",
-                "twelvefortyfivePM": "",
-                "onePM": "",
-                "onefifteenPM": "",
-                "onethirtyPM": "",
-                "onefortyfivePM": "",
-                "twoPM": "",
-                "twofifteenPM": "",
-                "twothirtyPM": "",
-                "twofortyfivePM": "",
-                "threePM": "",
-                "threefifteenPM": "",
-                "threethirtyPM": "",
-                "threefortyfivePM": "",
-                "fourPM": "",
-                "fourfifteenPM": "",
-                "fourthirtyPM": "",
-                "fourfortyfivePM": "",
-                "fivePM": "",
-                "fivefifteenPM": "",
-                "fivethirtyPM": "",
-                "fivefortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sevenPM": "",
-                "sevenfifteenPM": "",
-                "seventhirtyPM": "",
-                "sevenfortyfivePM": "",
-                "eightPM": "",
-                "eightfifteenPM": "",
-                "eightthirtyPM": "",
-                "eightfortyfivePM": "",
-                "ninePM": "",
-                "ninefifteenPM": "",
-                "ninethirtyPM": "",
-                "ninefortyfivePM": ""
-            },
-            "H": {
-                "sevenAM": "",
-                "sevenfifteenAM": "",
-                "seventhirtyAM": "",
-                "sevenfortyfiveAM": "",
-                "eightAM": "",
-                "eightfifteenAM": "",
-                "eightthirtyAM": "",
-                "eightfortyfiveAM": "",
-                "nineAM": "",
-                "ninefifteenAM": "",
-                "ninthirtyAM": "",
-                "ninefortyfiveAM": "",
-                "tenAM": "",
-                "teenfifteenAM": "",
-                "tenthirtyAM": "",
-                "tenfortyfiveAM": "",
-                "elevenAM": "",
-                "elevenfifteenAM": "",
-                "eleventhirtyAM": "",
-                "elevenfortyfiveAM": "",
-                "twelvePM": "",
-                "twelvefifteenPM": "",
-                "twelvethirtyPM": "",
-                "twelvefortyfivePM": "",
-                "onePM": "",
-                "onefifteenPM": "",
-                "onethirtyPM": "",
-                "onefortyfivePM": "",
-                "twoPM": "",
-                "twofifteenPM": "",
-                "twothirtyPM": "",
-                "twofortyfivePM": "",
-                "threePM": "",
-                "threefifteenPM": "",
-                "threethirtyPM": "",
-                "threefortyfivePM": "",
-                "fourPM": "",
-                "fourfifteenPM": "",
-                "fourthirtyPM": "",
-                "fourfortyfivePM": "",
-                "fivePM": "",
-                "fivefifteenPM": "",
-                "fivethirtyPM": "",
-                "fivefortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sevenPM": "",
-                "sevenfifteenPM": "",
-                "seventhirtyPM": "",
-                "sevenfortyfivePM": "",
-                "eightPM": "",
-                "eightfifteenPM": "",
-                "eightthirtyPM": "",
-                "eightfortyfivePM": "",
-                "ninePM": "",
-                "ninefifteenPM": "",
-                "ninethirtyPM": "",
-                "ninefortyfivePM": ""
-            },
-            "F": {
-                "sevenAM": "",
-                "sevenfifteenAM": "",
-                "seventhirtyAM": "",
-                "sevenfortyfiveAM": "",
-                "eightAM": "",
-                "eightfifteenAM": "",
-                "eightthirtyAM": "",
-                "eightfortyfiveAM": "",
-                "nineAM": "",
-                "ninefifteenAM": "",
-                "ninthirtyAM": "",
-                "ninefortyfiveAM": "",
-                "tenAM": "",
-                "teenfifteenAM": "",
-                "tenthirtyAM": "",
-                "tenfortyfiveAM": "",
-                "elevenAM": "",
-                "elevenfifteenAM": "",
-                "eleventhirtyAM": "",
-                "elevenfortyfiveAM": "",
-                "twelvePM": "",
-                "twelvefifteenPM": "",
-                "twelvethirtyPM": "",
-                "twelvefortyfivePM": "",
-                "onePM": "",
-                "onefifteenPM": "",
-                "onethirtyPM": "",
-                "onefortyfivePM": "",
-                "twoPM": "",
-                "twofifteenPM": "",
-                "twothirtyPM": "",
-                "twofortyfivePM": "",
-                "threePM": "",
-                "threefifteenPM": "",
-                "threethirtyPM": "",
-                "threefortyfivePM": "",
-                "fourPM": "",
-                "fourfifteenPM": "",
-                "fourthirtyPM": "",
-                "fourfortyfivePM": "",
-                "fivePM": "",
-                "fivefifteenPM": "",
-                "fivethirtyPM": "",
-                "fivefortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sevenPM": "",
-                "sevenfifteenPM": "",
-                "seventhirtyPM": "",
-                "sevenfortyfivePM": "",
-                "eightPM": "",
-                "eightfifteenPM": "",
-                "eightthirtyPM": "",
-                "eightfortyfivePM": "",
-                "ninePM": "",
-                "ninefifteenPM": "",
-                "ninethirtyPM": "",
-                "ninefortyfivePM": ""
-            },
-            "S": {
-                "sevenAM": "",
-                "sevenfifteenAM": "",
-                "seventhirtyAM": "",
-                "sevenfortyfiveAM": "",
-                "eightAM": "",
-                "eightfifteenAM": "",
-                "eightthirtyAM": "",
-                "eightfortyfiveAM": "",
-                "nineAM": "",
-                "ninefifteenAM": "",
-                "ninthirtyAM": "",
-                "ninefortyfiveAM": "",
-                "tenAM": "",
-                "teenfifteenAM": "",
-                "tenthirtyAM": "",
-                "tenfortyfiveAM": "",
-                "elevenAM": "",
-                "elevenfifteenAM": "",
-                "eleventhirtyAM": "",
-                "elevenfortyfiveAM": "",
-                "twelvePM": "",
-                "twelvefifteenPM": "",
-                "twelvethirtyPM": "",
-                "twelvefortyfivePM": "",
-                "onePM": "",
-                "onefifteenPM": "",
-                "onethirtyPM": "",
-                "onefortyfivePM": "",
-                "twoPM": "",
-                "twofifteenPM": "",
-                "twothirtyPM": "",
-                "twofortyfivePM": "",
-                "threePM": "",
-                "threefifteenPM": "",
-                "threethirtyPM": "",
-                "threefortyfivePM": "",
-                "fourPM": "",
-                "fourfifteenPM": "",
-                "fourthirtyPM": "",
-                "fourfortyfivePM": "",
-                "fivePM": "",
-                "fivefifteenPM": "",
-                "fivethirtyPM": "",
-                "fivefortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sixPM": "",
-                "sixfifteenPM": "",
-                "sixthirtyPM": "",
-                "sixfortyfivePM": "",
-                "sevenPM": "",
-                "sevenfifteenPM": "",
-                "seventhirtyPM": "",
-                "sevenfortyfivePM": "",
-                "eightPM": "",
-                "eightfifteenPM": "",
-                "eightthirtyPM": "",
-                "eightfortyfivePM": "",
-                "ninePM": "",
-                "ninefifteenPM": "",
-                "ninethirtyPM": "",
-                "ninefortyfivePM": ""
-            }
+            "M": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+            "T": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+            "W": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+            "H": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+            "F": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+            "S": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
         };
         MongoClient.connect(url, function(err, db) {
             if (err){
