@@ -61,14 +61,24 @@ app.get('/addgroup',function(req,res){
 app.get('/automateSchedule', function(req, res){
     var g;
     var classy;
+    var arr = [];
+    arr[0] = "Jani";
+    arr[1] = "Hege";
+    arr[2] = "Stale";
+    arr[3] = "Kai Jim";
+    arr[4] = "Borge";
+
+    console.log(arr.join());//
+    arr.splice(2, 1);
+    console.log(arr.join()); //
 
     dbactions.getClassroom(false, function(starter) {   //obtains a list of all the classes
         dbactions.getClassStart(false, function (data) {   //Obtains an order of all the classes based on start time
             for (var y in starter) {
                 dbactions.updateClassroomAssigns(starter[y]._id, starter[y], function (starter) {
+                starter.M.splice(2,1);
                 });
             }
-            dbactions.updateClassroomAssigns(false, function(rooms) {
                 for (x in data) {
               if (data[x].Class_Time != "" && data[x].Class_Time.Start != "") {  //Does not assign rooms to classes without any time assigned
                   var placeholder = "Class_Time"
@@ -85,8 +95,7 @@ app.get('/automateSchedule', function(req, res){
                   var endHour = parseInt(end[0]); //gets the number for the hour
                   classy = "";
                   // if (data[x].Class_Time.Start != null) {
-                  console.log(data[x].placeholder = 12);
-                  data[x].Room_Assigned = 102;
+                  data[x].Room_Assigned = 102;   //testing data, makes all rooms assigned to 12
                   dbactions.updateClass(data[x]._id, data[x], function () {
                       //empty for return
                   });
@@ -96,23 +105,30 @@ app.get('/automateSchedule', function(req, res){
                   }
                 }
               }
-          });
           res.render('automateSchedule', {classes: data, rooms: starter, title: "class"});
         });
     });
 });
 
+/*unassignSchedule
+ * Created by: Kenneth Thomas
+ * Parameters:
+ *   1) the request parameter given by the jade file
+ *   2) the res which is the paramater used to kill.
+ * Returns: Nothing
+ * Description:
+ *   Yhis function 0's out the Room Assigned and the availability of all rooms to make the scheduler start over from scratch.*/
 app.get('/unassignSchedule', function(req, res){
     dbactions.getClassStart(false, function (data) {
         for (x in data) {
-            data[x].Room_Assigned = "";
-            dbactions.updateClass(data[x]._id, data[x], function () {
+            data[x].Room_Assigned = "";  //blanks Room assigned
+            dbactions.updateClass(data[x]._id, data[x], function () {   //changes class to reflect changes
                 //empty for return
             });
         }
       res.redirect('/');
     });
-    dbactions.getClassroom(false, function(rooms) {
+    dbactions.getClassroom(false, function(rooms) {  //brings back list of all classrooms
         for (y in rooms) {
             dbactions.updateClassroomAssigns(rooms[y]._id,rooms[y],function(){
                 //empty for return
