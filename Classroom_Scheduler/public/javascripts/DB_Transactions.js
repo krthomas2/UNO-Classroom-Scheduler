@@ -264,6 +264,46 @@ var functions = module.exports = {
             }
         });
     },
+
+    ValidateRoomAssign: function (id, class_information, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err){
+                console.log(err);
+            }
+            else {
+                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: class_information}, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        callback();
+                    }
+                });
+            }
+        });
+    },
+    RunScheduler: function (id, room_information, callback){
+        var room_data = {
+            "Room_Number": room_information.Room_Number,
+            "Max_Capacity": room_information.Max_Capacity,
+            "Spec_Trait": room_information.Spec_Trait,
+        };
+        MongoClient.connect(url, function(err, db) {
+            if (err){
+                console.log(err);
+            }
+            else {
+                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: room_data}, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        callback();
+                    }
+                });
+            }
+        });
+    },
     updateClassroomAssigns: function (id, room_information, callback){
         var room_data = {
             "Room_Number": room_information.Room_Number,

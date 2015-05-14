@@ -62,15 +62,15 @@ app.get('/automateSchedule', function(req, res){
     var g;
     var classy;
 
-    dbactions.getClassroom(false, function(starter) {
-        dbactions.getClassStart(false, function (data) {
+    dbactions.getClassroom(false, function(starter) {   //obtains a list of all the classes
+        dbactions.getClassStart(false, function (data) {   //Obtains an order of all the classes based on start time
             for (var y in starter) {
                 dbactions.updateClassroomAssigns(starter[y]._id, starter[y], function (starter) {
                 });
             }
             dbactions.updateClassroomAssigns(false, function(rooms) {
                 for (x in data) {
-              if (data[x].Class_Time != "" && data[x].Class_Time.Start != "") {
+              if (data[x].Class_Time != "" && data[x].Class_Time.Start != "") {  //Does not assign rooms to classes without any time assigned
                   var placeholder = "Class_Time"
                   var days = data[x].Class_Time.Days;  //.split('');
                   var start = data[x].Class_Time.Start.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
@@ -97,7 +97,7 @@ app.get('/automateSchedule', function(req, res){
                 }
               }
           });
-          res.render('automateSchedule', {classes: data, rooms: room, title: "class"});
+          res.render('automateSchedule', {classes: data, rooms: starter, title: "class"});
         });
     });
 });
