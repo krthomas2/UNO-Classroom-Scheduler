@@ -1,3 +1,10 @@
+/*Node Modules
+*These are the external modules brought in for this application.
+* The main modules used are xlsx, fs, j2xls, and underscore
+* xlsx is an excel parser
+* fs is used with j2xls to write the output
+* underscore is used for sorting and managing lists/objects
+ */
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -10,7 +17,7 @@ var users = require('./routes/users');
 var multer  = require('multer');
 var dbactions = require('./public/javascripts/DB_Transactions.js');
 var fs = require('fs');
-//var j2xls = require('json2xls');
+var j2xls = require('json2xls');
 var app = express();
 
 // view engine setup
@@ -29,12 +36,11 @@ app.use('/', routes);
 app.use('/users', users);
 app.use(multer({ dest: './uploads/'}));
 
-//Get Methods below
-app.get('/calendar', function(req, res){
-  dbactions.getClassroom(false, function(data){
-    res.render('calendar', {rooms: data,title: "Calendar"});
-  });
-});
+//Get Methods below -- These methods populate the jade pages with proper data.
+
+
+
+//Not Needed delete after auto-insert is done
 app.get('/addgroup',function(req,res){
   dbactions.getClass(false,function(data){
     var courses;
@@ -44,26 +50,6 @@ app.get('/addgroup',function(req,res){
 
     }
     res.render('addgroup',{classys: data.unique, classys2: data,title:"Groups"});
-  });
-});
-app.get('/editroom',function(req,res){
-  dbactions.getClassroom(false,function(data){
-    res.render('editroom',{rooms: data, title:"Rooms"});
-  });
-});
-app.get('/editclass',function(req,res){
-  dbactions.getClass(false,function(data){
-    res.render('editClass',{rooms: data, title:"rooms"});
-  });
-});
-app.get('/getRoomInfo', function(req, res){//set values for class room data
-  dbactions.getClassroom(req.query.room_number, function(class_ids){
-     res.send(class_ids);
-  });
-});
-app.get('/getClassInfo', function(req, res){//set values for class room data
-  dbactions.getClass(req.query.id, function(data){
-    res.send(data);
   });
 });
 
@@ -81,17 +67,9 @@ app.get('/getCalendarInfo', function(req, res){
   });
 });
 
-app.get('/getremoveroom', function(req, res){
-  dbactions.getClassroom(false, function(data){
-    res.render('removeroom', {rooms: data, title: "Rooms"});
-  });
-});
 
-app.get('/getremoveclassy', function(req, res){
-  dbactions.getClass(false, function(data){
-    res.render('removeclassy', {rooms: data,title: "Classes"});
-  });
-});
+
+
 app.get('/automateSchedule', function(req, res){
     var g;
     var classy;
@@ -240,15 +218,10 @@ app.get('/downloadSchedule', function(req, res) {
 //stays on page with link, but downloads excel file
   });
 });
-//Post Methods Below
+//Post Methods Below -- These are the actions to modify the database
 
 
-app.post('/addRoom', function(req,res){
-  dbactions.insertClassroom(req.body,function(){
-  //empty function for callback
-  });
-  res.redirect('/rooms');
-});
+
 app.post('/addClass', function(req,res){
   var class_data = {
     "Subject": req.body.Subject,
@@ -349,17 +322,7 @@ app.post('/runScheduler', function(req,res){
 });
 
 
-app.post('/editRoomdata',function(req,res){
-  var room_data = {
-    "Room_Number": req.body.Room_Number,
-    "Max_Capacity": req.body.Max_Cap,
-    "Spec_Trait": req.body.Spec
-  };
-  dbactions.updateClassroom(req.body.Room_ID,room_data,function(){
-    //empty for return
-  });
-  res.redirect('/rooms');
-});
+
 app.post('/editScheduledata', function(req,res){
   res.redirect('/');//should go to scheduler page when added
   dbactions.updateSched(req.body.room_id,req.body,function(){
@@ -373,12 +336,7 @@ app.post('/automateScheduleData', function(req,res){
         //empty function for callback
     });
 });
-app.post('/removeroomdata', function(req,res){
-  res.redirect('/rooms');//should go to scheduler page when added
-  dbactions.removeClassroom(req.body.room_id,function(){
-    //empty function for callback
-  });
-});
+
 app.post('/removeclassydata', function(req,res){
   res.redirect('/classes');//should go to scheduler page when added
   dbactions.removeClassroom(req.body.class_id,function(){

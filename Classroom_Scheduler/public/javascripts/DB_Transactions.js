@@ -7,31 +7,6 @@ var u = require('underscore');
 var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
 var functions = module.exports = {
 
-    addUser: function(name,password,level){
-        var uname = name || false;
-        var pw = password || false;
-        var per = level || false;
-        MongoClient.connect(url, function(err, db) {
-            if (err) {
-                console.log(err);
-            }
-            else {
-				db.collection("Users").find({"Name" : uname}, function(err, returnValue){
-					returnValue.count(function(err, count){
-						if (count == 1){
-							callback("User already in database. Please choose a different username.");
-						}
-						else {
-							db.collection("Users").insert({"Name" : uname, "Password" : pw, "Permissions" : per}, function(err, callback){
-								callback(key.ops[0]._id);
-							});
-						}
-					});
-				});
-                db.close();
-            }
-        });
-    },
 
     /*insertClass
      * Created by: Nick Boeckman

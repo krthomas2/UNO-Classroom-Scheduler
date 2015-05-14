@@ -1,3 +1,8 @@
+/*editClass
+*Created by: TJ
+*Parameters: info, which is the class that is selected to be edited
+* This script populates the edit class jade view with the selected classes information
+ */
 function editClass(info) {
         $.get('/getClassInfo', {id: info}, function (data) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
             $("#Class").val(data[0].Class_ID);
