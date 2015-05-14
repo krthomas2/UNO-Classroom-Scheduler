@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
+var u = require('underscore');
 //URL of database. Change if location of DB changes
 //var url = 'mongodb://admin:Password2015@ds029317.mongolab.com:29317/testing';
 var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
@@ -997,9 +998,9 @@ function importExcelToDb(put) {
                 if (err) {
                     console.log(err);
                 }
-                else { /*Ok, we now have all the classes into the database, so we need to do the same thing with the class groups,
-                 because apparently the idea of making the groups decided through human interaction, like was suggested,
-                 isn't good enough for this project, even though there isn't any intuitive way to solve this problem.*/
+                else { //Ok, we now have all the classes into the database, so we need to do the same thing with the class groups,
+                 //because apparently the idea of making the groups decided through human interaction, like was suggested,
+                 //isn't good enough for this project, even though there isn't any intuitive way to solve this problem.*/
                     var groups = [];
                     var group_ids = [];
                     for (var x = 0; x < dbAdditions.length; x++) {
@@ -1009,11 +1010,13 @@ function importExcelToDb(put) {
                         else {
                                 var found = false;
                                 for (var y = 0; y < groups.length; y++) {
+                                    //We have to check the parameters down below to test if the two classes are in the same group.
                                     if (groups[y]["First_Name"].valueOf() == dbAdditions[x]["Instructor"]["First_Name"].valueOf() &&
                                         groups[y]["Last_Name"].valueOf() == dbAdditions[x]["Instructor"]["Last_Name"].valueOf() &&
                                         groups[y]["Pat"].valueOf() == dbAdditions[x]["Class_Time"]["Days"].valueOf() &&
                                         groups[y]["Start"].valueOf() == dbAdditions[x]["Class_Time"]["Start"].valueOf()) {
                                         try {
+                                            //Try adding this new object to the group_ids array.
                                             group_ids[y]["id" + Object.keys(group_ids[y]).length] = dbAdditions[x]["_id"];
                                         }
                                         catch(err){
@@ -1023,15 +1026,15 @@ function importExcelToDb(put) {
                                     }
                                 }
                                 if (!found) {
-                                    groups[groups.length] = {
+                                    groups[groups.length] = { //Add this as a new group at a new index.
                                         "First_Name": dbAdditions[x]["Instructor"]["First_Name"],
                                         "Last_Name": dbAdditions[x]["Instructor"]["Last_Name"],
                                         "Pat": dbAdditions[x]["Class_Time"]["Days"],
                                         "Start": dbAdditions[x]["Class_Time"]["Start"]
                                     };
                                     try {
-                                        group_ids[groups.length] = new Object();
-                                        group_ids[groups.length]["id0"] = dbAdditions[x]["_id"];
+                                        group_ids[groups.length] = new Object(); //Create a new object in the group_ids table.
+                                        group_ids[groups.length]["id0"] = dbAdditions[x]["_id"];  //Add this as the first new id in that table.
                                     }
                                     catch(err){
                                         console.log(err);
@@ -1044,8 +1047,7 @@ function importExcelToDb(put) {
                             console.log(err);
                         }
                         else {
-                            console.log(group_ids);
-                            db.collection("Class_Groups").insertOne(group_ids[1], function (err) {
+                            db.collection("Class_Groups").insertMany(u._.compact(group_ids), function (err) {
                                 if (err) {
                                     console.log(err);
                                 }
