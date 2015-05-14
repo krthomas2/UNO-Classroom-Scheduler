@@ -53,19 +53,7 @@ app.get('/addgroup',function(req,res){
   });
 });
 
-app.get('/getCalendarInfo', function(req, res){
-  var class_list = [];
-  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
-    for (var x = 0; x < class_ids.length; x++) {
-      dbactions.getClass(class_ids[x]["class_id"], function (classInfo) {
-        class_list.push(classInfo);
-        if (class_ids.length == class_list.length) {
-          res.send(class_list);
-        }
-      });
-    }
-  });
-});
+
 
 
 
@@ -218,6 +206,8 @@ app.get('/downloadSchedule', function(req, res) {
 //stays on page with link, but downloads excel file
   });
 });
+
+
 //Post Methods Below -- These are the actions to modify the database
 
 
@@ -337,12 +327,7 @@ app.post('/automateScheduleData', function(req,res){
     });
 });
 
-app.post('/removeclassydata', function(req,res){
-  res.redirect('/classes');//should go to scheduler page when added
-  dbactions.removeClassroom(req.body.class_id,function(){
-    //empty function for callback
-  });
-});
+
 
 app.post('/', function(req, res, next) {
   var temp_path = req.files.filer.path;

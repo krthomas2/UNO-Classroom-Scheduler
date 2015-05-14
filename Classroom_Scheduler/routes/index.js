@@ -3,12 +3,28 @@ var router = express.Router();
 var dbactions = require('../public/javascripts/DB_Transactions.js');
 
 
-
+/* Get methods get a jade view to show the user
+ * Post methods push data to the database as post is more secure than get.
+ */
 
 
 router.get('/calendar', function(req, res){
   dbactions.getClassroom(false, function(data){
     res.render('calendar', {rooms: data,title: "Calendar"});
+  });
+});
+
+router.get('/getCalendarInfo', function(req, res){
+  var class_list = [];
+  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
+    for (var x = 0; x < class_ids.length; x++) {
+      dbactions.getClass(class_ids[x]["class_id"], function (classInfo) {
+        class_list.push(classInfo);
+        if (class_ids.length == class_list.length) {
+          res.send(class_list);
+        }
+      });
+    }
   });
 });
 
@@ -26,6 +42,7 @@ router.get('/group', function(req, res, next) {
 router.get('/upload', function(req, res, next) {
   res.render('upload', { title: 'Upload' });
 });
+
 /* Classes CRUD Operations */
   /* GET Classes Page with choices for add/edit/remove */
 router.get('/classes', function(req, res, next) {
@@ -53,10 +70,17 @@ router.get('/getremoveclassy', function(req, res){
     res.render('removeclassy', {rooms: data,title: "Classes"});
   });
 });
-/* End of Class CRUD operations */
+      /* Remove specified class from database */
+router.post('/removeclassydata', function(req,res){
+  res.redirect('/classes');//should go to scheduler page when added
+  dbactions.removeClassroom(req.body.class_id,function(){
+    //empty function for callback
+  });
+});
+/* End of Classes CRUD operations */
 
 
-/* Room CRUD Operations */
+/* Rooms CRUD Operations */
   /* Classroom Page with choices for add/edit/remove */
 router.get('/rooms', function(req, res, next) {
   res.render('rooms', { title: 'Rooms' });
@@ -109,21 +133,8 @@ router.post('/removeroomdata', function(req,res){
     //empty function for callback
   });
 });
-/* End of CRUD for rooms */
-/* GET Preferences Page. */
-router.get('/prefs', function(req, res, next) {
-  res.render('prefs', { title: 'Request' });
-});
+/* End of rooms CRUD operations */
 
-
-
-
-
-
-/* GET Register Page. */
-router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Express' });
-});
 
 /* GET Create Schedule. */
 router.get('/createSchedule', function(req, res, next) {
