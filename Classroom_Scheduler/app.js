@@ -54,10 +54,6 @@ app.get('/addgroup',function(req,res){
 });
 
 
-
-
-
-
 app.get('/automateSchedule', function(req, res){
     var g;
     var classy;

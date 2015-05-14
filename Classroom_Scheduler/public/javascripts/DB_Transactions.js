@@ -69,12 +69,27 @@ var functions = module.exports = {
             }
             else {
                 if (class_id == false) {
-                    db.collection("Classes").find().sort({ "Class_Time.Start": 1 }).toArray(function(err, data){
-                        callback(data);
+                    db.collection("Classes").find().toArray(function(err, data){
+         var sorted =    u._.sortBy(data,function(sortthis){
+         var time = sortthis.Class_Time.Start.split(" ");//split class start time by time and AM or PM
+         var timesep = time[0].split(":");//split time based on : markers
+         var actualtime = (timesep[0]*3600);
+            if ( time[1] === 'PM' && timesep[0] != 12){//check if AM or PM..if PM add 12 hours to the time
+                actualtime = actualtime + (12 * 3600);
+            }
+            if(timesep[1] != '00') {//check the minutes for start time
+                actualtime = actualtime + (timesep[1] * 60);
+            }
+            if(timesep[2] != '00'){//If you really want to be anal with start times check if the seconds are moved
+                actualtime = actualtime + (timesep[2]);
+            }
+                    return actualtime;
+            });
+                        callback(sorted);
                     });
                 }
                 else {
-                    db.collection("Classes").find({_id: new ObjectId(class_id)}).sort({ "Class_Time.Start": 1 }).toArray(function(err, data){
+                    db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
