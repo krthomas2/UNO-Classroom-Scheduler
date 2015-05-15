@@ -39,9 +39,13 @@ router.get('/editgroup', function(req, res, next) {
 });
 
 /* GET edit schedule page. */
-router.get('/editschedule', function(req, res, next) {
-  res.render('editschedule', { title: 'Groups' });
+router.get('/editSchedule', function(req, res, next) {
+  res.render('editSchedule', { title: 'Groups' });
 });
+router.get('/downloadOldSchedule', function(req,res,next){
+  res.download('./uploads/ScheduleOld.xlsx');
+});
+
 /**********************************************************************************************************************/
 
 /* GET Upload Page. */
