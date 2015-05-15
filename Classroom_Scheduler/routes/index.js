@@ -32,11 +32,17 @@ router.get('/getCalendarInfo', function(req, res){
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
-
-/* GET group page. */
-router.get('/group', function(req, res, next) {
-  res.render('group', { title: 'Groups' });
+/**********************************************************************************************************************/
+/* GET edit group page. */
+router.get('/editgroup', function(req, res, next) {
+  res.render('editgroup', { title: 'Groups' });
 });
+
+/* GET edit schedule page. */
+router.get('/editschedule', function(req, res, next) {
+  res.render('editschedule', { title: 'Groups' });
+});
+/**********************************************************************************************************************/
 
 /* GET Upload Page. */
 router.get('/upload', function(req, res, next) {

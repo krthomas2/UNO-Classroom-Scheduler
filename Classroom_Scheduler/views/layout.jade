@@ -26,11 +26,11 @@ html
         li(class=(title === 'Classes' ? 'active' : ''))
           a(href='./classes') Add/Remove Classes
         li(class=(title === 'Groups' ? 'active' : ''))
-          a(href='./group') Add/Remove Groups
+          a(href='./editgroup') Edit Groups
         li(class=(title === 'Scheduler' ? 'active' : ''))
           a(href='./createSchedule') Create a Schedule
         li(class=(title === 'Clear Scheduler' ? 'active' : ''))
-          a(href='./clearScheduler') Clear Schedule
+          a(href='./clearScheduler') Purge Database
     div.container
       div.jumbotron
         block content
