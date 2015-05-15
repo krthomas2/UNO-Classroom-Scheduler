@@ -1,4 +1,8 @@
-/*Node Modules
+/**
+ * Description
+ * @method description
+ */
+/**Node Modules
 *These are the external modules brought in for this application.
 * The main modules used are xlsx, fs, j2xls, and underscore
 * xlsx is an excel parser
@@ -234,8 +238,6 @@ app.get('/generateSchedule', function(req,res){
                 }
                 else
                     actualtime = 0;
-
-                // console.log(actualtime);
                 return actualtime;//this is time as a single int for comparisons
             }
 
@@ -255,111 +257,7 @@ app.get('/generateSchedule', function(req,res){
     });
 });
 
-/*
-app.get('/automateSchedule', function(req, res){
-    var g;
-    var classy;
-    var array;
-    var validstart;
-    var validend;
 
-    dbactions.getClassroom(false, function(rooms) {   //obtains a list of all the classes
-        dbactions.getClassStart(false, function (data) {   //Obtains an order of all the classes based on start time
-            for (var x in data) {
-                console.log(data[x].Class_Time.Start);
-            }
-                for (x in data) {
-              if (data[x].Class_Time != "" && data[x].Class_Time.Start != "") {  //Does not assign rooms to classes without any time assigned
-                  var days = data[x].Class_Time.Days.split('');
-                  var start = data[x].Class_Time.Start.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
-                  console.log(start);
-                  var startHour = parseInt(start[0]); //gets the number for the hour
-                  var startMinute = parseInt(start[1]); //gets the number for the minute
-                  if (startMinute % 15 != 0) {
-                      startMinute -= (startMinute % 15);
-                  }
-                  var startAP = (start[2].split(' ')[1] == 'AM') ? 'A' : 'P';
-                  var end = data[x].Class_Time.End.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
-                  var endHour = parseInt(end[0]); //gets the number for the hour
-                  var endMinute = parseInt(start[1]); //gets the total minutes
-                  if (endMinute % 15 != 0) {
-                      endMinute -= (endMinute % 15);
-                  }
-                  var endAP = (end[2].split(' ')[1] == 'AM') ? 'A' : 'P';
-                  classy = "";
-                  for (var y in rooms) {   //Loop through all possible rooms
-                      for (var day in days) {  //Loop through each day to check for a valid solution
-                          validstart = dbactions.RoomAvailability(rooms[y]._id, rooms[y], startHour, startMinute, startAP, days[day])  //check that starting position is valid
-                          console.log(validstart);
-                          validend = dbactions.RoomAvailability(rooms[y]._id, rooms[y], endHour, endMinute, endAP, days[day])  //check that the ending position is valid
-                          console.log(validend);
-                          if (validstart != -1 && validend != -1)  //If a day doesn't work, go on to the next room and try again
-                              break;
-                      }
-                      if (validstart != -1 && validend != -1) {  //If a solution was found in the previous loop
-                          data[x].Room_Assigned = rooms[y].Room_Number;
-                          for (var day in days) {
-                              if (day == 0) {
-                                  dbactions.AssignClass(rooms[y]._id, rooms[y], data[x].Course_ID, validstart, validend, days[day], function () {
-                                  });
-                              }
-                          }
-                          dbactions.updateClass(data[x]._id, data[x], function() {   //Give room Assignment to class and update it
-                          });
-                          dbactions.updateClassroom(rooms[y]._id, rooms[y], function() {  //Pass the class assigned to the room to the timeslots
-                          });
-                          break;
-                      }
-                      else {
-                          continue;  //Check next room if possible
-                      }
-                  }
-                }
-              }
-          res.render('automateSchedule', {classes: data, rooms: rooms, title: "class"});
-        });
-    });
-});
-*/
-
-/*unassignSchedule
- * Created by: Kenneth Thomas
- * Parameters:
- *   1) the request parameter given by the jade file
- *   2) the res which is the paramater used to kill.
- * Returns: Nothing
- * Description:
- *   This function 0's out the Room Assigned and the availability of all rooms to make the scheduler start over from scratch.*/
-/*
-app.get('/unassignSchedule', function(req, res){
-    dbactions.getClassStart(false, function (data) {
-        for (x in data) {
-            data[x].Room_Assigned = "";  //blanks Room assigned
-            dbactions.updateClass(data[x]._id, data[x], function () {   //changes class to reflect changes
-                //empty for return
-            });
-        }
-      res.redirect('/');
-    });
-    dbactions.getClassroom(false, function(rooms) {  //brings back list of all classrooms
-        for (y in rooms) {
-            dbactions.updateClassroomAssigns(rooms[y]._id,rooms[y],function(){
-                //empty for return
-            });
-        };
-
-    });
-});
-
-*/
-
-/* GET Schedule page. */
-app.get('/editSchedule', function(req, res, next) {
-    dbactions.getSchedule(false, function(data){
-        console.log(data);
-        res.render('editSchedule', { title: 'Scheduler' , schedules: data});
-    });
-});
 
 
 app.get('/downloadSchedule', function(req, res) {
@@ -368,37 +266,24 @@ app.get('/downloadSchedule', function(req, res) {
   var y = 0;
   var groupy ="";
   var roomy ="";
-
+    var temp ="";
+    var inst ="";
   dbactions.getClass(false, function (data) {
-    dbactions.getSchedule(false,function(room) {
+    dbactions.getSchedule(false,function(sched) {
       dbactions.getClassGroup(false,function(group){
         for (x in data) {
           group = "";
-          /*   dbactions.getClassGroup(false,function(group){
-           for(x in group)
-           if(group[x]._id == data[x]._id) {
-           group = 'C';
-           }
-           })*/
           roomy = "";
-          groupy ="";
-          for (y in room) {//wish I could just get index of
-            if (room[y].class_id.equals(data[x]._id)) {
-              roomy = room[y].Room_Number;
-              break;
+          groupy ="";//Everything is a group
+           instr = data[x].Instructor.First_Name + " " + data[x].Instructor.Last_Name;
+            for(y in group){
+                if(group[y].Instructor ===  instr && group[y].Start === data[x].Class_Time.Start)//equality is not met for some reason
+                    temp = group[y]._id;//keep track of group value
+                    groupy ='C';//set group to yes
+                    break;
             }
-            else {
-              //move along this is not the data you are looking for
-            }
-          }
-          for( z in group) {//wish I could just get index of
-            if(group[x].Class_ID.equals(data[x]._id)){
-              groupy = 'C';
-              break;
-            }
-          }
-
-
+            var chek = u._.filter(sched,{"_id":temp._id});
+            roomy = chek.Room_Number;//dependent on group id which is not getting caught at the moment
           data[x] = ({
             "ClassNbr": data[x].Class_ID,
             Subject: data[x].Subject,
@@ -435,56 +320,7 @@ app.get('/downloadSchedule', function(req, res) {
 //stays on page with link, but downloads excel file
   });
 });
-
-
-
-/*
-
-
-app.post('/runScheduler', function(req,res){
-  console.log(req.body);
-  console.log("cheeseburger!")
-
-  var class_data = {
-    "_id": req.body._id,
-    "Course_ID": req.body.Catalog,
-    "Lecture_Type": req.body.Component,
-    "Class_Time": {
-      "Start": req.body.MtgS,
-      "End": req.body.MtgE,
-      "Days": req.body.Pat
-    },
-    "Class_Capacity": req.body.Cap,
-    "Mode": req.body.Mode,
-    "CrsAtr_Val": req.body.CrsAtr_Val,
-    "Room_Assigned": req.body.Room_Assigned
-  };
-    dbactions.getAllClass(false, function (data) {
-        console.log(req.body._id);
-    });
-    console.log("cheeseburger in paradise!")
-    res.redirect('/createSchedule');
-});
-
-
-
-app.post('/editScheduledata', function(req,res){
-  res.redirect('/');//should go to scheduler page when added
-  dbactions.updateSched(req.body.room_id,req.body,function(){
-    //empty function for callback
-  });
-});
-
-app.post('/automateScheduleData', function(req,res){
-    res.redirect('/createSchedule');//should go to scheduler page when added
-    dbactions.getClass(req.body.class_id,function(){
-        //empty function for callback
-    });
-});
-
-
-*/
-
+/* file upload */
 app.post('/', function(req, res, next) {
   var temp_path = req.files.filer.path;
   var wb,wsname,ws,put;//local variables for parsing the document

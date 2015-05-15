@@ -1,0 +1,81 @@
+{
+    "project": {},
+    "files": {
+        "public\\javascripts\\xlsx.js": {
+            "name": "public\\javascripts\\xlsx.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {},
+    "classitems": [
+        {
+            "file": "public\\javascripts\\xlsx.js",
+            "line": 948,
+            "class": ""
+        },
+        {
+            "file": "public\\javascripts\\xlsx.js",
+            "line": 953,
+            "class": ""
+        },
+        {
+            "file": "public\\javascripts\\xlsx.js",
+            "line": 1016,
+            "class": ""
+        },
+        {
+            "file": "public\\javascripts\\xlsx.js",
+            "line": 1083,
+            "class": ""
+        },
+        {
+            "file": "public\\javascripts\\xlsx.js",
+            "line": 1099,
+            "class": ""
+        },
+        {
+            "file": "public\\javascripts\\xlsx.js",
+            "line": 1119,
+            "class": ""
+        },
+        {
+            "file": "public\\javascripts\\xlsx.js",
+            "line": 1217,
+            "class": ""
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type",
+            "line": " public\\javascripts\\xlsx.js:948"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public\\javascripts\\xlsx.js:953"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public\\javascripts\\xlsx.js:1016"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public\\javascripts\\xlsx.js:1083"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public\\javascripts\\xlsx.js:1099"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public\\javascripts\\xlsx.js:1119"
+        },
+        {
+            "message": "Missing item type",
+            "line": " public\\javascripts\\xlsx.js:1217"
+        }
+    ]
+}
