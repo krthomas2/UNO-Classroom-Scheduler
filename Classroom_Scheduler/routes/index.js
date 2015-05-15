@@ -33,10 +33,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
 /**********************************************************************************************************************/
-/* GET edit group page. */
-router.get('/editgroup', function(req, res, next) {
-  res.render('editgroup', { title: 'Groups' });
-});
+
 
 /* GET edit schedule page. */
 router.get('/editSchedule', function(req, res, next) {
@@ -45,6 +42,7 @@ router.get('/editSchedule', function(req, res, next) {
 router.get('/downloadOldSchedule', function(req,res,next){
   res.download('./uploads/ScheduleOld.xlsx');
 });
+
 
 /**********************************************************************************************************************/
 
@@ -161,6 +159,29 @@ router.post('/removeclassydata', function(req,res){
 });
 /* End of Classes CRUD operations */
 
+/* Groups Crud Operations */
+  /* GET edit group page. */
+router.get('/editgroup', function(req, res, next) {
+  dbactions.getClassGroup(false, function(data){
+    res.render('editgroup', { title: 'Groups' , groups: data});
+  });
+});
+    /*get edit group info for edit page */
+router.get('/getGroupInfo', function(req,res,next){
+  dbactions.getClassGroup(req.query.id, function(data){
+    res.send(data);
+  });
+});
+    /*Send data to database for changed group*/
+router.post('/editGroupData', function(req,res){
+  var id = req.body._id;
+  delete req.body._id;//remove id to make push to database easier
+  dbactions.updateClassGroups(id,req.body, function(){
+    //blank for callback
+  });
+  res.redirect('/editGroup');
+});
+/* End of Groups CRUD operations */
 
 /* Rooms CRUD Operations */
   /* Classroom Page with choices for add/edit/remove */

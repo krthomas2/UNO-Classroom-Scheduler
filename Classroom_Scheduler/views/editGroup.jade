@@ -1,21 +1,36 @@
-"Course_Title": "DATA STRUCTURES",
-"Instructor": "Brian Dorn",
-"Start": "4:00:00 PM",
-"End": "5:15:00 PM",
-"Days": "TR",
-"Class_Capacity": "25"
-
 extends layout
 block content
    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
    script
-      include ../public/javascripts/editClass.js
+      include ../public/javascripts/editGroup.js
    title #{title}
    center
-      div.row
-         h4 Please select a room and change the data:
-      p.right.col-md-3 Select Class ID#: &nbsp;
-         select(onchange="editClass(value)")
+      p.right.col-md-3 Select Group: &nbsp;
+         select(onchange="editGroup(value)")
             #groups
                -each group in groups
-                  option(value = group._id) #{group.Course_Title + " taught by: " + group.Instructor}
+                  option(value = group._id) #{"Title: "+group.Course_Title + " Inst: " + group.Instructor}
+      div.row
+         form(method='post', name = 'edit', action='/editGroupData')
+            div.class.row
+               input(type="hidden", name='_id',id="_id",value="")
+            div.class.row
+               label(for="Course_Title") Course Title:&nbsp;
+               input(type="text", name='Course_Title',id ="Course_Title", placeholder="Course_Title",value="")
+            div.class.row
+               label(for="Instructor") Instructor:&nbsp;
+               input(type="text", name='Instructor', id ="Instructor", placeholder="Instructor",value="")
+            div.class.row
+               label(for="Start") Start:&nbsp;
+               input(type='text', name='Start',id="Start",placeholder ="Start",value="")
+            div.class.row
+               label(for="End") End:&nbsp;
+               input(type='text', name='End',id ="End",placeholder ="End",value="")
+            div.class.row
+               label(for="Days") Pat:&nbsp;
+               input(type='text', name='Days',id ="Days",placeholder ="Days",value="")
+            div.class.row
+               label(for="Class_Capacity") Group_Capacity:&nbsp;
+               input(type='text', name='Class_Capacity',id ="Class_Capacity",placeholder ="Class_Capacity",value="")
+            div.class.row.btn-group-vertical
+               input(type='submit', class="btn btn-danger")

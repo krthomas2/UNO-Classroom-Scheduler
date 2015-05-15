@@ -720,7 +720,7 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Class_Groups").updateOne({_id: new ObjectId(id)}, {$set: {ClassTime: group_information}}, function (err) {
+                db.collection("Class_Groups").updateOne({_id: new ObjectId(id)}, {$set: group_information}, function (err) {
                     if (err) {
                         console.log(err);
                     }

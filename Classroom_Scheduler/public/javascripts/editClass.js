@@ -28,19 +28,3 @@ function editClass(info) {
             $("Room_Assigned").val(data[0].Room_Assigned);
         });
     };
-
-db.open(function(err, db) {
-    db.collection('Customers', function(err, collection) {
-        collection.find(function(err, cursor) {
-            cursor.each(function(err, customer) {
-                if(customer != null){
-                    console.log('First Name: ' + customer.firstName);
-                    console.log('Last Name: ' + customer.lastName);
-                }
-                else{
-                    db.close();
-                }
-            });
-        });
-    });
-});
