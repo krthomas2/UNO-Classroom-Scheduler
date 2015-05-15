@@ -18,6 +18,7 @@ var multer  = require('multer');
 var dbactions = require('./public/javascripts/DB_Transactions.js');
 var fs = require('fs');
 var j2xls = require('json2xls');
+var u = require('underscore');
 var app = express();
 
 // view engine setup
@@ -37,6 +38,224 @@ app.use('/users', users);
 app.use(multer({ dest: './uploads/'}));
 
 //Get Methods below -- These methods populate the jade pages with proper data.
+
+app.get('/generateSchedule', function(req,res){
+    dbactions.getClassGroup(false, function(classbytime){
+        dbactions.getClassroom(false, function(rooms){
+            var sorted =    u._.sortBy(classbytime,function(data) {
+
+                if (data.Start != null) {
+
+                    var time = data.Start.split(" ");//split class start time by time and AM or PM
+                    var timesep = time[0].split(":");//split time based on : markers
+                    var actualtime = (timesep[0] * 3600);
+                    if (time[1] === 'PM' && timesep[0] != 12) {//check if AM or PM..if PM add 12 hours to the time
+                        actualtime = actualtime + (12 * 3600);
+                    }
+                    if (timesep[1] != 00) {//check the minutes for start time
+                        actualtime = actualtime + (timesep[1] * 60);
+                    }
+                    if (timesep[2] != 00) {//Check the seconds for comparison
+                        actualtime = actualtime + (timesep[2]);
+                    }
+
+                }
+                else
+                    var actualtime = 0;//in case of no class time(totally online sections, typos, etc)
+
+                return actualtime;//this value will be compared against by the sortBy funtion of underscore js
+            });
+
+            var roomy = u._.sortBy(rooms, 'Max_Capacity');//Get rooms sorted from smallest to largest
+            var roomdata = roomy.reverse();//get max capacity down to smallest
+            var schedule = [];//schedule to be added to database
+            var notadded =[];//groups that did not get added because of conflicts...they will need to be edited to work
+            var CurrentTime = sorted[0].Start;//Set Current time of scheduling classes(i.e. start at 7 a.m. and get all classes at 7 a.m. to be worked in the schedule)
+
+            var room_M = [];//Monday room list
+            var room_T = [];//Tuesday room list
+            var room_W = [];//Wednesday room list
+            var room_R = [];//Thursday room list
+            var room_F = [];//Friday room list
+            var room_S = [];//Saturday room list
+            for (x in roomdata) {//setup the 6 arrays for classrooms with the default being no start/end time
+                room_M[x] = {"Room_Number": roomdata[x]["Room_Number"], "start": "", "end": ""};
+                room_T[x] = {"Room_Number": roomdata[x]["Room_Number"], "start": "", "end": ""};
+                room_W[x] = {"Room_Number": roomdata[x]["Room_Number"], "start": "", "end": ""};
+                room_R[x] = {"Room_Number": roomdata[x]["Room_Number"], "start": "", "end": ""};
+                room_F[x] = {"Room_Number": roomdata[x]["Room_Number"], "start": "", "end": ""};
+                room_S[x] = {"Room_Number": roomdata[x]["Room_Number"], "start": "", "end": ""};
+            }
+
+            /* iterate through class listing to assign rooms*/
+            for(var x = 0; x < sorted.length; x++){
+                if(sorted[x].Start == CurrentTime){
+                    findroom(sorted[x]);
+                }
+                else{
+                    CurrentTime = sorted[x].Start;//this can be used to insert other priorities for a group...right now it is first come first serve
+                    //at this point you know all the rooms for the current time slot and can reorder them for whatever priority you want(say biggest capacity, name, teacher, etc.)
+                    findroom(sorted[x]);
+                }
+
+            }
+            function assign( roomnum, classinfo){
+                var index, object;
+                var days = classinfo.Days.split("");//split to get days
+                for ( var x =0; x < days.length; x++) {
+                    switch (days[x]) {
+                        case 'M'://Case Monday
+                            object = u._.findWhere(room_M,{"Room_Number":roomnum});//get copy of element
+                            index = u._.indexOf(room_M,object);//get index of element
+                            room_M[index]={"Room_Number": roomnum, "start": classinfo.Start, "end": classinfo.End};//add class to index location of that day
+                            break;
+                        case 'T':
+                            object = u._.findWhere(room_T,{"Room_Number":roomnum});
+                            index = u._.indexOf(room_T,object);
+                            room_T[index]= {"Room_Number": roomnum, "start": classinfo.Start, "end": classinfo.End};
+                            break;
+                        case 'W':
+                            object = u._.findWhere(room_W,{"Room_Number":roomnum});
+                            index = u._.indexOf(room_W,object);
+                            room_W[index] = {"Room_Number": roomnum, "start": classinfo.Start, "end": classinfo.End};
+                            break;
+                        case 'R':
+                            object = u._.findWhere(room_R,{"Room_Number":roomnum});
+                            index = u._.indexOf(room_R,object);
+                            room_R[index] = {"Room_Number": roomnum, "start": classinfo.Start, "end": classinfo.End};
+                            break;
+                        case 'F':
+                            object = u._.findWhere(room_F,{"Room_Number":roomnum});
+                            index = u._.indexOf(room_F,object);
+                            room_F[index] = {"Room_Number": roomnum, "start": classinfo.Start, "end": classinfo.End};
+                            break;
+                        case 'S':
+                            object = u._.findWhere(room_S,{"Room_Number":roomnum});
+                            index = u._.indexOf(room_S,object);
+                            room_S[index] = {"Room_Number": roomnum, "start": classinfo.Start, "end": classinfo.End};
+                            break;
+                        default:
+                            console.log("should not reach this");
+
+                    }
+                }
+            }
+
+            function findroom(classinfo) {
+                var inserted = false;
+                var possiblerooms = u._.filter(roomy, function(room){//allowed rooms for this class group are only allowed to be larger than or equal to max_capacity of the group
+                    return room.Max_Capacity >= classinfo.Class_Capacity;
+                });
+
+                var output = u._.sortBy(possiblerooms, 'Max_Capacity');//get the rooms from smallest to largest capacity that work for this specific class
+
+                for(var x = 0; x < output.length; x++){//go through each group and try all available rooms until either you run out of rooms or find the room of best fit
+                    if(checkAvailable(output[x].Room_Number,classinfo)){
+                        assign(output[x].Room_Number,classinfo);
+                        schedule[schedule.length+1] = {"Room_Number" : output[x].Room_Number,"Classes" : classinfo}
+                        inserted = true;//group was inserted
+                        break;//no need to continue looking
+                    }
+                }
+                if(!inserted){//if group was not inserted push to list to be printed at end of schedule
+                    notadded[notadded.length+1] = classinfo;
+                }
+
+            }
+
+            function checkAvailable(roomnumber,classinfo){
+                var check;//value of the room in question, used with all the room arrays
+                var days = classinfo.Days.split("");//split to get days
+                var y = true;//start off with everything before was true
+                for ( var x =0; x < days.length; x++){
+                    if(!y) {
+                        return false;//if one day fails then the room at this timeframe does not work, don't continue to look
+                    }
+                    switch( days[x]){//Switch statment to check every day the course is in session
+                        case 'M':
+                            check = u._.find(room_M,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case 'T':
+                            check = u._.find(room_T,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case 'W':
+                            check = u._.find(room_W,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case 'R':
+                            check = u._.find(room_R,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case 'F':
+                            check = u._.find(room_F,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case 'S':
+                            check = u._.find(room_S,function(data){ return data.Room_Number == roomnumber;});
+                            y =  checkTime(classinfo.Start, check);
+                            break;
+                        default:
+                            console.log("should not reach this");
+
+                    }
+                }
+                return true;//No problems with mismatched classes
+            }
+
+            function checkTime(starttime, roominfo ){// check if the class is starting after the last class for this room
+                var start = getvalue(starttime);//temp variable for comparisons--it represents the time in a single integer format
+                var end = getvalue(roominfo.end);//temp variable for comparisons
+                if( start >= end){
+                    return true;//classroom is open take it
+                }
+                else{
+                    return false;//classroom is taken go to next best fit.
+                }
+
+
+            }
+            function getvalue(oldtime){//Old time is time in the format HH:MM:SS AM/PM for Hours minutes and seconds... no values are changed with this function
+                if(oldtime != "") {
+                    var time = oldtime.split(" ");//split class start time by time and AM or PM
+                    var timesep = time[0].split(":");//split time based on : markers
+                    var actualtime = (timesep[0] * 3600);
+                    if (time[1] === 'PM' && timesep[0] != 12) {//check if AM or PM..if PM add 12 hours to the single integer time
+                        actualtime = actualtime + (12 * 3600);
+                    }
+                    if (timesep[1] != 00) {//check the minutes for start time...have to be careful with javascript as concatenate and add are the same symbol
+                        actualtime = actualtime + (timesep[1] * 60);
+                    }
+                    if (timesep[2] != 00) {//If you really want to you can even look at the start times and check the seconds
+                        actualtime = actualtime + (timesep[2]);
+                    }
+                }
+                else
+                    actualtime = 0;
+
+                // console.log(actualtime);
+                return actualtime;//this is time as a single int for comparisons
+            }
+
+            var xls;
+            xls = j2xls(u._.compact(notadded));//list of groups not able to be inserted at the current time
+
+            fs.writeFileSync('NotAdded.xlsx', xls, 'binary');//create the excel file
+
+            dbactions.insertSched(u._.compact(schedule));//add non-null entries to the database
+            res.download('NotAdded.xlsx');//download the excel file not sure why it doesn't stay on top of the window, but it does download
+            res.redirect('/calendar');//to view the schedule hour to hour
+
+        });
+
+
+
+
+    });
+});
+
+
 
 
 

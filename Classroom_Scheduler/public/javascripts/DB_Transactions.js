@@ -3,8 +3,8 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var u = require('underscore');
 //URL of database. Change if location of DB changes
-//var url = 'mongodb://admin:Password2015@ds029317.mongolab.com:29317/testing';
-var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
+var url = 'mongodb://admin:Password2015@dbh46.mongolab.com:27467/meanapp';
+//var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
 var functions = module.exports = {
 
 
@@ -765,12 +765,12 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Class_Schedule").insertOne(schedule_information, function (err, key) {
+                db.collection("Class_Schedule").insertMany(u._.compact(schedule_information), function (err) {
                     if (err) {
                         console.log(err);
                     }
                     else {
-                        callback(key.ops[0]._id);
+
                     }
                 });
             }
@@ -944,6 +944,10 @@ function importExcelToDb(put) {
                                         try {
                                             //Try adding this new object to the group_ids array.
                                             group_ids[y]["id" + Object.keys(group_ids[y]).length] = dbAdditions[x]["_id"];
+                                            var cap = parseInt(group_ids[y].Class_Capacity);
+                                            var cap2 =parseInt(dbAdditions[x].Class_Capacity);
+                                            var cap = cap + cap2;
+                                            group_ids[y]["Class_Capacity"] = cap; //get the combined cap for the group
                                         }
                                         catch(err){
                                             console.log(err);
@@ -960,6 +964,12 @@ function importExcelToDb(put) {
                                     };
                                     try {
                                         group_ids[groups.length] = new Object(); //Create a new object in the group_ids table.
+                                        group_ids[groups.length]["Course_Title"] = dbAdditions[x].Course_Title;//Data about the group
+                                        group_ids[groups.length]["Instructor"] = dbAdditions[x].Instructor.First_Name +" "+ dbAdditions[x].Instructor.Last_Name;
+                                        group_ids[groups.length]["Start"] = dbAdditions[x].Class_Time.Start;
+                                        group_ids[groups.length]["End"] = dbAdditions[x].Class_Time.End;
+                                        group_ids[groups.length]["Days"] = dbAdditions[x].Class_Time.Days;
+                                        group_ids[groups.length]["Class_Capacity"] = dbAdditions[x].Class_Capacity;
                                         group_ids[groups.length]["id0"] = dbAdditions[x]["_id"];  //Add this as the first new id in that table.
                                     }
                                     catch(err){
