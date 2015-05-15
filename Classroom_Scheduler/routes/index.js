@@ -398,7 +398,11 @@ router.post('/removeroomdata', function(req,res){
 
 
 
-
+/**
+ * @function clearSchedule
+ * @description
+ * Clears the Schedule database entries.
+ */
 
 /* Clear the Schedule */
 router.get('/clearSchedule', function(req, res){
@@ -406,7 +410,11 @@ router.get('/clearSchedule', function(req, res){
     res.redirect('/createSchedule');
   });
 });
-
+/**
+ * @function clearScheduler
+ * @description
+ * Purges the database of everything except rooms
+ */
 /* Purge database */
 router.get('/clearScheduler', function(req, res){
   dbactions.clearScheduler(function(){
