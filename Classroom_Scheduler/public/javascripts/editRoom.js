@@ -4,6 +4,12 @@
 * Info is the selected room, this script populates the jade view with
 * the data that is in the database for the selected room.
  */
+/**
+ * Info is the selected room; this script populates the jade view with the data that is in the database for the selected room
+ * @class editRoom
+ * @param info
+ *  Room _id to get the specific rooms' data.
+ */
 function editRoom(info) {
         $.get('/getRoomInfo', {room_number: info}, function (class_list) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
             $('#Room_ID').val(class_list[0]._id);

@@ -2,6 +2,12 @@
 *Created by Kenneth and TJ
 *Gets group data for groups edit page
  */
+/**
+ * Gets the group data for the group edit page
+ * @class editGroup
+ * @param info
+ *  The group _id of the group data expected
+ */
 function editGroup(info) {
         $.get('/getGroupInfo', {id: info}, function (list) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
             $('#_id').val(list[0]._id);

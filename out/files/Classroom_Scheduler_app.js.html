@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Classroom_Scheduler\app.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/DB_Transactions.html">DB_Transactions</a></li>
+                                <li><a href="../classes/downloadSchedule.html">downloadSchedule</a></li>
+                                <li><a href="../classes/editClass.html">editClass</a></li>
+                                <li><a href="../classes/editGroup.html">editGroup</a></li>
+                                <li><a href="../classes/editRoom.html">editRoom</a></li>
+                                <li><a href="../classes/editSchedule.html">editSchedule</a></li>
+                                <li><a href="../classes/generateSchedule.html">generateSchedule</a></li>
+                                <li><a href="../classes/getCalendarInfo.html">getCalendarInfo</a></li>
+                                <li><a href="../classes/index.js.html">index.js</a></li>
+                                <li><a href="../classes/upload.html">upload</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/body-parser.html">body-parser</a></li>
+                                <li><a href="../modules/cookie-parser.html">cookie-parser</a></li>
+                                <li><a href="../modules/DB_Transactions.js.html">DB_Transactions.js</a></li>
+                                <li><a href="../modules/express.html">express</a></li>
+                                <li><a href="../modules/fs.html">fs</a></li>
+                                <li><a href="../modules/index.js.html">index.js</a></li>
+                                <li><a href="../modules/json2xls.html">json2xls</a></li>
+                                <li><a href="../modules/morgan.html">morgan</a></li>
+                                <li><a href="../modules/multer.html">multer</a></li>
+                                <li><a href="../modules/path.html">path</a></li>
+                                <li><a href="../modules/underscore.html">underscore</a></li>
+                                <li><a href="../modules/xlsx.html">xlsx</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: Classroom_Scheduler\app.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+
+/**Node Modules
+*These are the external modules brought in for this application.
+* The main modules used are xlsx, fs, j2xls, and underscore
+* xlsx is an excel parser
+* fs is used with j2xls to write the output
+* underscore is used for sorting and managing lists/objects
+ */
+/**
+ * Express is used for the routing, and generating of the starter application
+ * @module express
+ **/
+/**
+ * Path is used to get the location of other modules
+ * @module path
+ **/
+
+/**
+ * Morgan is used to create temporary files for upload/download
+ * @module morgan
+ **/
+
+/**
+ * Cookie-Parser is used by Express as part of the generation of the starter app
+ * @module cookie-parser
+ **/
+
+/**
+ * Body-Parser is used by Express as part of the generation of the starter app
+ * @module body-parser
+ *
+ **/
+
+/**
+ * Xlsx is the Excel parsing module.  It has many outputs,
+ * for this project the WS and _toJson are used.
+ * @module xlsx
+ **/
+
+/**
+ * Index JS is the main route handling module
+ * @module index.js
+ **/
+
+/**
+ * Is needed for file transfers
+ * @module multer
+ **/
+
+ /**
+ * This is the database transactions script,
+ * it holds all the communication functions for the
+ * app.
+ * @module DB_Transactions.js
+ **/
+
+ /**
+ * Is used to write the application
+ * @module fs
+ **/
+
+/**
+ *  Is used to turn the array of class information into
+ * the final schedule.xlsx file
+ * @module json2xls
+ **/
+
+/**
+ * Is a very handy module that has many functions built in
+ * to handle sorting, filtering of lists/objects
+ * @module underscore
+ */
+var express = require(&#x27;express&#x27;);
+var path = require(&#x27;path&#x27;);
+var favicon = require(&#x27;serve-favicon&#x27;);
+var logger = require(&#x27;morgan&#x27;);
+var cookieParser = require(&#x27;cookie-parser&#x27;);
+var bodyParser = require(&#x27;body-parser&#x27;);
+var xlsx = require(&#x27;xlsx&#x27;);
+var routes = require(&#x27;./routes/index&#x27;);
+var users = require(&#x27;./routes/users&#x27;);
+var multer  = require(&#x27;multer&#x27;);
+var dbactions = require(&#x27;./public/javascripts/DB_Transactions.js&#x27;);
+var fs = require(&#x27;fs&#x27;);
+var j2xls = require(&#x27;json2xls&#x27;);
+var u = require(&#x27;underscore&#x27;);
+var app = express();
+
+// view engine setup
+app.set(&#x27;views&#x27;, path.join(__dirname, &#x27;views&#x27;));
+app.set(&#x27;view engine&#x27;, &#x27;jade&#x27;);
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + &#x27;/public/favicon.ico&#x27;));
+app.use(logger(&#x27;dev&#x27;));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, &#x27;public&#x27;)));
+
+app.use(&#x27;/&#x27;, routes);
+app.use(&#x27;/users&#x27;, users);
+app.use(multer({ dest: &#x27;./uploads/&#x27;}));
+
+
+
+/*Schedule Algorithm follows */
+/**
+ * Generates the schedule based on
+ * the groups and rooms.
+ * Returns document of non added groups
+ * @class generateSchedule
+ */
+app.get(&#x27;/generateSchedule&#x27;, function(req,res){
+    dbactions.getClassGroup(false, function(classbytime){
+        dbactions.getClassroom(false, function(rooms){
+            var sorted =    u._.sortBy(classbytime,function(data) {
+
+                if (data.Start != null) {
+
+                    var time = data.Start.split(&quot; &quot;);//split class start time by time and AM or PM
+                    var timesep = time[0].split(&quot;:&quot;);//split time based on : markers
+                    var actualtime = (timesep[0] * 3600);
+                    if (time[1] === &#x27;PM&#x27; &amp;&amp; timesep[0] != 12) {//check if AM or PM..if PM add 12 hours to the time
+                        actualtime = actualtime + (12 * 3600);
+                    }
+                    if (timesep[1] != 00) {//check the minutes for start time
+                        actualtime = actualtime + (timesep[1] * 60);
+                    }
+                    if (timesep[2] != 00) {//Check the seconds for comparison
+                        actualtime = actualtime + (timesep[2]);
+                    }
+
+                }
+                else
+                    var actualtime = 0;//in case of no class time(totally online sections, typos, etc)
+
+                return actualtime;//this value will be compared against by the sortBy funtion of underscore js
+            });
+
+            var roomy = u._.sortBy(rooms, &#x27;Max_Capacity&#x27;);//Get rooms sorted from smallest to largest
+            var roomdata = roomy.reverse();//get max capacity down to smallest
+            var schedule = [];//schedule to be added to database
+            var notadded =[];//groups that did not get added because of conflicts...they will need to be edited to work
+            var CurrentTime = sorted[0].Start;//Set Current time of scheduling classes(i.e. start at 7 a.m. and get all classes at 7 a.m. to be worked in the schedule)
+
+            var room_M = [];//Monday room list
+            var room_T = [];//Tuesday room list
+            var room_W = [];//Wednesday room list
+            var room_R = [];//Thursday room list
+            var room_F = [];//Friday room list
+            var room_S = [];//Saturday room list
+            for (x in roomdata) {//setup the 6 arrays for classrooms with the default being no start/end time
+                room_M[x] = {&quot;Room_Number&quot;: roomdata[x][&quot;Room_Number&quot;], &quot;start&quot;: &quot;&quot;, &quot;end&quot;: &quot;&quot;};
+                room_T[x] = {&quot;Room_Number&quot;: roomdata[x][&quot;Room_Number&quot;], &quot;start&quot;: &quot;&quot;, &quot;end&quot;: &quot;&quot;};
+                room_W[x] = {&quot;Room_Number&quot;: roomdata[x][&quot;Room_Number&quot;], &quot;start&quot;: &quot;&quot;, &quot;end&quot;: &quot;&quot;};
+                room_R[x] = {&quot;Room_Number&quot;: roomdata[x][&quot;Room_Number&quot;], &quot;start&quot;: &quot;&quot;, &quot;end&quot;: &quot;&quot;};
+                room_F[x] = {&quot;Room_Number&quot;: roomdata[x][&quot;Room_Number&quot;], &quot;start&quot;: &quot;&quot;, &quot;end&quot;: &quot;&quot;};
+                room_S[x] = {&quot;Room_Number&quot;: roomdata[x][&quot;Room_Number&quot;], &quot;start&quot;: &quot;&quot;, &quot;end&quot;: &quot;&quot;};
+            }
+
+            /* iterate through class listing to assign rooms*/
+            for(var x = 0; x &lt; sorted.length; x++){
+                if(sorted[x].Start == CurrentTime){
+                    findroom(sorted[x]);
+                }
+                else{
+                    CurrentTime = sorted[x].Start;//this can be used to insert other priorities for a group...right now it is first come first serve
+                    //at this point you know all the rooms for the current time slot and can reorder them for whatever priority you want(say biggest capacity, name, teacher, etc.)
+                    findroom(sorted[x]);
+                }
+
+            }
+            /**
+             * @function assign
+             * @param roomnum
+             *
+             *  The room to have the group-class added to it
+             * @param classinfo
+             *
+             *  The class to be added to the room
+             * @description
+             * Takes an approved room number and group-class
+             * and puts them in the schedule for the proper days.
+             * This is used for adding other group-classes as data
+             * to see if the room is open at this time.
+             *
+             */
+            function assign( roomnum, classinfo){
+                var index, object;
+                var days = classinfo.Days.split(&quot;&quot;);//split to get days
+                for ( var x =0; x &lt; days.length; x++) {
+                    switch (days[x]) {
+                        case &#x27;M&#x27;://Case Monday
+                            object = u._.findWhere(room_M,{&quot;Room_Number&quot;:roomnum});//get copy of element
+                            index = u._.indexOf(room_M,object);//get index of element
+                            room_M[index]={&quot;Room_Number&quot;: roomnum, &quot;start&quot;: classinfo.Start, &quot;end&quot;: classinfo.End};//add class to index location of that day
+                            break;
+                        case &#x27;T&#x27;:
+                            object = u._.findWhere(room_T,{&quot;Room_Number&quot;:roomnum});
+                            index = u._.indexOf(room_T,object);
+                            room_T[index]= {&quot;Room_Number&quot;: roomnum, &quot;start&quot;: classinfo.Start, &quot;end&quot;: classinfo.End};
+                            break;
+                        case &#x27;W&#x27;:
+                            object = u._.findWhere(room_W,{&quot;Room_Number&quot;:roomnum});
+                            index = u._.indexOf(room_W,object);
+                            room_W[index] = {&quot;Room_Number&quot;: roomnum, &quot;start&quot;: classinfo.Start, &quot;end&quot;: classinfo.End};
+                            break;
+                        case &#x27;R&#x27;:
+                            object = u._.findWhere(room_R,{&quot;Room_Number&quot;:roomnum});
+                            index = u._.indexOf(room_R,object);
+                            room_R[index] = {&quot;Room_Number&quot;: roomnum, &quot;start&quot;: classinfo.Start, &quot;end&quot;: classinfo.End};
+                            break;
+                        case &#x27;F&#x27;:
+                            object = u._.findWhere(room_F,{&quot;Room_Number&quot;:roomnum});
+                            index = u._.indexOf(room_F,object);
+                            room_F[index] = {&quot;Room_Number&quot;: roomnum, &quot;start&quot;: classinfo.Start, &quot;end&quot;: classinfo.End};
+                            break;
+                        case &#x27;S&#x27;:
+                            object = u._.findWhere(room_S,{&quot;Room_Number&quot;:roomnum});
+                            index = u._.indexOf(room_S,object);
+                            room_S[index] = {&quot;Room_Number&quot;: roomnum, &quot;start&quot;: classinfo.Start, &quot;end&quot;: classinfo.End};
+                            break;
+                        default:
+                            console.log(&quot;should not reach this&quot;);
+
+                    }
+                }
+            }
+
+            /**
+             * @function findroom
+             * @param classinfo
+             *
+             *  The class to find the room for
+             * @description
+             * findroom takes all the rooms available and sorts them by capacity
+             * then it finds the smallest room available for the class in question.
+             * There is no return, but it does generate a list of acceptable classrooms: that is classrooms that can hold this class.
+             */
+            function findroom(classinfo) {
+                var inserted = false;
+                var possiblerooms = u._.filter(roomy, function(room){//allowed rooms for this class group are only allowed to be larger than or equal to max_capacity of the group
+                    return room.Max_Capacity &gt;= classinfo.Class_Capacity;
+                });
+
+                var output = u._.sortBy(possiblerooms, &#x27;Max_Capacity&#x27;);//get the rooms from smallest to largest capacity that work for this specific class
+
+                for(var x = 0; x &lt; output.length; x++){//go through each group and try all available rooms until either you run out of rooms or find the room of best fit
+                    if(checkAvailable(output[x].Room_Number,classinfo)){
+                        assign(output[x].Room_Number,classinfo);
+                        schedule[schedule.length+1] = {&quot;Room_Number&quot; : output[x].Room_Number,&quot;Classes&quot; : classinfo}
+                        inserted = true;//group was inserted
+                        break;//no need to continue looking
+                    }
+                }
+                if(!inserted){//if group was not inserted push to list to be printed at end of schedule
+                    notadded[notadded.length+1] = classinfo;
+                }
+
+            }
+
+            /**
+             * @function checkAvailable
+             * @param roomnumber
+             *
+             *  The room to be checked
+             * @param classinfo
+             *
+             *  The class to be checked
+             * @returns {boolean}
+             * True or False
+             * @description
+             * Checks if the room is available for all days and times that the class has a session.
+             * Returns true for available and false for not available.
+             */
+            function checkAvailable(roomnumber,classinfo){
+                var check;//value of the room in question, used with all the room arrays
+                var days = classinfo.Days.split(&quot;&quot;);//split to get days
+                var y = true;//start off with everything before was true
+                for ( var x =0; x &lt; days.length; x++){
+                    if(!y) {
+                        return false;//if one day fails then the room at this timeframe does not work, don&#x27;t continue to look
+                    }
+                    switch( days[x]){//Switch statment to check every day the course is in session
+                        case &#x27;M&#x27;:
+                            check = u._.find(room_M,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case &#x27;T&#x27;:
+                            check = u._.find(room_T,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case &#x27;W&#x27;:
+                            check = u._.find(room_W,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case &#x27;R&#x27;:
+                            check = u._.find(room_R,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case &#x27;F&#x27;:
+                            check = u._.find(room_F,function(data){ return data.Room_Number == roomnumber;});
+                            y = checkTime(classinfo.Start, check);
+                            break;
+                        case &#x27;S&#x27;:
+                            check = u._.find(room_S,function(data){ return data.Room_Number == roomnumber;});
+                            y =  checkTime(classinfo.Start, check);
+                            break;
+                        default:
+                            console.log(&quot;should not reach this&quot;);
+
+                    }
+                }
+                return true;//No problems with mismatched classes
+            }
+
+            /**
+             * @function checkTime
+             * @param starttime
+             *
+             *  start time of the class to check the room for availability
+             * @param roominfo
+             *
+             *  day array of the room in question
+             * @returns {boolean}
+             * True for open or False for closed/taken
+             * @description
+             * Checks the specific time of the day array to see if it is open.
+             */
+            function checkTime(starttime, roominfo ){// check if the class is starting after the last class for this room
+                var start = getvalue(starttime);//temp variable for comparisons--it represents the time in a single integer format
+                var end = getvalue(roominfo.end);//temp variable for comparisons
+                if( start &gt;= end){
+                    return true;//classroom is open take it
+                }
+                else{
+                    return false;//classroom is taken go to next best fit.
+                }
+
+
+            }
+
+            /**
+             * @function getvalue
+             * @param oldtime
+             *
+             *  Time in the format of 10:00:00 AM
+             * @returns {number}
+             *  Time in the format 123456
+             * @description
+             * Takes time stamp and converts it to a single number for comparisons.
+             */
+            function getvalue(oldtime){//Old time is time in the format HH:MM:SS AM/PM for Hours minutes and seconds... no values are changed with this function
+                if(oldtime != &quot;&quot;) {
+                    var time = oldtime.split(&quot; &quot;);//split class start time by time and AM or PM
+                    var timesep = time[0].split(&quot;:&quot;);//split time based on : markers
+                    var actualtime = (timesep[0] * 3600);
+                    if (time[1] === &#x27;PM&#x27; &amp;&amp; timesep[0] != 12) {//check if AM or PM..if PM add 12 hours to the single integer time
+                        actualtime = actualtime + (12 * 3600);
+                    }
+                    if (timesep[1] != 00) {//check the minutes for start time...have to be careful with javascript as concatenate and add are the same symbol
+                        actualtime = actualtime + (timesep[1] * 60);
+                    }
+                    if (timesep[2] != 00) {//If you really want to you can even look at the start times and check the seconds
+                        actualtime = actualtime + (timesep[2]);
+                    }
+                }
+                else
+                    actualtime = 0;
+                return actualtime;//this is time as a single int for comparisons
+            }
+
+            var xls;
+            xls = j2xls(u._.compact(notadded));//list of groups not able to be inserted at the current time
+
+            fs.writeFileSync(&#x27;NotAdded.xlsx&#x27;, xls, &#x27;binary&#x27;);//create the excel file
+
+            dbactions.insertSched(u._.compact(schedule));//add non-null entries to the database
+            res.download(&#x27;NotAdded.xlsx&#x27;);//download the excel file of groups that couldn&#x27;t be added
+
+        });
+
+
+
+
+    });
+});
+
+
+/**
+ * @class downloadSchedule
+ * @description
+ * Downloads data from the database in an excel file.
+ */
+app.get(&#x27;/downloadSchedule&#x27;, function(req, res) {
+  var classy;
+  var jsonObjs;
+  var y = 0;
+  var groupy =&quot;&quot;;
+  var roomy =&quot;&quot;;
+    var temp =&quot;&quot;;
+    var inst =&quot;&quot;;
+  dbactions.getClass(false, function (data) {
+    dbactions.getSchedule(false,function(sched) {
+      dbactions.getClassGroup(false,function(group){
+        for (x in data) {
+          group = &quot;&quot;;
+          roomy = &quot;&quot;;
+          groupy =&quot;&quot;;//Everything is a group
+           instr = data[x].Instructor.First_Name + &quot; &quot; + data[x].Instructor.Last_Name;
+            for(y in group){
+                if(group[y].Instructor ===  instr &amp;&amp; group[y].Start === data[x].Class_Time.Start)//equality is not met for some reason
+                    temp = group[y]._id;//keep track of group value
+                    groupy =&#x27;C&#x27;;//set group to yes
+                    break;
+            }
+            var chek = u._.filter(sched,{&quot;_id&quot;:temp._id});
+            roomy = chek.Room_Number;//dependent on group id which is not getting caught at the moment
+          data[x] = ({
+            &quot;ClassNbr&quot;: data[x].Class_ID,
+            Subject: data[x].Subject,
+            Catalog: data[x].Course_ID,
+            &quot;Section&quot;: data[x].Section_ID,
+            &quot;Combined Section&quot;: groupy,
+            &quot;Title&quot;: data[x].Course_Title,
+            &quot;Descr&quot;: data[x].Description,
+            &quot;Acad Group&quot;: data[x].Acad_Group,
+            &quot;Cap Enrl&quot;: data[x].Class_Capacity,
+            &quot;Tot Enrl&quot;: data[x].Tot_Enrl,
+            &quot;Pat&quot;: data[x].Class_Time.Days,
+            &quot;MtgStart&quot;: data[x].Class_Time.Start,
+            &quot;MtgEnd&quot;: data[x].Class_Time.End,
+            &quot;Last&quot;: data[x].Instructor.Last_Name,
+            &quot;First Name&quot;: data[x].Instructor.First_Name,
+            &quot;Start Date&quot;: data[x].Start_Date,
+            &quot;End Date&quot;: data[x].End_Date,
+            Session: data[x].Session,
+            Location: data[x].Location,
+            Mode: data[x].Mode,
+            &quot;CrsAtr Val&quot;: data[x].CrsAtr_Val,
+            &quot;Component&quot;: data[x].Lecture_Type,
+            &quot;Room Number&quot;: roomy
+          });
+        }
+        var xls = j2xls(data);
+
+        fs.writeFileSync(&#x27;Scheduler.xlsx&#x27;, xls, &#x27;binary&#x27;);
+        res.download(&#x27;Scheduler.xlsx&#x27;);
+      });
+      });
+
+//stays on page with link, but downloads excel file
+  });
+});
+/* file upload */
+/**
+ * @class upload
+ * @description
+ * uploads the selected document from the client side to the server.  Makes sure only one document is stored at a time in the application and that it is of type xls or xlsx.
+ */
+app.post(&#x27;/&#x27;, function(req, res, next) {
+  var temp_path = req.files.filer.path;
+  var wb,wsname,ws,put;//local variables for parsing the document
+  if(req.files.filer.extension == &#x27;xlsx&#x27;) {//type xlsx
+    if(&#x27;uploads/ScheduleOld.xlsx&#x27;!=null)
+    {
+      fs.unlink(&#x27;uploads/ScheduleOld.xlsx&#x27;,function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    if(&#x27;uploads/ScheduleOld.xls&#x27;!=null)
+    {
+      fs.unlink(&#x27;uploads/ScheduleOld.xls&#x27;,function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    wb = xlsx.readFile(req.files.filer.path);//create the workbook
+    wsname = wb.SheetNames[0];//get the first sheet name
+    ws = wb.Sheets[wsname];//get the first sheet data
+    put = xlsx.utils.sheet_to_json(ws);//convert data to json
+    fs.rename(temp_path,&#x27;uploads/ScheduleOld.xlsx&#x27;,function(err){
+      if(err) throw err;
+    });
+    dbactions.importExcelToDb(put);
+  }
+  else if(req.files.filer.extension ==&#x27;xls&#x27;){//same as above just creates a .xls file in uploads vs .xlsx
+    if(&#x27;uploads/ScheduleOld.xls&#x27;!=null)
+    {
+      fs.unlink(&#x27;uploads/ScheduleOld.xls&#x27;,function(err){//remove old schedule if it exists
+        //if(err) throw err;
+      });
+    }
+    if(&#x27;uploads/ScheduleOld.xlsx&#x27; != null)//remove any other schedule format
+    {
+      fs.unlink(&#x27;uploads/ScheduleOld.xlsx&#x27;,function(err){
+        //if(err) throw err;
+      });
+    }
+    wb = xlsx.readFile(req.files.filer.path);
+    wsname = wb.SheetNames[0];
+    ws = wb.Sheets[wsname];
+    put = xlsx.utils.sheet_to_json(ws);
+    fs.rename(temp_path,&#x27;uploads/ScheduleOld.xls&#x27;,function(err){
+      if(err) throw err;
+    });
+    dbactions.importExcelToDb(put);
+  }
+  else{//if file is not xlsx or xls then don&#x27;t delete the old schedule, but delete the temp file of what was just uploaded
+    fs.unlink(temp_path,function(err){
+      if(err) throw err;
+    });
+  }
+  res.redirect(&#x27;/createSchedule&#x27;);
+
+});
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error(&#x27;Not Found&#x27;);
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get(&#x27;env&#x27;) === &#x27;development&#x27;) {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render(&#x27;error&#x27;, {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render(&#x27;error&#x27;, {
+    message: err.message,
+    error: {}
+  });
+});
+
+
+module.exports = app;
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
