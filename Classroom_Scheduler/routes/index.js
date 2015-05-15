@@ -183,6 +183,30 @@ router.post('/editGroupData', function(req,res){
 });
 /* End of Groups CRUD operations */
 
+/* Schedule Crud Operations */
+  /* GET Create Schedule. */
+router.get('/createSchedule', function(req, res, next) {
+  res.render('createSchedule', { title: 'Scheduler' });
+});
+
+      /*get edit schedule info for edit page */
+router.get('/getScheduleInfo', function(req,res,next){
+  dbactions.getSchedule(req.query.id, function(data){
+    res.send(data);
+  });
+});
+     /*Send data to database for changed schedule*/
+router.post('/editScheduleData', function(req,res){
+  var id = req.body._id;
+  delete req.body._id;//remove id to make push to database easier
+  dbactions.updateSched(id,req.body, function(){
+    //blank for callback
+  });
+  res.redirect('/createSchedule');
+});
+/* End of Schedule CRUD operations */
+
+
 /* Rooms CRUD Operations */
   /* Classroom Page with choices for add/edit/remove */
 router.get('/rooms', function(req, res, next) {
@@ -239,26 +263,15 @@ router.post('/removeroomdata', function(req,res){
 /* End of rooms CRUD operations */
 
 
-/* GET Create Schedule. */
-router.get('/createSchedule', function(req, res, next) {
-  res.render('createSchedule', { title: 'Scheduler' });
-});
 
-/* GET Edit Schedule. */
-router.get('/editSchedule', function(req, res, next) {
-  res.render('editSchedule', { title: 'Rooms' });
-});
+
+
 /* Clear the Schedule */
 router.get('/clearSchedule', function(req, res){
   dbactions.clearSchedule(function(){
     res.redirect('/createSchedule');
   });
 });
-/* GET Practice. */
-router.get('/practice', function(req, res, next) {
-  res.render('practice', { title: 'Express' });
-});
-module.exports = router;
 
 /* Purge database */
 router.get('/clearScheduler', function(req, res){
@@ -266,3 +279,5 @@ router.get('/clearScheduler', function(req, res){
     res.redirect('/');
   });
 });
+module.exports = router;
+

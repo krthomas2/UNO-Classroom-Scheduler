@@ -353,7 +353,13 @@ app.get('/unassignSchedule', function(req, res){
 
 */
 
-
+/* GET Schedule page. */
+app.get('/editSchedule', function(req, res, next) {
+    dbactions.getSchedule(false, function(data){
+        console.log(data);
+        res.render('editSchedule', { title: 'Scheduler' , schedules: data});
+    });
+});
 
 
 app.get('/downloadSchedule', function(req, res) {

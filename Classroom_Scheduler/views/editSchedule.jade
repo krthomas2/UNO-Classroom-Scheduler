@@ -1,47 +1,22 @@
-//
-   Created by Kenneth on 5/2/2015.
 extends layout
 block content
    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
    script
-      include ../public/javascripts/editClass.js
+      include ../public/javascripts/editSchedule.js
    title #{title}
    center
+      p.right.col-md-3 Select Group/Room: &nbsp;
+         select(onchange="editSchedule(value)")
+            #schedules
+               -each s in schedules
+                  option(value = s._id) #{"Title: " + s.Course_Title + " Inst: " + s.Instructor}
       div.row
-         h4 Please select a room and change the data:
-      p.right.col-md-3 Select Class ID#:
-         select.form-control(onchange="editClass(value)")
-            #rooms
-               -each room in rooms
-               option(value = room._id) #{room.Class_ID}
-      div.row
-         form(method='post', name = 'edit', action='/editClassData')
+         form(method='post', name = 'edit', action='/editScheduleData')
             div.class.row
-               input(type="hidden", name='_id',id="ID",value="")
+               input(type="hidden", name='_id',id="_id",value="")
             div.class.row
-               label(for="Class") Class:&nbsp;
-               input(type="number", name='Class',id ="Class", placeholder="Class Nbr",value="")
-            div.class.row
-               label(for="Catalog") Catalog:&nbsp;
-               input(type="text", name='Catalog', id ="Catalog", placeholder="Catalog",value="")
-            div.class.row
-               label(for="Subject") Subject:&nbsp;
-               input(type='text', name='Subject',id="Subject",placeholder ="Subject",value="")
-            div.class.row
-               label(for="Title") Title:&nbsp;
-               input(type='text', name='Title',id ="Title",placeholder ="Title",value="")
-            div.class.row
-               label(for="Section") Section:&nbsp;
-               input(type='number', name='Section',id = "Section",placeholder ="Section",value="")
-            div.class.row
-               label(for="Component") Component:&nbsp;
-               input(type="text", name='Component',id = "Component", placeholder="Component",value="")
-            div.class.row
-               label(for="MtgS") Mtg Start:&nbsp;
-               input(type='text', name='MtgS',id ="MtgS",placeholder ="Mtg Start",value="")
-            div.class.row
-               label(for="MtgE") Mtg End:&nbsp;
-               input(type="text", name='MtgE',id ="MtgE", placeholder="Mtg End",value="")
+               label(for="Room_Number") Room_Number:&nbsp;
+               input(type="number", name='Room_Number',id ="Room_Number", placeholder="Room_Number",value="")
             div.class.row.btn-group-vertical
                input(type='submit', class="btn btn-danger")
 
