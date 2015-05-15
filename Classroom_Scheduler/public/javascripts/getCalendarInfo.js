@@ -12,15 +12,15 @@ function getCalendarInfo(info) {
     $('td').removeClass("hidden").removeClass("danger").html('').attr("rowspan", 1);
     $.get('/getCalendarInfo', {room_number: info.value}, function (class_list) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
         for (var classes in class_list) { //Iterate through all the classes.
-            var days = class_list[classes][0].Class_Time.Days.split('');
-            var start = class_list[classes][0].Class_Time.Start.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
+            var days = class_list[classes][0].Days.split('');
+            var start = class_list[classes][0].Start.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
             var startHour = parseInt(start[0]); //gets the number for the hour
             var startMinute = parseInt(start[1]); //gets the number for the minute
             if (startMinute % 15 != 0){
                 startMinute -= (startMinute % 15);
             }
             var startAP = (start[2].split(' ')[1] == 'AM') ? 'A' : 'P';
-            var end = class_list[classes][0].Class_Time.End.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
+            var end = class_list[classes][0].End.split(':'); //Match either a space or a colon. Will result in a 4 piece string.
             var endHour = parseInt(end[0]); //gets the number for the hour
             var endMinute = parseInt(end[1]); //gets the number for the minute
             if (endMinute % 15 != 0){
@@ -39,9 +39,9 @@ function getCalendarInfo(info) {
                     }
                     if (cellCount == 0) {
                         startName.push(tdName);
-                        $(tdName).html(class_list[classes][0].Subject + class_list[classes][0].Course_ID + '-' +
-                            class_list[classes][0].Section_ID + '<br\/><br\/>' + class_list[classes][0].Course_Title + '<br\/><br\/>Start: &nbsp; ' +
-                            class_list[classes][0].Class_Time.Start + '<br\/>End: &nbsp; &nbsp;' + class_list[classes][0].Class_Time.End); //Add the information to the appropriate cell.
+                        $(tdName).html(class_list[classes][0].Subject +
+                            class_list[classes][0].Instructor + '<br\/><br\/>' + class_list[classes][0].Course_Title + '<br\/><br\/>Start: &nbsp; ' +
+                            class_list[classes][0].Start + '<br\/>End: &nbsp; &nbsp;' + class_list[classes][0].End); //Add the information to the appropriate cell.
                         $(tdName).addClass("danger");
                     }
                     else{
