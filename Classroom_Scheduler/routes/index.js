@@ -1,3 +1,8 @@
+/*
+*Here are the routes for the application...They are grouped by item and then functionality
+*
+*
+ */
 var express = require('express');
 var router = express.Router();
 var dbactions = require('../public/javascripts/DB_Transactions.js');
@@ -32,19 +37,6 @@ router.get('/getCalendarInfo', function(req, res){
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
-/**********************************************************************************************************************/
-
-
-/* GET edit schedule page. */
-router.get('/editSchedule', function(req, res, next) {
-  res.render('editSchedule', { title: 'Groups' });
-});
-router.get('/downloadOldSchedule', function(req,res,next){
-  res.download('./uploads/ScheduleOld.xlsx');
-});
-
-
-/**********************************************************************************************************************/
 
 /* GET Upload Page. */
 router.get('/upload', function(req, res, next) {
@@ -101,6 +93,10 @@ router.get('/editclass',function(req,res){
   dbactions.getClass(false,function(data){
     res.render('editClass',{rooms: data, title:"rooms"});
   });
+});
+  /* GET edit schedule page. */
+router.get('/editSchedule', function(req, res, next) {
+  res.render('editSchedule', { title: 'Groups' });
 });
       /* Get specified class information for edit page */
 router.get('/getClassInfo', function(req, res){//set values for class room data
@@ -188,7 +184,13 @@ router.post('/editGroupData', function(req,res){
 router.get('/createSchedule', function(req, res, next) {
   res.render('createSchedule', { title: 'Scheduler' });
 });
-
+/* GET Schedule page. */
+router.get('/editSchedule', function(req, res, next) {
+  dbactions.getSchedule(false, function(data){
+    console.log(data);
+    res.render('editSchedule', { title: 'Scheduler' , schedules: data});
+  });
+});
       /*get edit schedule info for edit page */
 router.get('/getScheduleInfo', function(req,res,next){
   dbactions.getSchedule(req.query.id, function(data){
@@ -272,7 +274,9 @@ router.get('/clearSchedule', function(req, res){
     res.redirect('/createSchedule');
   });
 });
-
+router.get('/downloadOldSchedule', function(req,res,next){
+  res.download('./uploads/ScheduleOld.xlsx');
+});
 /* Purge database */
 router.get('/clearScheduler', function(req, res){
   dbactions.clearScheduler(function(){
