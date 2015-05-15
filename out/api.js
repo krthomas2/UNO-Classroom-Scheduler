@@ -1,6 +1,7 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "DB_Transactions",
         "downloadSchedule",
         "generateSchedule",
         "index.js",

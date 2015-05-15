@@ -1,10 +1,107 @@
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-var ObjectId = require('mongodb').ObjectID;
-var u = require('underscore');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Classroom_Scheduler\public\javascripts\DB_Transactions.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/DB_Transactions.html">DB_Transactions</a></li>
+                                <li><a href="../classes/downloadSchedule.html">downloadSchedule</a></li>
+                                <li><a href="../classes/generateSchedule.html">generateSchedule</a></li>
+                                <li><a href="../classes/index.js.html">index.js</a></li>
+                                <li><a href="../classes/upload.html">upload</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/body-parser.html">body-parser</a></li>
+                                <li><a href="../modules/cookie-parser.html">cookie-parser</a></li>
+                                <li><a href="../modules/DB_Transactions.js.html">DB_Transactions.js</a></li>
+                                <li><a href="../modules/express.html">express</a></li>
+                                <li><a href="../modules/fs.html">fs</a></li>
+                                <li><a href="../modules/index.js.html">index.js</a></li>
+                                <li><a href="../modules/json2xls.html">json2xls</a></li>
+                                <li><a href="../modules/morgan.html">morgan</a></li>
+                                <li><a href="../modules/multer.html">multer</a></li>
+                                <li><a href="../modules/path.html">path</a></li>
+                                <li><a href="../modules/underscore.html">underscore</a></li>
+                                <li><a href="../modules/xlsx.html">xlsx</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: Classroom_Scheduler\public\javascripts\DB_Transactions.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+var MongoClient = require(&#x27;mongodb&#x27;).MongoClient;
+var assert = require(&#x27;assert&#x27;);
+var ObjectId = require(&#x27;mongodb&#x27;).ObjectID;
+var u = require(&#x27;underscore&#x27;);
 //URL of database. Change if location of DB changes
-var url = 'mongodb://admin:Password2015@dbh46.mongolab.com:27467/meanapp';
-//var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
+var url = &#x27;mongodb://admin:Password2015@dbh46.mongolab.com:27467/meanapp&#x27;;
+//var url = &#x27;mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler&#x27;;
 var functions = module.exports = {
 
     /**
@@ -31,7 +128,7 @@ var functions = module.exports = {
 				console.log(err);
 			}
 			else {
-                db.collection("Classes").insertOne(class_information, function (err, key) {
+                db.collection(&quot;Classes&quot;).insertOne(class_information, function (err, key) {
                     if (err) {
                         console.log(err);
                     }
@@ -65,12 +162,12 @@ var functions = module.exports = {
             }
             else {
                 if (class_id == false) {
-                    db.collection("Classes").find().toArray(function(err, data){
+                    db.collection(&quot;Classes&quot;).find().toArray(function(err, data){
                         callback(data);
                     });
                 }
                 else {
-                    db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
+                    db.collection(&quot;Classes&quot;).find({_id: new ObjectId(class_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -90,18 +187,18 @@ var functions = module.exports = {
             }
             else {
                 if (class_id == false) {
-                    db.collection("Classes").find().toArray(function(err, data){
+                    db.collection(&quot;Classes&quot;).find().toArray(function(err, data){
          var sorted =    u._.sortBy(data,function(sortthis){
-         var time = sortthis.Class_Time.Start.split(" ");//split class start time by time and AM or PM
-         var timesep = time[0].split(":");//split time based on : markers
+         var time = sortthis.Class_Time.Start.split(&quot; &quot;);//split class start time by time and AM or PM
+         var timesep = time[0].split(&quot;:&quot;);//split time based on : markers
          var actualtime = (timesep[0]*3600);
-            if ( time[1] === 'PM' && timesep[0] != 12){//check if AM or PM..if PM add 12 hours to the time
+            if ( time[1] === &#x27;PM&#x27; &amp;&amp; timesep[0] != 12){//check if AM or PM..if PM add 12 hours to the time
                 actualtime = actualtime + (12 * 3600);
             }
-            if(timesep[1] != '00') {//check the minutes for start time
+            if(timesep[1] != &#x27;00&#x27;) {//check the minutes for start time
                 actualtime = actualtime + (timesep[1] * 60);
             }
-            if(timesep[2] != '00'){//If you really want to be anal with start times check if the seconds are moved
+            if(timesep[2] != &#x27;00&#x27;){//If you really want to be anal with start times check if the seconds are moved
                 actualtime = actualtime + (timesep[2]);
             }
                     return actualtime;
@@ -110,7 +207,7 @@ var functions = module.exports = {
                     });
                 }
                 else {
-                    db.collection("Classes").find({_id: new ObjectId(class_id)}).toArray(function(err, data){
+                    db.collection(&quot;Classes&quot;).find({_id: new ObjectId(class_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -140,7 +237,7 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: class_information}, function (err) {
+                db.collection(&quot;Classes&quot;).updateOne({_id: new ObjectId(id)}, {$set: class_information}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -170,7 +267,7 @@ var functions = module.exports = {
 				console.log(err);
 			}
 			else {
-				db.collection("Classes", function (err, collection) {
+				db.collection(&quot;Classes&quot;, function (err, collection) {
 					collection.removeOne({_id: new ObjectId(id)}, function(){
                         callback();
                     });
@@ -198,7 +295,7 @@ var functions = module.exports = {
                 console.log(err);
             }
             else {
-                db.collection("Classrooms").insertOne(room_information, function (err, key) {
+                db.collection(&quot;Classrooms&quot;).insertOne(room_information, function (err, key) {
                     if (err) {
                         console.log(err);
                     }
@@ -229,12 +326,12 @@ var functions = module.exports = {
             }
             else {
                 if (classroom_id == false) {
-                    db.collection("Classrooms").find().toArray(function(err, data){
+                    db.collection(&quot;Classrooms&quot;).find().toArray(function(err, data){
                         callback(data);
                     });
                 }
                 else {
-                    db.collection("Classrooms").find({_id: new ObjectId(classroom_id)}).toArray(function(err, data){
+                    db.collection(&quot;Classrooms&quot;).find({_id: new ObjectId(classroom_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -249,21 +346,13 @@ var functions = module.exports = {
      * Description:
      *   This function gets classroom information back from the database, specifically the classrooms that are scheduled
      *   in the designated room.*/
-    /**
-     * @function getClassroomByNumber
-     * @param room_number
-     * The room number all the classes are located in.
-     * @description
-     *   This function gets classroom information back from the database, specifically the classrooms that are scheduled
-     *   in the designated room.
-     */
     getClassroomByNumber: function (room_number, callback){  //Corresponds to classroom information for scehduler when id not provided.
         MongoClient.connect(url, function(err, db){
             if (err) {
                 console.log(err);
             }
             else {
-                db.collection("Class_Schedule").find({Room_Number: room_number}).toArray(function(err, data){
+                db.collection(&quot;Class_Schedule&quot;).find({Room_Number: room_number}).toArray(function(err, data){
                     callback(data);
                 });
             }
@@ -277,22 +366,13 @@ var functions = module.exports = {
      * Returns: Nothing
      * Description:
      *   This function updates the specified classroom with the information provided.*/
-    /**
-     * @function updateClassroom
-     * @param id
-     * the id of the classroom to update.
-     * @param room_information
-     * the information to be updated.
-     * @description
-     *   This function updates the specified classroom with the information provided.
-     */
     updateClassroom: function (id, room_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
             }
             else {
-                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: room_information}, function (err) {
+                db.collection(&quot;Classrooms&quot;).updateOne({_id: new ObjectId(id)}, {$set: room_information}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -303,23 +383,14 @@ var functions = module.exports = {
             }
         });
     },
-    /**
-     * @function ValidateRoomAssign
-     * @param id
-     *  The class id value
-     * @param class_information
-     *   Information about the class
-     * @constructor
-     * @description
-     * To check that the room was assigned.  Part of an alternate solution to scheduling.
-     */
+
     ValidateRoomAssign: function (id, class_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
             }
             else {
-                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: class_information}, function (err) {
+                db.collection(&quot;Classes&quot;).updateOne({_id: new ObjectId(id)}, {$set: class_information}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -330,27 +401,18 @@ var functions = module.exports = {
             }
         });
     },
-    /**
-     * @function RunScheduler
-     * @param id
-     * @param room_information
-     * @constructor
-     * @description
-     *  Part of the alternate scheduler solution.
-     */
-
     RunScheduler: function (id, room_information, callback){
         var room_data = {
-            "Room_Number": room_information.Room_Number,
-            "Max_Capacity": room_information.Max_Capacity,
-            "Spec_Trait": room_information.Spec_Trait
+            &quot;Room_Number&quot;: room_information.Room_Number,
+            &quot;Max_Capacity&quot;: room_information.Max_Capacity,
+            &quot;Spec_Trait&quot;: room_information.Spec_Trait
         };
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
             }
             else {
-                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: room_data}, function (err) {
+                db.collection(&quot;Classrooms&quot;).updateOne({_id: new ObjectId(id)}, {$set: room_data}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -373,48 +435,30 @@ var functions = module.exports = {
      * Returns: Nothing
      * Description:
      *   This function takes a valid class assignment and adds it to the database*/
-    /**
-     * @function AssignClass
-     * @param id
-     * the id of the classroom to update.
-     * @param room_information
-     * the room the class is being assigned.
-     * @param course_ID
-     * The unique course ID to be assigned
-     * @param start
-     * The start positon to be filled
-     * @param end
-     * The end position to be filled
-     * @param day
-     * The days of the week of the class
-     * @constructor
-     * @Description
-     *   This function takes a valid class assignment and adds it to the database
-*/
     AssignClass: function (id, room_information, course_ID, start, end, day, callback) {
-        while (start < end) {
+        while (start &lt; end) {
             switch (day) {
-                case "M":
+                case &quot;M&quot;:
                     console.log(room_information.M[start]);
                     room_information.M[start] = course_ID;
                     break;
-                case "T":
+                case &quot;T&quot;:
                     console.log(room_information.T[start]);
                     room_information.T[start] = course_ID;
                     break;
-                case "W":
+                case &quot;W&quot;:
                     console.log(room_information.W[start]);
                     room_information.W[start] = course_ID;
                     break;
-                case "H":
+                case &quot;H&quot;:
                     console.log(room_information.H[start]);
                     room_information.H[start] = course_ID;
                     break;
-                case "F":
+                case &quot;F&quot;:
                     console.log(room_information.F[start]);
                     room_information.F[start] = course_ID;
                     break;
-                case "S":
+                case &quot;S&quot;:
                     console.log(room_information.S[start]);
                     room_information.S[start] = course_ID;
                     break;
@@ -422,7 +466,6 @@ var functions = module.exports = {
             start++;
         }
     },
-
     /*RoomAvailability
      * Created by: Kenneth Thomas
      * Parameters:
@@ -434,198 +477,187 @@ var functions = module.exports = {
      *   6) The day on which the room is being requested.
      * Returns: Value of class assigned to a timeslot
      * Description:
-     *   This function checks the beggining or end time to see if it has been taken for a room. A value of "" means it is free to assign, otherwise this room can't go to that class*/
-    /**
-     * 
-     * @param id
-     * @param room_information
-     * @param hour
-     * @param minute
-     * @param startAP
-     * @param day
-     * @returns {*}
-     * @constructor
-     */
+     *   This function checks the beggining or end time to see if it has been taken for a room. A value of &quot;&quot; means it is free to assign, otherwise this room can&#x27;t go to that class*/
     RoomAvailability: function (id, room_information, hour, minute, startAP, day) {
-        var total = hour + ":" + minute + ":" + startAP;  //designates which time slot to check
+        var total = hour + &quot;:&quot; + minute + &quot;:&quot; + startAP;  //designates which time slot to check
         var position; //Designates which array slot a time corresponds to
         switch (total) {   //find array slot to check
-            case "7:0:A":
+            case &quot;7:0:A&quot;:
                 position = 0;
                 break;
-            case "7:15:A":
+            case &quot;7:15:A&quot;:
                 position = 1;
                 break;
-            case "7:30:A":
+            case &quot;7:30:A&quot;:
                 position = 2;
                 break;
-            case "7:45:A":
+            case &quot;7:45:A&quot;:
                 position = 3;
                 break;
-            case "8:0:A":
+            case &quot;8:0:A&quot;:
                 position = 4;
                 break;
-            case "8:15:A":
+            case &quot;8:15:A&quot;:
                 position = 5;
                 break;
-            case "8:30:A":
+            case &quot;8:30:A&quot;:
                 position = 6;
                 break;
-            case "8:45:A":
+            case &quot;8:45:A&quot;:
                 position = 7;
                 break;
-            case "9:0:A":
+            case &quot;9:0:A&quot;:
                 position = 8;
                 break;
-            case "9:15:A":
+            case &quot;9:15:A&quot;:
                 position = 9;
                 break;
-            case "9:30:A":
+            case &quot;9:30:A&quot;:
                 position = 10;
                 break;
-            case "9:45:A":
+            case &quot;9:45:A&quot;:
                 position = 11;
                 break;
-            case "10:0:A":
+            case &quot;10:0:A&quot;:
                 position = 12;
                 break;
-            case "10:15:A":
+            case &quot;10:15:A&quot;:
                 position = 13;
                 break;
-            case "10:30:A":
+            case &quot;10:30:A&quot;:
                 position = 14;
                 break;
-            case "10:45:A":
+            case &quot;10:45:A&quot;:
                 position = 15;
-            case "11:0:A":
+            case &quot;11:0:A&quot;:
                 position = 16;
                 break;
-            case "11:15:A":
+            case &quot;11:15:A&quot;:
                 position = 17;
                 break;
-            case "11:30:A":
+            case &quot;11:30:A&quot;:
                 position = 18;
                 break;
-            case "11:45:A":
+            case &quot;11:45:A&quot;:
                 position = 19;
                 break;
-            case "12:0:P":
+            case &quot;12:0:P&quot;:
                 position = 20;
                 break;
-            case "12:15:P":
+            case &quot;12:15:P&quot;:
                 position = 21;
                 break;
-            case "12:30:P":
+            case &quot;12:30:P&quot;:
                 position = 22;
                 break;
-            case "12:45:P":
+            case &quot;12:45:P&quot;:
                 position = 23;
                 break;
-            case "1:0:P":
+            case &quot;1:0:P&quot;:
                 position = 24;
                 break;
-            case "1:15:P":
+            case &quot;1:15:P&quot;:
                 position = 25;
                 break;
-            case "1:30:P":
+            case &quot;1:30:P&quot;:
                 position = 26;
                 break;
-            case "1:45:P":
+            case &quot;1:45:P&quot;:
                 position = 27;
                 break;
-            case "2:0:P":
+            case &quot;2:0:P&quot;:
                 position = 28;
                 break;
-            case "2:15:P":
+            case &quot;2:15:P&quot;:
                 position = 29;
                 break;
-            case "2:30:P":
+            case &quot;2:30:P&quot;:
                 position = 30;
                 break;
-            case "2:45:P":
+            case &quot;2:45:P&quot;:
                 position = 31;
                 break;
-            case "3:0:P":
+            case &quot;3:0:P&quot;:
                 position = 32;
                 break;
-            case "3:15:P":
+            case &quot;3:15:P&quot;:
                 position = 33;
                 break;
-            case "3:30:P":
+            case &quot;3:30:P&quot;:
                 position = 34;
                 break;
-            case "3:45:P":
+            case &quot;3:45:P&quot;:
                 position = 35;
-            case "4:0:P":
+            case &quot;4:0:P&quot;:
                 position = 36;
                 break;
-            case "4:15:P":
+            case &quot;4:15:P&quot;:
                 position = 37;
                 break;
-            case "4:30:P":
+            case &quot;4:30:P&quot;:
                 position = 38;
                 break;
-            case "4:45:P":
+            case &quot;4:45:P&quot;:
                 position = 39;
                 break;
-            case "5:0:P":
+            case &quot;5:0:P&quot;:
                 position = 40;
                 break;
-            case "5:15:P":
+            case &quot;5:15:P&quot;:
                 position = 41;
                 break;
-            case "5:30:P":
+            case &quot;5:30:P&quot;:
                 position = 42;
                 break;
-            case "5:45:P":
+            case &quot;5:45:P&quot;:
                 position = 43;
                 break;
-            case "6:0:P":
+            case &quot;6:0:P&quot;:
                 position = 44;
                 break;
-            case "6:15:P":
+            case &quot;6:15:P&quot;:
                 position = 45;
                 break;
-            case "6:30:P":
+            case &quot;6:30:P&quot;:
                 position = 46;
                 break;
-            case "6:45:P":
+            case &quot;6:45:P&quot;:
                 position = 47;
                 break;
-            case "7:0:P":
+            case &quot;7:0:P&quot;:
                 position = 48;
                 break;
-            case "7:15:P":
+            case &quot;7:15:P&quot;:
                 position = 49;
                 break;
-            case "7:30:P":
+            case &quot;7:30:P&quot;:
                 position = 50;
                 break;
-            case "7:45:P":
+            case &quot;7:45:P&quot;:
                 position = 51;
                 break;
-            case "8:0:P":
+            case &quot;8:0:P&quot;:
                 position = 52;
                 break;
-            case "8:15:P":
+            case &quot;8:15:P&quot;:
                 position = 53;
                 break;
-            case "8:30:P":
+            case &quot;8:30:P&quot;:
                 position = 54;
                 break;
-            case "8:45:P":
+            case &quot;8:45:P&quot;:
                 position = 55;
                 break;
-            case "9:0:P":
+            case &quot;9:0:P&quot;:
                 position = 56;
                 break;
-            case "9:15:P":
+            case &quot;9:15:P&quot;:
                 position = 57;
                 break;
-            case "9:30:P":
+            case &quot;9:30:P&quot;:
                 position = 58;
                 break;
-            case "9:45:P":
+            case &quot;9:45:P&quot;:
                 position = 59;
                 break;
             default:
@@ -633,44 +665,44 @@ var functions = module.exports = {
                 break;
         }
         switch (day) {
-            case "M":
+            case &quot;M&quot;:
                 console.log(room_information.M[position]);
-                if (room_information.M[position] == "")
+                if (room_information.M[position] == &quot;&quot;)
                 return position;
                 else
                 return -1  //Already Assigned
                 break;
-            case "T":
+            case &quot;T&quot;:
                 console.log(room_information.T[position]);
-                if (room_information.T[position] == "")
+                if (room_information.T[position] == &quot;&quot;)
                     return position;
                 else
                     return -1  //Already Assigned
                 break;
-            case "W":
+            case &quot;W&quot;:
                 console.log(room_information.W[position]);
-                if (room_information.W[position] == "")
+                if (room_information.W[position] == &quot;&quot;)
                     return position;
                 else
                     return -1  //Already Assigned
                 break;
-            case "H":
+            case &quot;H&quot;:
                 console.log(room_information.H[position]);
-                if (room_information.H[position] == "")
+                if (room_information.H[position] == &quot;&quot;)
                     return position;
                 else
                     return -1  //Already Assigned
                 break;
-            case "F":
+            case &quot;F&quot;:
                 console.log(room_information.F[position]);
-                if (room_information.F[position] == "")
+                if (room_information.F[position] == &quot;&quot;)
                     return position;
                 else
                     return -1  //Already Assigned
                 break;
-            case "S":
+            case &quot;S&quot;:
                 console.log(room_information.S[position]);
-                if (room_information.S[position] == "")
+                if (room_information.S[position] == &quot;&quot;)
                     return position;
                 else
                     return -1  //Already Assigned
@@ -679,22 +711,22 @@ var functions = module.exports = {
     },
 updateClassroomAssigns: function (id, room_information, callback){
         var room_data = {
-            "Room_Number": room_information.Room_Number,
-            "Max_Capacity": room_information.Max_Capacity,
-            "Spec_Trait": room_information.Spec_Trait,
-            "M": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
-            "T": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
-            "W": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
-            "H": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
-            "F": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
-            "S": ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
+            &quot;Room_Number&quot;: room_information.Room_Number,
+            &quot;Max_Capacity&quot;: room_information.Max_Capacity,
+            &quot;Spec_Trait&quot;: room_information.Spec_Trait,
+            &quot;M&quot;: [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
+            &quot;T&quot;: [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
+            &quot;W&quot;: [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
+            &quot;H&quot;: [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
+            &quot;F&quot;: [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
+            &quot;S&quot;: [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;]
         };
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
             }
             else {
-                db.collection("Classrooms").updateOne({_id: new ObjectId(id)}, {$set: room_data}, function (err) {
+                db.collection(&quot;Classrooms&quot;).updateOne({_id: new ObjectId(id)}, {$set: room_data}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -718,7 +750,7 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Classrooms", function (err, collection) {
+                db.collection(&quot;Classrooms&quot;, function (err, collection) {
                     collection.removeOne({_id: new ObjectId(id)}, function () {
                         callback();
                     });
@@ -739,7 +771,7 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Class_Groups").insertOne(group_information, function (err, key) {
+                db.collection(&quot;Class_Groups&quot;).insertOne(group_information, function (err, key) {
                     if (err) {
                         console.log(err);
                     }
@@ -766,12 +798,12 @@ updateClassroomAssigns: function (id, room_information, callback){
             }
             else {
                 if (group_id == false) {
-                    db.collection("Class_Groups").find().toArray(function(err, data){
+                    db.collection(&quot;Class_Groups&quot;).find().toArray(function(err, data){
                         callback(data);
                     });
                 }
                 else {
-                    db.collection("Class_Groups").find({_id: new ObjectId(group_id)}).toArray(function(err, data){
+                    db.collection(&quot;Class_Groups&quot;).find({_id: new ObjectId(group_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -792,7 +824,7 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Class_Groups").updateOne({_id: new ObjectId(id)}, {$set: group_information}, function (err) {
+                db.collection(&quot;Class_Groups&quot;).updateOne({_id: new ObjectId(id)}, {$set: group_information}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -816,7 +848,7 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Class_Groups", function (err, collection) {
+                db.collection(&quot;Class_Groups&quot;, function (err, collection) {
                     collection.removeOne({_id: new ObjectId(id)}, function () {
                         callback();
                     });
@@ -837,7 +869,7 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Class_Schedule").insertMany(u._.compact(schedule_information), function (err) {
+                db.collection(&quot;Class_Schedule&quot;).insertMany(u._.compact(schedule_information), function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -864,12 +896,12 @@ updateClassroomAssigns: function (id, room_information, callback){
             }
             else {
                 if (sched_id == false) {
-                    db.collection("Class_Schedule").find().toArray(function(err, data){
+                    db.collection(&quot;Class_Schedule&quot;).find().toArray(function(err, data){
                         callback(data);
                     });
                 }
                 else {
-                    db.collection("Class_Schedule").find({_id: new ObjectId(sched_id)}).toArray(function(err, data){
+                    db.collection(&quot;Class_Schedule&quot;).find({_id: new ObjectId(sched_id)}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -885,12 +917,12 @@ updateClassroomAssigns: function (id, room_information, callback){
             }
             else {
                 if (sched_id == false) {
-                    db.collection("Class_Schedule").find().toArray(function(err, data){
+                    db.collection(&quot;Class_Schedule&quot;).find().toArray(function(err, data){
                         callback(data);
                     });
                 }
                 else {
-                    db.collection("Class_Schedule").find({Room_Number: room_number}).toArray(function(err, data){
+                    db.collection(&quot;Class_Schedule&quot;).find({Room_Number: room_number}).toArray(function(err, data){
                         callback(data);
                     });
                 }
@@ -911,7 +943,7 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Classes").updateOne({_id: new ObjectId(id)}, {$set: {Room_Assigned: sched_information.Room_Assigned}},{upsert:true}, function (err) {
+                db.collection(&quot;Classes&quot;).updateOne({_id: new ObjectId(id)}, {$set: {Room_Assigned: sched_information.Room_Assigned}},{upsert:true}, function (err) {
                     if (err) {
                         console.log(err);
                     }
@@ -935,7 +967,7 @@ updateClassroomAssigns: function (id, room_information, callback){
 					console.log(err);
 				}
 				else {
-                    db.collection("Class_Schedule", function (err, collection) {
+                    db.collection(&quot;Class_Schedule&quot;, function (err, collection) {
                         collection.removeOne({_id: new ObjectId(id)}, function () {
                             callback();
                         });
@@ -955,9 +987,9 @@ updateClassroomAssigns: function (id, room_information, callback){
                 console.log(err);
             }
             else {
-                db.collection("Classes").remove({});
-                db.collection("Class_Groups").remove({});
-                db.collection("Class_Schedule").remove({});
+                db.collection(&quot;Classes&quot;).remove({});
+                db.collection(&quot;Class_Groups&quot;).remove({});
+                db.collection(&quot;Class_Schedule&quot;).remove({});
                 callback();
             }
         });
@@ -975,7 +1007,7 @@ updateClassroomAssigns: function (id, room_information, callback){
             console.log(err);
         }
         else {
-            db.collection("Class_Schedule").remove({});
+            db.collection(&quot;Class_Schedule&quot;).remove({});
             callback();
         }
     });
@@ -995,34 +1027,34 @@ updateClassroomAssigns: function (id, room_information, callback){
 function importExcelToDb(put) {
     var dbAdditions = [];
 
-    for (var x = 0; x < put.length; x++) {//iterating through courses
+    for (var x = 0; x &lt; put.length; x++) {//iterating through courses
         //This is the array of data needing an insert into the classes table.
         dbAdditions[x] = {
-            "Subject": put[x]["Subject"],
-            "Course_ID": put[x]["Catalog"],
-            "Section_ID": put[x]["Section"],
-            "Class_ID": put[x]["Class Nbr"],
-            "Course_Title": put[x]["Title"],
-            "Lecture_Type": put[x]["Component"],
-            "Class_Time": {
-                "Start": put[x]["Mtg Start"],
-                "End": put[x]["Mtg End"],
-                "Days": put[x]["Pat"]
+            &quot;Subject&quot;: put[x][&quot;Subject&quot;],
+            &quot;Course_ID&quot;: put[x][&quot;Catalog&quot;],
+            &quot;Section_ID&quot;: put[x][&quot;Section&quot;],
+            &quot;Class_ID&quot;: put[x][&quot;Class Nbr&quot;],
+            &quot;Course_Title&quot;: put[x][&quot;Title&quot;],
+            &quot;Lecture_Type&quot;: put[x][&quot;Component&quot;],
+            &quot;Class_Time&quot;: {
+                &quot;Start&quot;: put[x][&quot;Mtg Start&quot;],
+                &quot;End&quot;: put[x][&quot;Mtg End&quot;],
+                &quot;Days&quot;: put[x][&quot;Pat&quot;]
             },
-            "Instructor": {
-                First_Name: put[x]["First Name"],
-                Last_Name: put[x]["Last"]
+            &quot;Instructor&quot;: {
+                First_Name: put[x][&quot;First Name&quot;],
+                Last_Name: put[x][&quot;Last&quot;]
             },
-            "Class_Capacity": put[x]["Cap Enrl"],
-            "Description": put[x]["Descr"],
-            "Acad_Group": put[x]["Acad Group"],
-            "Tot_Enrl": put[x]["Tot Enrl"],
-            "Start_Date": put[x]["Start Date"],
-            "End_Date": put[x]["End Date"],
-            "Session": put[x]["Session"],
-            "Location": put[x]["Location"],
-            "Mode": put[x]["Mode"],
-            "CrsAtr_Val": put[x]["CrsAtr_Val"]
+            &quot;Class_Capacity&quot;: put[x][&quot;Cap Enrl&quot;],
+            &quot;Description&quot;: put[x][&quot;Descr&quot;],
+            &quot;Acad_Group&quot;: put[x][&quot;Acad Group&quot;],
+            &quot;Tot_Enrl&quot;: put[x][&quot;Tot Enrl&quot;],
+            &quot;Start_Date&quot;: put[x][&quot;Start Date&quot;],
+            &quot;End_Date&quot;: put[x][&quot;End Date&quot;],
+            &quot;Session&quot;: put[x][&quot;Session&quot;],
+            &quot;Location&quot;: put[x][&quot;Location&quot;],
+            &quot;Mode&quot;: put[x][&quot;Mode&quot;],
+            &quot;CrsAtr_Val&quot;: put[x][&quot;CrsAtr_Val&quot;]
         };
     }
     MongoClient.connect(url, function (err, db) {
@@ -1030,34 +1062,34 @@ function importExcelToDb(put) {
             console.log(err);
         }
         else {
-            db.collection("Classes").insertMany(dbAdditions, function (err) {
+            db.collection(&quot;Classes&quot;).insertMany(dbAdditions, function (err) {
                 if (err) {
                     console.log(err);
                 }
                 else { //Ok, we now have all the classes into the database, so we need to do the same thing with the class groups,
                  //because apparently the idea of making the groups decided through human interaction, like was suggested,
-                 //isn't good enough for this project, even though there isn't any intuitive way to solve this problem.*/
+                 //isn&#x27;t good enough for this project, even though there isn&#x27;t any intuitive way to solve this problem.*/
                     var groups = [];
                     var group_ids = [];
-                    for (var x = 0; x < dbAdditions.length; x++) {
+                    for (var x = 0; x &lt; dbAdditions.length; x++) {
                         if (err) {
                             console.log(err);
                         }
                         else {
                                 var found = false;
-                                for (var y = 0; y < groups.length; y++) {
+                                for (var y = 0; y &lt; groups.length; y++) {
                                     //We have to check the parameters down below to test if the two classes are in the same group.
-                                    if (groups[y]["First_Name"].valueOf() == dbAdditions[x]["Instructor"]["First_Name"].valueOf() &&
-                                        groups[y]["Last_Name"].valueOf() == dbAdditions[x]["Instructor"]["Last_Name"].valueOf() &&
-                                        groups[y]["Pat"].valueOf() == dbAdditions[x]["Class_Time"]["Days"].valueOf() &&
-                                        groups[y]["Start"].valueOf() == dbAdditions[x]["Class_Time"]["Start"].valueOf()) {
+                                    if (groups[y][&quot;First_Name&quot;].valueOf() == dbAdditions[x][&quot;Instructor&quot;][&quot;First_Name&quot;].valueOf() &amp;&amp;
+                                        groups[y][&quot;Last_Name&quot;].valueOf() == dbAdditions[x][&quot;Instructor&quot;][&quot;Last_Name&quot;].valueOf() &amp;&amp;
+                                        groups[y][&quot;Pat&quot;].valueOf() == dbAdditions[x][&quot;Class_Time&quot;][&quot;Days&quot;].valueOf() &amp;&amp;
+                                        groups[y][&quot;Start&quot;].valueOf() == dbAdditions[x][&quot;Class_Time&quot;][&quot;Start&quot;].valueOf()) {
                                         try {
                                             //Try adding this new object to the group_ids array.
-                                            group_ids[y]["id" + Object.keys(group_ids[y]).length] = dbAdditions[x]["_id"];
+                                            group_ids[y][&quot;id&quot; + Object.keys(group_ids[y]).length] = dbAdditions[x][&quot;_id&quot;];
                                             var cap = parseInt(group_ids[y].Class_Capacity);
                                             var cap2 =parseInt(dbAdditions[x].Class_Capacity);
                                             var cap = cap + cap2;
-                                            group_ids[y]["Class_Capacity"] = cap; //get the combined cap for the group
+                                            group_ids[y][&quot;Class_Capacity&quot;] = cap; //get the combined cap for the group
                                         }
                                         catch(err){
                                             console.log(err);
@@ -1067,20 +1099,20 @@ function importExcelToDb(put) {
                                 }
                                 if (!found) {
                                     groups[groups.length] = { //Add this as a new group at a new index.
-                                        "First_Name": dbAdditions[x]["Instructor"]["First_Name"],
-                                        "Last_Name": dbAdditions[x]["Instructor"]["Last_Name"],
-                                        "Pat": dbAdditions[x]["Class_Time"]["Days"],
-                                        "Start": dbAdditions[x]["Class_Time"]["Start"]
+                                        &quot;First_Name&quot;: dbAdditions[x][&quot;Instructor&quot;][&quot;First_Name&quot;],
+                                        &quot;Last_Name&quot;: dbAdditions[x][&quot;Instructor&quot;][&quot;Last_Name&quot;],
+                                        &quot;Pat&quot;: dbAdditions[x][&quot;Class_Time&quot;][&quot;Days&quot;],
+                                        &quot;Start&quot;: dbAdditions[x][&quot;Class_Time&quot;][&quot;Start&quot;]
                                     };
                                     try {
                                         group_ids[groups.length] = new Object(); //Create a new object in the group_ids table.
-                                        group_ids[groups.length]["Course_Title"] = dbAdditions[x].Course_Title;//Data about the group
-                                        group_ids[groups.length]["Instructor"] = dbAdditions[x].Instructor.First_Name +" "+ dbAdditions[x].Instructor.Last_Name;
-                                        group_ids[groups.length]["Start"] = dbAdditions[x].Class_Time.Start;
-                                        group_ids[groups.length]["End"] = dbAdditions[x].Class_Time.End;
-                                        group_ids[groups.length]["Days"] = dbAdditions[x].Class_Time.Days;
-                                        group_ids[groups.length]["Class_Capacity"] = dbAdditions[x].Class_Capacity;
-                                        group_ids[groups.length]["id0"] = dbAdditions[x]["_id"];  //Add this as the first new id in that table.
+                                        group_ids[groups.length][&quot;Course_Title&quot;] = dbAdditions[x].Course_Title;//Data about the group
+                                        group_ids[groups.length][&quot;Instructor&quot;] = dbAdditions[x].Instructor.First_Name +&quot; &quot;+ dbAdditions[x].Instructor.Last_Name;
+                                        group_ids[groups.length][&quot;Start&quot;] = dbAdditions[x].Class_Time.Start;
+                                        group_ids[groups.length][&quot;End&quot;] = dbAdditions[x].Class_Time.End;
+                                        group_ids[groups.length][&quot;Days&quot;] = dbAdditions[x].Class_Time.Days;
+                                        group_ids[groups.length][&quot;Class_Capacity&quot;] = dbAdditions[x].Class_Capacity;
+                                        group_ids[groups.length][&quot;id0&quot;] = dbAdditions[x][&quot;_id&quot;];  //Add this as the first new id in that table.
                                     }
                                     catch(err){
                                         console.log(err);
@@ -1093,7 +1125,7 @@ function importExcelToDb(put) {
                             console.log(err);
                         }
                         else {
-                            db.collection("Class_Groups").insertMany(u._.compact(group_ids), function (err) {
+                            db.collection(&quot;Class_Groups&quot;).insertMany(u._.compact(group_ids), function (err) {
                                 if (err) {
                                     console.log(err);
                                 }
@@ -1106,3 +1138,22 @@ function importExcelToDb(put) {
     });
 }
 
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

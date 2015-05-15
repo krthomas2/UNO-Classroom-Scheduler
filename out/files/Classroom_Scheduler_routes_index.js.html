@@ -38,6 +38,7 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/DB_Transactions.html">DB_Transactions</a></li>
                                 <li><a href="../classes/downloadSchedule.html">downloadSchedule</a></li>
                                 <li><a href="../classes/generateSchedule.html">generateSchedule</a></li>
                                 <li><a href="../classes/index.js.html">index.js</a></li>
@@ -494,7 +495,11 @@ router.post(&#x27;/removeroomdata&#x27;, function(req,res){
 
 
 
-
+/**
+ * @function clearSchedule
+ * @description
+ * Clears the Schedule database entries.
+ */
 
 /* Clear the Schedule */
 router.get(&#x27;/clearSchedule&#x27;, function(req, res){
@@ -502,7 +507,11 @@ router.get(&#x27;/clearSchedule&#x27;, function(req, res){
     res.redirect(&#x27;/createSchedule&#x27;);
   });
 });
-
+/**
+ * @function clearScheduler
+ * @description
+ * Purges the database of everything except rooms
+ */
 /* Purge database */
 router.get(&#x27;/clearScheduler&#x27;, function(req, res){
   dbactions.clearScheduler(function(){
