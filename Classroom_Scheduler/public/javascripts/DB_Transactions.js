@@ -61,6 +61,26 @@ var functions = module.exports = {
         });
     },
 
+    getClassForCourseID: function (course_id, callback){
+        course_id = course_id || false;
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                if (course_id_id == false) {
+                    db.collection("Classes").find().toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+                else {
+                    db.collection("Classes").find({Course_ID: course_id}).toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+            }
+        });
+    },
     getClassStart: function (class_id, callback){
         class_id = class_id || false;
         MongoClient.connect(url, function(err, db){
