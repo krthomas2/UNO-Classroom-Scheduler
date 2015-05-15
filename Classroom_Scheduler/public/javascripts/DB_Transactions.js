@@ -922,7 +922,15 @@ updateClassroomAssigns: function (id, room_information, callback){
      * Description:
      *   This function gets scheduling information back from the database. Either it will get one scheduled class if an id is
      *   specified, otherwise it returns all the schedule information in the database.*/
-	getSchedule: function (sched_id, callback){
+    /**
+     * @function getSchedule
+     * @param sched_id
+     *  Optional: The schedule id
+     * @description
+     * This function gets scheduling information back from the database. Either it will get one scheduled class if an id is
+     * specified, otherwise it returns all the schedule information in the database.
+     */
+    getSchedule: function (sched_id, callback){
         sched_id = sched_id || false;
         MongoClient.connect(url, function(err, db){
             if (err) {
@@ -942,7 +950,15 @@ updateClassroomAssigns: function (id, room_information, callback){
             }
         });
 	},
-
+    /**
+     * @function getScheduleByRoom
+     * @param sched_id
+     *  Unique schedule identifier
+     * @param room_number
+     *  Room number in question
+     *  @description
+     *  Gets data from schedule table for a specific room.
+     */
     getScheduleByRoom: function (sched_id, room_number, callback){
         sched_id = sched_id || false;
         MongoClient.connect(url, function(err, db){
@@ -971,7 +987,16 @@ updateClassroomAssigns: function (id, room_information, callback){
      * Returns: Nothing
      * Description:
      *   This function updates the specified schedule information with the information provided.*/
-	updateSched: function (id, sched_information, callback){
+    /**
+     * @function updateSched
+     * @param id
+     * the id of the scheduled class to update.
+     * @param sched_information
+     * the information to be updated.
+     * @description callback
+     *   This function updates the specified schedule information with the information provided.
+     */
+    updateSched: function (id, sched_information, callback){
         MongoClient.connect(url, function(err, db) {
             if (err){
                 console.log(err);
@@ -995,7 +1020,14 @@ updateClassroomAssigns: function (id, room_information, callback){
      * Returns: None
      * Description:
      *   This function removes one scheduled class room combination from the database, specifically the one for which the id was passed.*/
-	removeSched: function (id, callback){
+    /**
+     * @function removeSched
+     * @param id
+     *   the id of the scheduled information to remove from the database.
+     * @description
+     *   This function removes one scheduled class room combination from the database, specifically the one for which the id was passed.
+     */
+    removeSched: function (id, callback){
 		MongoClient.connect(url, function(err, db) {
 				if (err) {
 					console.log(err);
@@ -1015,6 +1047,11 @@ updateClassroomAssigns: function (id, room_information, callback){
      * Returns: None
      * Description:
      *   This function clears all the information from the database, with the exception of room information.*/
+    /**
+     * @function ClearScheduler
+     * @description
+     * Purges the database of everything except classrooms.
+     */
     clearScheduler: function(callback){
         MongoClient.connect(url, function(err, db) {
             if (err) {
@@ -1035,6 +1072,11 @@ updateClassroomAssigns: function (id, room_information, callback){
 * Description:
 *   This function clears all the information from the schedule, leaving the other tables alone
 */
+    /**
+     * @function clearSchedule
+     * @description
+     * Clears only the schedule table.
+     */
     clearSchedule: function(callback){
     MongoClient.connect(url, function(err, db) {
         if (err) {
@@ -1047,7 +1089,6 @@ updateClassroomAssigns: function (id, room_information, callback){
     });
 },
     /*Excel Import*/
-
 	importExcelToDb: importExcelToDb
 }
 /*importExcelToDB
@@ -1058,6 +1099,13 @@ updateClassroomAssigns: function (id, room_information, callback){
  * Description:
  *   This function is designed to help get the information imported from the uploaded excel spreadsheet and adds it all
  *   to the database. This function also creates the class grouping information necessary to combine all the classes.*/
+/**
+ * @function importExcelToDb
+ * @param put
+ *  An array of classdata needing a wrapper to make an object.
+ * @description
+ *  Takes and automates inserting data/groups when using the excel upload option.
+ */
 function importExcelToDb(put) {
     var dbAdditions = [];
 
