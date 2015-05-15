@@ -869,11 +869,12 @@ updateClassroomAssigns: function (id, room_information, callback){
             }
         });
     },
-    /*
+/* clearSchedule
+* Created by: TJ
 * Parameters: None
 * Returns: None
 * Description:
-*   This function clears all the information from the schedule
+*   This function clears all the information from the schedule, leaving the other tables alone
 */
     clearSchedule: function(callback){
     MongoClient.connect(url, function(err, db) {

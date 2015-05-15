@@ -52,7 +52,43 @@ router.get('/classes', function(req, res, next) {
 router.get('/getaddclass', function(req, res, next) {
   res.render('addclass', { title: 'Classes' });
 });
-    /* Class edit page */
+
+      /* Send the new class to the database*/
+router.post('/addClass', function(req,res){
+  var class_data = {
+    "Subject": req.body.Subject,
+    "Course_ID": req.body.Catalog,
+    "Section_ID": req.body.Section,
+    "Class_ID": req.body.Class,
+    "Course_Title": req.body.Title,
+    "Lecture_Type": req.body.Component,
+    "Class_Time": {
+      "Start": req.body.MtgS,
+      "End": req.body.MtgE,
+      "Days": req.body.Pat
+    },
+    "Instructor": {
+      First_Name: req.body.First,
+      Last_Name: req.body.Last
+    },
+    "Class_Capacity": req.body.Cap,
+    "Description": req.body.Descr,
+    "Acad_Group": req.body.Acad,
+    "Tot_Enrl": req.body.Tot,
+    "Start_Date": req.body.Start,
+    "End_Date": req.body.End,
+    "Session": req.body.Session,
+    "Location": req.body.Location,
+    "Mode": req.body.Mode,
+    "CrsAtr_Val": req.body.CrsAtr_Val,
+    "Group_ID": req.body.Class
+  };
+  dbactions.insertClass(class_data, function(){
+    //empty for return
+  });
+  res.redirect('/classes');
+});
+/* Class edit page */
 router.get('/editclass',function(req,res){
   dbactions.getClass(false,function(data){
     res.render('editClass',{rooms: data, title:"rooms"});
@@ -63,6 +99,42 @@ router.get('/getClassInfo', function(req, res){//set values for class room data
   dbactions.getClass(req.query.id, function(data){
     res.send(data);
   });
+});
+      /* Send edit class data to the database */
+router.post('/editClassData', function(req,res){
+  var class_data = {
+    "Subject": req.body.Subject,
+    "Course_ID": req.body.Catalog,
+    "Section_ID": req.body.Section,
+    "Class_ID": req.body.Class,
+    "Course_Title": req.body.Title,
+    "Lecture_Type": req.body.Component,
+    "Class_Time": {
+      "Start": req.body.MtgS,
+      "End": req.body.MtgE,
+      "Days": req.body.Pat
+    },
+    "Instructor": {
+      First_Name: req.body.First,
+      Last_Name: req.body.Last
+    },
+    "Class_Capacity": req.body.Cap,
+    "Description": req.body.Descr,
+    "Acad_Group": req.body.Acad,
+    "Tot_Enrl": req.body.Tot,
+    "Start_Date": req.body.Start,
+    "End_Date": req.body.End,
+    "Session": req.body.Session,
+    "Location": req.body.Location,
+    "Mode": req.body.Mode,
+    "CrsAtr_Val": req.body.CrsAtr_Val,
+    "Room_Assigned": req.body.Room_Assigned,
+    "Group": req.body.group
+  };
+  dbactions.updateClass(req.body._id,class_data,function(){
+    //empty for return
+  });
+  res.redirect('/classes');
 });
     /* Remove class page */
 router.get('/getremoveclassy', function(req, res){
@@ -145,8 +217,21 @@ router.get('/createSchedule', function(req, res, next) {
 router.get('/editSchedule', function(req, res, next) {
   res.render('editSchedule', { title: 'Rooms' });
 });
+/* Clear the Schedule */
+router.get('/clearSchedule', function(req, res){
+  dbactions.clearSchedule(function(){
+    res.redirect('/createSchedule');
+  });
+});
 /* GET Practice. */
 router.get('/practice', function(req, res, next) {
   res.render('practice', { title: 'Express' });
 });
 module.exports = router;
+
+/* Purge database */
+router.get('/clearScheduler', function(req, res){
+  dbactions.clearScheduler(function(){
+    res.redirect('/');
+  });
+});

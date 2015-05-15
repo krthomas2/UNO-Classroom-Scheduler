@@ -37,8 +37,9 @@ app.use('/', routes);
 app.use('/users', users);
 app.use(multer({ dest: './uploads/'}));
 
-//Get Methods below -- These methods populate the jade pages with proper data.
 
+
+/*Schedule Algorithm follows */
 app.get('/generateSchedule', function(req,res){
     dbactions.getClassGroup(false, function(classbytime){
         dbactions.getClassroom(false, function(rooms){
@@ -254,24 +255,6 @@ app.get('/generateSchedule', function(req,res){
     });
 });
 
-
-
-
-
-//Not Needed delete after auto-insert is done
-app.get('/addgroup',function(req,res){
-  dbactions.getClass(false,function(data){
-    var courses;
-    for(x in data){
-      courses : data[x];
-      console.log(courses);
-
-    }
-    res.render('addgroup',{classys: data.unique, classys2: data,title:"Groups"});
-  });
-});
-
-
 /*
 app.get('/automateSchedule', function(req, res){
     var g;
@@ -366,22 +349,10 @@ app.get('/unassignSchedule', function(req, res){
 
     });
 });
-app.get('/clearSchedule', function(req, res){
-    dbactions.clearSchedule(function(){
-        res.redirect('/createSchedule');
-    });
-});
 
-app.get('/clearScheduler', function(req, res){
-  dbactions.clearScheduler(function(){
-    res.redirect('/');
-  });
-});
 
- // dbactions.getClass(false, function(data){
- //   res.render('editSchedule', {rooms: data,title: "Classes"});
-//})
-//);
+
+
 
 app.get('/downloadSchedule', function(req, res) {
   var classy;
@@ -458,83 +429,9 @@ app.get('/downloadSchedule', function(req, res) {
 });
 
 
-//Post Methods Below -- These are the actions to modify the database
 
+/*
 
-
-app.post('/addClass', function(req,res){
-  var class_data = {
-    "Subject": req.body.Subject,
-    "Course_ID": req.body.Catalog,
-    "Section_ID": req.body.Section,
-    "Class_ID": req.body.Class,
-    "Course_Title": req.body.Title,
-    "Lecture_Type": req.body.Component,
-    "Class_Time": {
-      "Start": req.body.MtgS,
-      "End": req.body.MtgE,
-      "Days": req.body.Pat
-    },
-    "Instructor": {
-      First_Name: req.body.First,
-      Last_Name: req.body.Last
-    },
-    "Class_Capacity": req.body.Cap,
-    "Description": req.body.Descr,
-    "Acad_Group": req.body.Acad,
-    "Tot_Enrl": req.body.Tot,
-    "Start_Date": req.body.Start,
-    "End_Date": req.body.End,
-    "Session": req.body.Session,
-    "Location": req.body.Location,
-    "Mode": req.body.Mode,
-    "CrsAtr_Val": req.body.CrsAtr_Val,
-    "Group_ID": req.body.Class
-  };
-  dbactions.insertClass(class_data, function(){
-    //empty for return
-  });
-  res.redirect('/classes');
-});
-
-app.post('/editClassData', function(req,res){
-  var class_data = {
-    "Subject": req.body.Subject,
-    "Course_ID": req.body.Catalog,
-    "Section_ID": req.body.Section,
-    "Class_ID": req.body.Class,
-    "Course_Title": req.body.Title,
-    "Lecture_Type": req.body.Component,
-    "Class_Time": {
-      "Start": req.body.MtgS,
-      "End": req.body.MtgE,
-      "Days": req.body.Pat
-    },
-    "Instructor": {
-      First_Name: req.body.First,
-      Last_Name: req.body.Last
-    },
-    "Class_Capacity": req.body.Cap,
-    "Description": req.body.Descr,
-    "Acad_Group": req.body.Acad,
-    "Tot_Enrl": req.body.Tot,
-    "Start_Date": req.body.Start,
-    "End_Date": req.body.End,
-    "Session": req.body.Session,
-    "Location": req.body.Location,
-    "Mode": req.body.Mode,
-    "CrsAtr_Val": req.body.CrsAtr_Val,
-    "Room_Assigned": req.body.Room_Assigned,
-    "Group": req.body.group
-  };
-  dbactions.getClassroomByNumber(class_data.Room_Assigned, function(rooms) {
-     console.log(rooms.Room_Number);
-  })
-  dbactions.updateClass(req.body._id,class_data,function(){
-    //empty for return
-  });
-  res.redirect('/classes');
-});
 
 app.post('/runScheduler', function(req,res){
   console.log(req.body);
@@ -578,6 +475,7 @@ app.post('/automateScheduleData', function(req,res){
 });
 
 
+*/
 
 app.post('/', function(req, res, next) {
   var temp_path = req.files.filer.path;
