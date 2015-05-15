@@ -16,9 +16,9 @@ router.get('/calendar', function(req, res){
 
 router.get('/getCalendarInfo', function(req, res){
   var class_list = [];
-  dbactions.getClassroomByNumber(req.query.room_number, function(class_ids){
+  dbactions.getScheduleByRoom(true, req.query.room_number, function(class_ids){
     for (var x = 0; x < class_ids.length; x++) {
-      dbactions.getClass(class_ids[x]["class_id"], function (classInfo) {
+      dbactions.getClass(class_ids[x].Class_ID, function (classInfo) {
         class_list.push(classInfo);
         if (class_ids.length == class_list.length) {
           res.send(class_list);

@@ -804,6 +804,27 @@ updateClassroomAssigns: function (id, room_information, callback){
             }
         });
 	},
+
+    getScheduleByRoom: function (sched_id, room_number, callback){
+        sched_id = sched_id || false;
+        MongoClient.connect(url, function(err, db){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                if (sched_id == false) {
+                    db.collection("Class_Schedule").find().toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+                else {
+                    db.collection("Class_Schedule").find({Room_Number: room_number}).toArray(function(err, data){
+                        callback(data);
+                    });
+                }
+            }
+        });
+    },
     /*updateSched
      * Created by: Nick Boeckman
      * Parameters:
