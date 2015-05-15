@@ -869,7 +869,23 @@ updateClassroomAssigns: function (id, room_information, callback){
             }
         });
     },
-
+    /*
+* Parameters: None
+* Returns: None
+* Description:
+*   This function clears all the information from the schedule
+*/
+    clearSchedule: function(callback){
+    MongoClient.connect(url, function(err, db) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            db.collection("Class_Schedule").remove({});
+            callback();
+        }
+    });
+},
     /*Excel Import*/
 
 	importExcelToDb: importExcelToDb

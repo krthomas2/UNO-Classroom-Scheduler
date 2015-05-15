@@ -244,8 +244,7 @@ app.get('/generateSchedule', function(req,res){
             fs.writeFileSync('NotAdded.xlsx', xls, 'binary');//create the excel file
 
             dbactions.insertSched(u._.compact(schedule));//add non-null entries to the database
-            res.download('NotAdded.xlsx');//download the excel file not sure why it doesn't stay on top of the window, but it does download
-            res.redirect('/calendar');//to view the schedule hour to hour
+            res.download('NotAdded.xlsx');//download the excel file of groups that couldn't be added
 
         });
 
@@ -273,6 +272,7 @@ app.get('/addgroup',function(req,res){
 });
 
 
+/*
 app.get('/automateSchedule', function(req, res){
     var g;
     var classy;
@@ -337,6 +337,7 @@ app.get('/automateSchedule', function(req, res){
         });
     });
 });
+*/
 
 /*unassignSchedule
  * Created by: Kenneth Thomas
@@ -345,7 +346,7 @@ app.get('/automateSchedule', function(req, res){
  *   2) the res which is the paramater used to kill.
  * Returns: Nothing
  * Description:
- *   Yhis function 0's out the Room Assigned and the availability of all rooms to make the scheduler start over from scratch.*/
+ *   This function 0's out the Room Assigned and the availability of all rooms to make the scheduler start over from scratch.*/
 app.get('/unassignSchedule', function(req, res){
     dbactions.getClassStart(false, function (data) {
         for (x in data) {
@@ -363,6 +364,11 @@ app.get('/unassignSchedule', function(req, res){
             });
         };
 
+    });
+});
+app.get('/clearSchedule', function(req, res){
+    dbactions.clearSchedule(function(){
+        res.redirect('/createSchedule');
     });
 });
 
