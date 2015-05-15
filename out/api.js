@@ -3,7 +3,12 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "DB_Transactions",
         "downloadSchedule",
+        "editClass",
+        "editGroup",
+        "editRoom",
+        "editSchedule",
         "generateSchedule",
+        "getCalendarInfo",
         "index.js",
         "upload"
     ],

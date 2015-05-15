@@ -1,6 +1,13 @@
 /* Created by Kenneth
 *Early prototype to scheduler
  */
+/**
+ * @class editSchedule
+ * @param info
+ *  Schedule _id for expected schedule data
+ * @description
+ * Early prototype to scheduler
+ */
 function editSchedule(info) {
     $.get('/getSchedule', {id: info}, function (data) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
         $("#Room_Assigned").val(data[0].Room_Assigned);

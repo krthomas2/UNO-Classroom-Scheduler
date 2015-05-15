@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>body-parser</title>
+    <title>Classroom_Scheduler\public\javascripts\editSchedule.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -96,29 +96,30 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>body-parser Module</h1>
-<div class="box clearfix meta">
+<h1 class="file-heading">File: Classroom_Scheduler\public\javascripts\editSchedule.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*
+*Created by All
+* Gets Schedule information and puts it on edit page, in theory
+*
+ */
+/**
+ * Gets Schedule information and puts it on edit page
+ * @class editSchedule
+ * @param info
+ *  Schedule _id for expected schedule data
+ */
+function editSchedule(info) {
+    $.get(&#x27;/getScheduleInfo&#x27;, {id: info}, function (data) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
+        $(&quot;#_id&quot;).val(data[0]._id);
+        $(&quot;#Room_Number&quot;).val(data[0].Room_Number);
+    });
+};
 
 
-        <div class="foundat">
-            Defined in: <a href="../files/Classroom_Scheduler_app.js.html#l28"><code>Classroom_Scheduler\app.js:28</code></a>
-        </div>
-
-</div>
-
-
-<div class="box intro">
-    <p>Body-Parser is used by Express as part of the generation of the starter app</p>
-
-</div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-    </div>
-
-    <div class="yui3-u-1-2">
-    </div>
+    </pre>
 </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>body-parser</title>
+    <title>Classroom_Scheduler\public\javascripts\Scheduler.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -96,29 +96,49 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>body-parser Module</h1>
-<div class="box clearfix meta">
+<h1 class="file-heading">File: Classroom_Scheduler\public\javascripts\Scheduler.js</h1>
 
+<div class="file">
+    <pre class="code prettyprint linenums">
+/* Created by Kenneth
+*Early prototype to scheduler
+ */
+/**
+ * @class editSchedule
+ * @param info
+ *  Schedule _id for expected schedule data
+ * @description
+ * Early prototype to scheduler
+ */
+function editSchedule(info) {
+    $.get(&#x27;/getSchedule&#x27;, {id: info}, function (data) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
+        $(&quot;#Room_Assigned&quot;).val(data[0].Room_Assigned);
+        $(&quot;#MtgS&quot;).val(data[0].Class_Time.Start);
+        $(&quot;#MtgE&quot;).val(data[0].Class_Time.End);
+        $(&quot;#Pat&quot;).val(data[0].Class_Time.Days);
+    });
+};
 
-        <div class="foundat">
-            Defined in: <a href="../files/Classroom_Scheduler_app.js.html#l28"><code>Classroom_Scheduler\app.js:28</code></a>
-        </div>
-
-</div>
-
-
-<div class="box intro">
-    <p>Body-Parser is used by Express as part of the generation of the starter app</p>
-
-</div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-    </div>
-
-    <div class="yui3-u-1-2">
-    </div>
+function editSchedule() {
+    myname = &quot;Joe&quot;;
+    alert(myname);
+}
+db.open(function(err, db) {
+    db.collection(&#x27;Customers&#x27;, function(err, collection) {
+        collection.find(function(err, cursor) {
+            cursor.each(function(err, customer) {
+                if(customer != null){
+                    console.log(&#x27;First Name: &#x27; + customer.firstName);
+                    console.log(&#x27;Last Name: &#x27; + customer.lastName);
+                }
+                else{
+                    db.close();
+                }
+            });
+        });
+    });
+});
+    </pre>
 </div>
                     </div>
                 </div>

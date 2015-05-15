@@ -4,6 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 var u = require('underscore');
 //URL of database. Change if location of DB changes
 var url = 'mongodb://admin:Password2015@dbh46.mongolab.com:27467/meanapp';
+/* Example of secondary url string below */
 //var url = 'mongodb://admin:Password2015@ds029640.mongolab.com:29640/classroom_scheduler';
 var functions = module.exports = {
 
@@ -77,6 +78,9 @@ var functions = module.exports = {
             }
         });
     },
+    /*getClassStart
+    *Created by Kenneth and TJ
+    */
     /**
      *@function getClassStart
      * @description

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>body-parser</title>
+    <title>Classroom_Scheduler\public\javascripts\getCalendarInfo.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -96,29 +96,88 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>body-parser Module</h1>
-<div class="box clearfix meta">
+<h1 class="file-heading">File: Classroom_Scheduler\public\javascripts\getCalendarInfo.js</h1>
 
+<div class="file">
+    <pre class="code prettyprint linenums">
+/*getCalendarInfo
+ * Created by: Nick Boeckman
+ * Parameters:
+ *   the room number requested to get information for.
+ * Returns: Technically nothing... Really though it updates the table in calendar.jade to have all the information from
+ *  the database for the room number passed in.
+ * Description:
+ *   This function takes a given room number, and gets all the class information for all the classes scheduled in that room
+ *   placing it into the table in calendar.jade where required to make a correct looking calendar view.*/
+/**
+ * @class getCalendarInfo
+ * @param info
+ *  Room _id number for expected data.
+ * @description
+ * Populates the calendar page with visual graphics of the groups and their times.
+ */
+function getCalendarInfo(info) {
+    $(&#x27;td&#x27;).removeClass(&quot;hidden&quot;).removeClass(&quot;danger&quot;).html(&#x27;&#x27;).attr(&quot;rowspan&quot;, 1);
+    $.get(&#x27;/getCalendarInfo&#x27;, {room_number: info.value}, function (class_list) {  //This will make a call to the framework to get all the classrooms that are assigned to the selected room
+        for (var classes in class_list) { //Iterate through all the classes.
+            var days = class_list[classes][0].Class_Time.Days.split(&#x27;&#x27;);
+            var start = class_list[classes][0].Class_Time.Start.split(&#x27;:&#x27;); //Match either a space or a colon. Will result in a 4 piece string.
+            var startHour = parseInt(start[0]); //gets the number for the hour
+            var startMinute = parseInt(start[1]); //gets the number for the minute
+            if (startMinute % 15 != 0){
+                startMinute -= (startMinute % 15);
+            }
+            var startAP = (start[2].split(&#x27; &#x27;)[1] == &#x27;AM&#x27;) ? &#x27;A&#x27; : &#x27;P&#x27;;
+            var end = class_list[classes][0].Class_Time.End.split(&#x27;:&#x27;); //Match either a space or a colon. Will result in a 4 piece string.
+            var endHour = parseInt(end[0]); //gets the number for the hour
+            var endMinute = parseInt(end[1]); //gets the number for the minute
+            if (endMinute % 15 != 0){
+                endMinute += (15 - (endMinute % 15));
+                if (endMinute == 60){
+                    endMinute = 0;
+                }
+            }
+            var cellCount = 0;
+            var startName = [];
+            while (startHour != endHour || startMinute != endMinute) {
+                for (var day in days) {
+                    var tdName = &#x27;td.&#x27; + days[day] + startHour + startMinute + startAP;
+                    if (startMinute == 0) { //need to add an extra 0 if the minute is 0
+                        var tdName = &#x27;td.&#x27; + days[day] + startHour + startMinute + &#x27;0&#x27; + startAP;
+                    }
+                    if (cellCount == 0) {
+                        startName.push(tdName);
+                        $(tdName).html(class_list[classes][0].Subject + class_list[classes][0].Course_ID + &#x27;-&#x27; +
+                            class_list[classes][0].Section_ID + &#x27;&lt;br\/&gt;&lt;br\/&gt;&#x27; + class_list[classes][0].Course_Title + &#x27;&lt;br\/&gt;&lt;br\/&gt;Start: &amp;nbsp; &#x27; +
+                            class_list[classes][0].Class_Time.Start + &#x27;&lt;br\/&gt;End: &amp;nbsp; &amp;nbsp;&#x27; + class_list[classes][0].Class_Time.End); //Add the information to the appropriate cell.
+                        $(tdName).addClass(&quot;danger&quot;);
+                    }
+                    else{
+                        $(tdName).addClass(&quot;hidden&quot;);
+                    }
+                }
+                //Do all the math to get the next 15 minute thing.
+                startMinute += 15;
+                if (startMinute == 60) {
+                    startMinute = 0;
+                    startHour++;
+                    if (startHour == 12) {
+                        startAP = &#x27;P&#x27;;
+                    }
+                    if (startHour == 13) {
+                        startHour = 1;
+                    }
+                }
+                cellCount++;
+            }
+            for (x in startName) {
+                $(startName[x]).attr(&quot;rowspan&quot;, cellCount);
+            }
+        }
+    });
+}
 
-        <div class="foundat">
-            Defined in: <a href="../files/Classroom_Scheduler_app.js.html#l28"><code>Classroom_Scheduler\app.js:28</code></a>
-        </div>
-
-</div>
-
-
-<div class="box intro">
-    <p>Body-Parser is used by Express as part of the generation of the starter app</p>
-
-</div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-    </div>
-
-    <div class="yui3-u-1-2">
-    </div>
+    </pre>
 </div>
                     </div>
                 </div>

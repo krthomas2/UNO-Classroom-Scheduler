@@ -40,7 +40,12 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/DB_Transactions.html">DB_Transactions</a></li>
                                 <li><a href="../classes/downloadSchedule.html">downloadSchedule</a></li>
+                                <li><a href="../classes/editClass.html">editClass</a></li>
+                                <li><a href="../classes/editGroup.html">editGroup</a></li>
+                                <li><a href="../classes/editRoom.html">editRoom</a></li>
+                                <li><a href="../classes/editSchedule.html">editSchedule</a></li>
                                 <li><a href="../classes/generateSchedule.html">generateSchedule</a></li>
+                                <li><a href="../classes/getCalendarInfo.html">getCalendarInfo</a></li>
                                 <li><a href="../classes/index.js.html">index.js</a></li>
                                 <li><a href="../classes/upload.html">upload</a></li>
                             </ul>
@@ -96,7 +101,7 @@
 
 
         <div class="foundat">
-            Defined in: <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l10"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:10</code></a>
+            Defined in: <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l11"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:11</code></a>
         </div>
 
             Module: <a href="../modules/express.html">express</a>
@@ -126,7 +131,23 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
+                                <a href="#method_AssignClass">AssignClass</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_clearSchedule">clearSchedule</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_ClearScheduler">ClearScheduler</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_getClass">getClass</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getClassGroup">getClassGroup</a>
 
                             </li>
                             <li class="index-item method">
@@ -134,7 +155,23 @@
 
                             </li>
                             <li class="index-item method">
+                                <a href="#method_getClassroomByNumber">getClassroomByNumber</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_getClassStart">getClassStart</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getSchedule">getSchedule</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_getScheduleByRoom">getScheduleByRoom</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_importExcelToDb">importExcelToDb</a>
 
                             </li>
                             <li class="index-item method">
@@ -142,7 +179,15 @@
 
                             </li>
                             <li class="index-item method">
+                                <a href="#method_insertClassGroup">insertClassGroup</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_insertClassroom">insertClassroom</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_insertSched">insertSched</a>
 
                             </li>
                             <li class="index-item method">
@@ -150,7 +195,47 @@
 
                             </li>
                             <li class="index-item method">
+                                <a href="#method_removeClassGroup">removeClassGroup</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_removeClassroom">removeClassroom</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_removeSched">removeSched</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RoomAvailability">RoomAvailability</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RunScheduler">RunScheduler</a>
+
+                            </li>
+                            <li class="index-item method">
                                 <a href="#method_updateClass">updateClass</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_updateClassGroups">updateClassGroups</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_updateClassroom">updateClassroom</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_updateClassroomAssigns">updateClassroomAssigns</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_updateSched">updateSched</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_ValidateRoomAssign">ValidateRoomAssign</a>
 
                             </li>
                     </ul>
@@ -163,6 +248,204 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
+<div id="method_AssignClass" class="method item">
+    <h3 class="name"><code>AssignClass</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id
+the</code>
+                </li>
+                <li class="arg">
+                        <code>room_information
+the</code>
+                </li>
+                <li class="arg">
+                        <code>course_ID
+The</code>
+                </li>
+                <li class="arg">
+                        <code>start
+The</code>
+                </li>
+                <li class="arg">
+                        <code>end
+The</code>
+                </li>
+                <li class="arg">
+                        <code>day
+The</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l380"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:380</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function takes a valid class assignment and adds it to the database</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>id of the classroom to update.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">room_information
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>room the class is being assigned.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">course_ID
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>unique course ID to be assigned</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">start
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>start positon to be filled</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">end
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>end position to be filled</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">day
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>days of the week of the class</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_clearSchedule" class="method item">
+    <h3 class="name"><code>clearSchedule</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l1079"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:1079</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Clears only the schedule table.</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_ClearScheduler" class="method item">
+    <h3 class="name"><code>ClearScheduler</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l1054"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:1054</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Purges the database of everything except classrooms.</p>
+
+    </div>
+
+
+
+
+</div>
 <div id="method_getClass" class="method item">
     <h3 class="name"><code>getClass</code></h3>
 
@@ -185,7 +468,7 @@ OPTIONAL:</code>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l53"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:53</code></a>
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l54"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:54</code></a>
         </p>
 
 
@@ -220,6 +503,61 @@ OPTIONAL:</code>
 
 
 </div>
+<div id="method_getClassGroup" class="method item">
+    <h3 class="name"><code>getClassGroup</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>group_id</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l797"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:797</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function gets class grouping information back from the database. Either it will get one group if a group id is
+specified, otherwise it returns all the groups in the database.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">group_id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>OPTIONAL: The id of the class grouping to retrieve from the database.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
 <div id="method_getClassroom" class="method item">
     <h3 class="name"><code>getClassroom</code></h3>
 
@@ -241,7 +579,7 @@ OPTIONAL:</code>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l220"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:220</code></a>
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l224"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:224</code></a>
         </p>
 
 
@@ -272,6 +610,63 @@ OPTIONAL:</code>
 
 
 </div>
+<div id="method_getClassroomByNumber" class="method item">
+    <h3 class="name"><code>getClassroomByNumber</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>room_number
+The</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l256"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:256</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function gets classroom information back from the database, specifically the classrooms that are scheduled
+in the designated room.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">room_number
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>room number all the classes are located in.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
 <div id="method_getClassStart" class="method item">
     <h3 class="name"><code>getClassStart</code></h3>
 
@@ -287,7 +682,7 @@ OPTIONAL:</code>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l80"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:80</code></a>
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l84"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:84</code></a>
         </p>
 
 
@@ -299,6 +694,183 @@ OPTIONAL:</code>
 
     </div>
 
+
+
+
+</div>
+<div id="method_getSchedule" class="method item">
+    <h3 class="name"><code>getSchedule</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>sched_id</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l929"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:929</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function gets scheduling information back from the database. Either it will get one scheduled class if an id is
+specified, otherwise it returns all the schedule information in the database.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">sched_id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Optional: The schedule id</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_getScheduleByRoom" class="method item">
+    <h3 class="name"><code>getScheduleByRoom</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>sched_id</code>
+                </li>
+                <li class="arg">
+                        <code>room_number</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l957"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:957</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Gets data from schedule table for a specific room.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">sched_id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Unique schedule identifier</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">room_number</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Room number in question</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_importExcelToDb" class="method item">
+    <h3 class="name"><code>importExcelToDb</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>put</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l1106"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:1106</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Takes and automates inserting data/groups when using the excel upload option.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">put</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>An array of classdata needing a wrapper to make an object.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
 
 
 
@@ -327,7 +899,7 @@ OPTIONAL:</code>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l22"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:22</code></a>
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l23"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:23</code></a>
         </p>
 
 
@@ -367,6 +939,60 @@ OPTIONAL:</code>
 
 
 </div>
+<div id="method_insertClassGroup" class="method item">
+    <h3 class="name"><code>insertClassGroup</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>group_information</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l765"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:765</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function inserts one class grouping into the database.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">group_information</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>the information required for a class grouping.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
 <div id="method_insertClassroom" class="method item">
     <h3 class="name"><code>insertClassroom</code></h3>
 
@@ -388,7 +1014,7 @@ OPTIONAL:</code>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l188"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:188</code></a>
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l192"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:192</code></a>
         </p>
 
 
@@ -421,6 +1047,70 @@ OPTIONAL:</code>
 
 
 </div>
+<div id="method_insertSched" class="method item">
+    <h3 class="name"><code>insertSched</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>schedule_information</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l895"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:895</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function inserts one scheduled class along with its room information into the database.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">schedule_information</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                    <p>The id generated by the database.</p>
+
+            </div>
+        </div>
+
+
+</div>
 <div id="method_removeClass" class="method item">
     <h3 class="name"><code>removeClass</code></h3>
 
@@ -442,7 +1132,7 @@ OPTIONAL:</code>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l161"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:161</code></a>
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l165"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:165</code></a>
         </p>
 
 
@@ -466,6 +1156,382 @@ OPTIONAL:</code>
                     <div class="param-description">
                         <p>the id of the class to remove from the database.</p>
 
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_removeClassGroup" class="method item">
+    <h3 class="name"><code>removeClassGroup</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l867"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:867</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function removes one class grouping from the database, specifically the one for which the id was passed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>the id of the class grouping to remove from the database.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_removeClassroom" class="method item">
+    <h3 class="name"><code>removeClassroom</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l737"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:737</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function removes one classroom from the database, specifically the one for which the id was passed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>the id of the classroom to remove from the database.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_removeSched" class="method item">
+    <h3 class="name"><code>removeSched</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l1027"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:1027</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function removes one scheduled class room combination from the database, specifically the one for which the id was passed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>the id of the scheduled information to remove from the database.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_RoomAvailability" class="method item">
+    <h3 class="name"><code>RoomAvailability</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id
+the</code>
+                </li>
+                <li class="arg">
+                        <code>room_information
+The</code>
+                </li>
+                <li class="arg">
+                        <code>hour
+The</code>
+                </li>
+                <li class="arg">
+                        <code>minute
+The</code>
+                </li>
+                <li class="arg">
+                        <code>startAP
+Whether</code>
+                </li>
+                <li class="arg">
+                        <code>day
+The</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l442"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:442</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Part of the alternate solution that proposed having availability times in the rooms database.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>id of the class to update.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">room_information
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>room information of being checked</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">hour
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>hour the classroom begins</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">minute
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>minutes in the hour the class begins</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">startAP
+Whether</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>the time is A:M or P.M</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">day
+The</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>day on which the room is being requested.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type"></span>:
+                    <p>Value of class assigned to a timeslot</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_RunScheduler" class="method item">
+    <h3 class="name"><code>RunScheduler</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id</code>
+                </li>
+                <li class="arg">
+                        <code>room_information</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l337"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:337</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Part of the alternate scheduler solution.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">room_information</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                         
                     </div>
 
                 </li>
@@ -499,7 +1565,7 @@ OPTIONAL:</code>
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l129"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:129</code></a>
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l133"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:133</code></a>
         </p>
 
 
@@ -533,6 +1599,359 @@ OPTIONAL:</code>
 
                     <div class="param-description">
                         <p>the information to be updated.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_updateClassGroups" class="method item">
+    <h3 class="name"><code>updateClassGroups</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id
+the</code>
+                </li>
+                <li class="arg">
+                        <code>group_information
+the</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l834"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:834</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function updates the specified class grouping with the information provided.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>id of the class group to update.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">group_information
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>information to be updated.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_updateClassroom" class="method item">
+    <h3 class="name"><code>updateClassroom</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id
+the</code>
+                </li>
+                <li class="arg">
+                        <code>room_information
+the</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l284"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:284</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>This function updates the specified classroom with the information provided.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>id of the classroom to update.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">room_information
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>information to be updated.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_updateClassroomAssigns" class="method item">
+    <h3 class="name"><code>updateClassroomAssigns</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id</code>
+                </li>
+                <li class="arg">
+                        <code>room_information</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l693"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:693</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Updates the classrooms to have the initial value of &quot;&quot;...part of alternate scheduler...not currently active.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Classroom id.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">room_information</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Information of the room to update.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_updateSched" class="method item">
+    <h3 class="name"><code>updateSched</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id
+the</code>
+                </li>
+                <li class="arg">
+                        <code>sched_information
+the</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l994"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:994</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>callback
+This function updates the specified schedule information with the information provided.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>id of the scheduled class to update.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">sched_information
+the</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>information to be updated.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+<div id="method_ValidateRoomAssign" class="method item">
+    <h3 class="name"><code>ValidateRoomAssign</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>id</code>
+                </li>
+                <li class="arg">
+                        <code>class_information</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/Classroom_Scheduler_public_javascripts_DB_Transactions.js.html#l310"><code>Classroom_Scheduler\public\javascripts\DB_Transactions.js:310</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>To check that the room was assigned.  Part of an alternate solution to scheduling.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">id</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>The class id value</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">class_information</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Information about the class</p>
 
                     </div>
 

@@ -10,6 +10,58 @@
             "fors": {},
             "namespaces": {}
         },
+        "Classroom_Scheduler\\public\\javascripts\\Scheduler.js": {
+            "name": "Classroom_Scheduler\\public\\javascripts\\Scheduler.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classroom_Scheduler\\public\\javascripts\\editClass.js": {
+            "name": "Classroom_Scheduler\\public\\javascripts\\editClass.js",
+            "modules": {},
+            "classes": {
+                "editClass": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classroom_Scheduler\\public\\javascripts\\editGroup.js": {
+            "name": "Classroom_Scheduler\\public\\javascripts\\editGroup.js",
+            "modules": {},
+            "classes": {
+                "editGroup": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classroom_Scheduler\\public\\javascripts\\editRoom.js": {
+            "name": "Classroom_Scheduler\\public\\javascripts\\editRoom.js",
+            "modules": {},
+            "classes": {
+                "editRoom": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classroom_Scheduler\\public\\javascripts\\editSchedule.js": {
+            "name": "Classroom_Scheduler\\public\\javascripts\\editSchedule.js",
+            "modules": {},
+            "classes": {
+                "editSchedule": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classroom_Scheduler\\public\\javascripts\\getCalendarInfo.js": {
+            "name": "Classroom_Scheduler\\public\\javascripts\\getCalendarInfo.js",
+            "modules": {},
+            "classes": {
+                "getCalendarInfo": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "Classroom_Scheduler\\public\\javascripts\\xlsx.js": {
             "name": "Classroom_Scheduler\\public\\javascripts\\xlsx.js",
             "modules": {},
@@ -57,6 +109,11 @@
             "submodules": {},
             "classes": {
                 "DB_Transactions": 1,
+                "editSchedule": 1,
+                "editClass": 1,
+                "editGroup": 1,
+                "editRoom": 1,
+                "getCalendarInfo": 1,
                 "index.js": 1
             },
             "fors": {},
@@ -203,8 +260,103 @@
             "extension_for": [],
             "module": "express",
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 10,
+            "line": 11,
             "description": "The database transactions for the application."
+        },
+        "editSchedule": {
+            "name": "editSchedule",
+            "shortname": "editSchedule",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "express",
+            "file": "Classroom_Scheduler\\public\\javascripts\\editSchedule.js",
+            "line": 6,
+            "params": [
+                {
+                    "name": "info",
+                    "description": "Schedule _id for expected schedule data"
+                }
+            ],
+            "description": "Gets Schedule information and puts it on edit page"
+        },
+        "editClass": {
+            "name": "editClass",
+            "shortname": "editClass",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "express",
+            "file": "Classroom_Scheduler\\public\\javascripts\\editClass.js",
+            "line": 6,
+            "description": "This script populates the edit class jade view with the selected classes information",
+            "params": [
+                {
+                    "name": "info",
+                    "description": "Class _id from drop-down box"
+                }
+            ]
+        },
+        "editGroup": {
+            "name": "editGroup",
+            "shortname": "editGroup",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "express",
+            "file": "Classroom_Scheduler\\public\\javascripts\\editGroup.js",
+            "line": 5,
+            "description": "Gets the group data for the group edit page",
+            "params": [
+                {
+                    "name": "info",
+                    "description": "The group _id of the group data expected"
+                }
+            ]
+        },
+        "editRoom": {
+            "name": "editRoom",
+            "shortname": "editRoom",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "express",
+            "file": "Classroom_Scheduler\\public\\javascripts\\editRoom.js",
+            "line": 7,
+            "description": "Info is the selected room; this script populates the jade view with the data that is in the database for the selected room",
+            "params": [
+                {
+                    "name": "info",
+                    "description": "Room _id to get the specific rooms' data."
+                }
+            ]
+        },
+        "getCalendarInfo": {
+            "name": "getCalendarInfo",
+            "shortname": "getCalendarInfo",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "express",
+            "file": "Classroom_Scheduler\\public\\javascripts\\getCalendarInfo.js",
+            "line": 10,
+            "params": [
+                {
+                    "name": "info",
+                    "description": "Room _id number for expected data."
+                }
+            ],
+            "description": "Populates the calendar page with visual graphics of the groups and their times."
         },
         "index.js": {
             "name": "index.js",
@@ -265,7 +417,7 @@
     "classitems": [
         {
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 22,
+            "line": 23,
             "description": "This function inserts one class into the database",
             "itemtype": "method",
             "name": "insertClass",
@@ -282,7 +434,7 @@
         },
         {
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 53,
+            "line": 54,
             "description": "This function gets class information back from the database. Either it will get one class if a class id is\nspecified, otherwise it returns all the classes in the database.",
             "itemtype": "method",
             "name": "getClass",
@@ -296,7 +448,7 @@
         },
         {
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 80,
+            "line": 84,
             "itemtype": "method",
             "name": "getClassStart",
             "description": "Sorts the Classes by start time.  Calculated with strings of 10:44:00 AM",
@@ -304,7 +456,7 @@
         },
         {
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 129,
+            "line": 133,
             "description": "This function updates the specified class with the information provided.",
             "itemtype": "method",
             "name": "updateClass",
@@ -322,7 +474,7 @@
         },
         {
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 161,
+            "line": 165,
             "description": "This function removes one class from the database, specifically the one for which the id was passed.",
             "itemtype": "method",
             "name": "removeClass",
@@ -336,7 +488,7 @@
         },
         {
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 188,
+            "line": 192,
             "itemtype": "method",
             "name": "insertClassroom",
             "params": [
@@ -350,7 +502,7 @@
         },
         {
             "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
-            "line": 220,
+            "line": 224,
             "itemtype": "method",
             "name": "getClassroom",
             "params": [
@@ -359,6 +511,353 @@
                     "description": ""
                 }
             ],
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 256,
+            "itemtype": "method",
+            "name": "getClassroomByNumber",
+            "params": [
+                {
+                    "name": "room_number\nThe",
+                    "description": "room number all the classes are located in."
+                }
+            ],
+            "description": "This function gets classroom information back from the database, specifically the classrooms that are scheduled\n  in the designated room.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 284,
+            "itemtype": "method",
+            "name": "updateClassroom",
+            "params": [
+                {
+                    "name": "id\nthe",
+                    "description": "id of the classroom to update."
+                },
+                {
+                    "name": "room_information\nthe",
+                    "description": "information to be updated."
+                }
+            ],
+            "description": "This function updates the specified classroom with the information provided.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 310,
+            "itemtype": "method",
+            "name": "ValidateRoomAssign",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "The class id value"
+                },
+                {
+                    "name": "class_information",
+                    "description": "Information about the class"
+                }
+            ],
+            "is_constructor": 1,
+            "description": "To check that the room was assigned.  Part of an alternate solution to scheduling.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 337,
+            "itemtype": "method",
+            "name": "RunScheduler",
+            "params": [
+                {
+                    "name": "id",
+                    "description": ""
+                },
+                {
+                    "name": "room_information",
+                    "description": ""
+                }
+            ],
+            "is_constructor": 1,
+            "description": "Part of the alternate scheduler solution.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 380,
+            "itemtype": "method",
+            "name": "AssignClass",
+            "params": [
+                {
+                    "name": "id\nthe",
+                    "description": "id of the classroom to update."
+                },
+                {
+                    "name": "room_information\nthe",
+                    "description": "room the class is being assigned."
+                },
+                {
+                    "name": "course_ID\nThe",
+                    "description": "unique course ID to be assigned"
+                },
+                {
+                    "name": "start\nThe",
+                    "description": "start positon to be filled"
+                },
+                {
+                    "name": "end\nThe",
+                    "description": "end position to be filled"
+                },
+                {
+                    "name": "day\nThe",
+                    "description": "days of the week of the class"
+                }
+            ],
+            "is_constructor": 1,
+            "description": "This function takes a valid class assignment and adds it to the database",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 442,
+            "itemtype": "method",
+            "name": "RoomAvailability",
+            "params": [
+                {
+                    "name": "id\nthe",
+                    "description": "id of the class to update."
+                },
+                {
+                    "name": "room_information\nThe",
+                    "description": "room information of being checked"
+                },
+                {
+                    "name": "hour\nThe",
+                    "description": "hour the classroom begins"
+                },
+                {
+                    "name": "minute\nThe",
+                    "description": "minutes in the hour the class begins"
+                },
+                {
+                    "name": "startAP\nWhether",
+                    "description": "the time is A:M or P.M"
+                },
+                {
+                    "name": "day\nThe",
+                    "description": "day on which the room is being requested."
+                }
+            ],
+            "return": {
+                "description": "Value of class assigned to a timeslot",
+                "type": "*"
+            },
+            "is_constructor": 1,
+            "description": "Part of the alternate solution that proposed having availability times in the rooms database.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 693,
+            "itemtype": "method",
+            "name": "updateClassroomAssigns",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Classroom id."
+                },
+                {
+                    "name": "room_information",
+                    "description": "Information of the room to update."
+                }
+            ],
+            "description": "Updates the classrooms to have the initial value of \"\"...part of alternate scheduler...not currently active.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 737,
+            "itemtype": "method",
+            "name": "removeClassroom",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "the id of the classroom to remove from the database."
+                }
+            ],
+            "description": "This function removes one classroom from the database, specifically the one for which the id was passed.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 765,
+            "itemtype": "method",
+            "name": "insertClassGroup",
+            "params": [
+                {
+                    "name": "group_information",
+                    "description": "the information required for a class grouping."
+                }
+            ],
+            "description": "This function inserts one class grouping into the database.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 797,
+            "itemtype": "method",
+            "name": "getClassGroup",
+            "params": [
+                {
+                    "name": "group_id",
+                    "description": "OPTIONAL: The id of the class grouping to retrieve from the database."
+                }
+            ],
+            "description": "This function gets class grouping information back from the database. Either it will get one group if a group id is\nspecified, otherwise it returns all the groups in the database.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 834,
+            "itemtype": "method",
+            "name": "updateClassGroups",
+            "params": [
+                {
+                    "name": "id\nthe",
+                    "description": "id of the class group to update."
+                },
+                {
+                    "name": "group_information\nthe",
+                    "description": "information to be updated."
+                }
+            ],
+            "description": "This function updates the specified class grouping with the information provided.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 867,
+            "itemtype": "method",
+            "name": "removeClassGroup",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "the id of the class grouping to remove from the database."
+                }
+            ],
+            "description": "This function removes one class grouping from the database, specifically the one for which the id was passed.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 895,
+            "itemtype": "method",
+            "name": "insertSched",
+            "params": [
+                {
+                    "name": "schedule_information",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "The id generated by the database."
+            },
+            "description": "This function inserts one scheduled class along with its room information into the database.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 929,
+            "itemtype": "method",
+            "name": "getSchedule",
+            "params": [
+                {
+                    "name": "sched_id",
+                    "description": "Optional: The schedule id"
+                }
+            ],
+            "description": "This function gets scheduling information back from the database. Either it will get one scheduled class if an id is\nspecified, otherwise it returns all the schedule information in the database.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 957,
+            "itemtype": "method",
+            "name": "getScheduleByRoom",
+            "params": [
+                {
+                    "name": "sched_id",
+                    "description": "Unique schedule identifier"
+                },
+                {
+                    "name": "room_number",
+                    "description": "Room number in question"
+                }
+            ],
+            "description": "Gets data from schedule table for a specific room.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 994,
+            "itemtype": "method",
+            "name": "updateSched",
+            "params": [
+                {
+                    "name": "id\nthe",
+                    "description": "id of the scheduled class to update."
+                },
+                {
+                    "name": "sched_information\nthe",
+                    "description": "information to be updated."
+                }
+            ],
+            "description": "callback\n  This function updates the specified schedule information with the information provided.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 1027,
+            "itemtype": "method",
+            "name": "removeSched",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "the id of the scheduled information to remove from the database."
+                }
+            ],
+            "description": "This function removes one scheduled class room combination from the database, specifically the one for which the id was passed.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 1054,
+            "itemtype": "method",
+            "name": "ClearScheduler",
+            "description": "Purges the database of everything except classrooms.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 1079,
+            "itemtype": "method",
+            "name": "clearSchedule",
+            "description": "Clears only the schedule table.",
+            "class": "DB_Transactions"
+        },
+        {
+            "file": "Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js",
+            "line": 1106,
+            "itemtype": "method",
+            "name": "importExcelToDb",
+            "params": [
+                {
+                    "name": "put",
+                    "description": "An array of classdata needing a wrapper to make an object."
+                }
+            ],
+            "description": "Takes and automates inserting data/groups when using the excel upload option.",
             "class": "DB_Transactions"
         },
         {
@@ -745,35 +1244,123 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:22"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:23"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:22"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:23"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:53"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:54"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:80"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:84"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:129"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:133"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:161"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:165"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:188"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:192"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:220"
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:224"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:256"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:284"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:310"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:337"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:380"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:442"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:442"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:693"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:737"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:765"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:797"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:834"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:867"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:895"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:895"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:929"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:957"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:994"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:1027"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:1054"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:1079"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\public\\javascripts\\DB_Transactions.js:1106"
         },
         {
             "message": "replacing incorrect tag: function with method",
