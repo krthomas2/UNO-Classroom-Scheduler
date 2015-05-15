@@ -891,7 +891,7 @@ updateClassroomAssigns: function (id, room_information, callback){
 
 	importExcelToDb: importExcelToDb
 }
-/*clearScheduler
+/*importExcelToDB
  * Created by: Nick Boeckman
  * Parameters:
  *    Json object listing all the class information from the excel spreadsheet.
