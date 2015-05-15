@@ -287,29 +287,216 @@
             "file": "Classroom_Scheduler\\routes\\index.js",
             "line": 24,
             "itemtype": "method",
-            "name": "calendar",
+            "name": "getCalendarInfo",
             "description": "Get the calendar info for the all class-groups in the specified room",
             "class": "index.js"
         },
         {
             "file": "Classroom_Scheduler\\routes\\index.js",
-            "line": 43,
+            "line": 42,
             "itemtype": "method",
             "name": "home",
-            "description": "Get the application Home page.  THis is where we envision UNO user logins to happen to control who has access to the scheduler menu.",
+            "description": "Get the application Home page.  This is where we envision UNO user logins to happen to control who has access to the scheduler menu.",
             "class": "index.js"
         },
         {
             "file": "Classroom_Scheduler\\routes\\index.js",
-            "line": 53,
+            "line": 52,
             "itemtype": "method",
             "name": "editSchedule",
-            "description": "Gets the",
+            "description": "Gets the edit Schedule page",
             "class": "index.js"
         },
         {
             "file": "Classroom_Scheduler\\routes\\index.js",
-            "line": 67,
+            "line": 61,
+            "itemtype": "method",
+            "name": "downloadOldSchedule",
+            "description": "Downloads the schedule that was uploaded for 3rd party comparison.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 71,
+            "itemtype": "method",
+            "name": "upload",
+            "description": "Routes to the upload Schedule page.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 82,
+            "itemtype": "method",
+            "name": "classes",
+            "description": "Get the actions for classes page. Add/Edit/Remove",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 91,
+            "itemtype": "method",
+            "name": "getaddclass",
+            "description": "Gets the form for adding a new class.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 100,
+            "itemtype": "method",
+            "name": "addClass",
+            "description": "Adds the new class data to the database",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 140,
+            "itemtype": "method",
+            "name": "editclass",
+            "description": "Loads the edit class page where the user is prompted to pick a class ID # to edit.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 151,
+            "itemtype": "method",
+            "name": "getClassInfo",
+            "description": "Gets the classinformation for the selected class",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 162,
+            "itemtype": "method",
+            "name": "editClassData",
+            "description": "Sends the new data for the specified class to update the old entry.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 203,
+            "itemtype": "method",
+            "name": "getremoveclassy",
+            "description": "Gets the remove classes page. used classy as the name as class is not safe for a variable.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 214,
+            "itemtype": "method",
+            "name": "removeclassydata",
+            "description": "Remove Specified class from database.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 229,
+            "itemtype": "method",
+            "name": "editgroup",
+            "description": "Renders the edit group page with the group data for selecting a group from a dropdown to populate the group fields.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 240,
+            "itemtype": "method",
+            "name": "getGroupInfo",
+            "description": "Get the specified group information.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 251,
+            "itemtype": "method",
+            "name": "editGroupData",
+            "description": "Send data to database for changed group",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 266,
+            "itemtype": "method",
+            "name": "createSchedule",
+            "description": "Automate the Schedule.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 276,
+            "itemtype": "method",
+            "name": "getScheduleInfo",
+            "description": "Populate the Manual Schedule Edit page with the data matching the record to be edited.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 287,
+            "itemtype": "method",
+            "name": "editScheduleData",
+            "description": "Send the updated schedule information to the database",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 305,
+            "itemtype": "method",
+            "name": "rooms",
+            "description": "Get the Add/Edit/Remove page for rooms",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 314,
+            "itemtype": "method",
+            "name": "getaddroom",
+            "description": "Gets the form for adding a new room",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 323,
+            "itemtype": "method",
+            "name": "addRoom",
+            "description": "Adds new room to database",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 335,
+            "itemtype": "method",
+            "name": "editroom",
+            "description": "Gets the edit room form.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 346,
+            "itemtype": "method",
+            "name": "getRoomInfo",
+            "description": "Gets the specified room information for edit page",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 357,
+            "itemtype": "method",
+            "name": "editRoomdata",
+            "description": "Sends the updated room data to the database.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 374,
+            "itemtype": "method",
+            "name": "getremoveroom",
+            "description": "Gets the remove classroom page with dropdown list of classrooms.",
+            "class": "index.js"
+        },
+        {
+            "file": "Classroom_Scheduler\\routes\\index.js",
+            "line": 385,
+            "itemtype": "method",
+            "name": "removeroomdata",
+            "description": "Remove the specified room from the database",
             "class": "index.js"
         },
         {
@@ -429,11 +616,107 @@
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\routes\\index.js:43"
+            "line": " Classroom_Scheduler\\routes\\index.js:42"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " Classroom_Scheduler\\routes\\index.js:53"
+            "line": " Classroom_Scheduler\\routes\\index.js:52"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:61"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:71"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:82"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:91"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:100"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:140"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:151"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:162"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:203"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:214"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:229"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:240"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:251"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:266"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:276"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:287"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:305"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:314"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:323"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:335"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:346"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:357"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:374"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " Classroom_Scheduler\\routes\\index.js:385"
         },
         {
             "message": "replacing incorrect tag: function with method",
@@ -494,10 +777,6 @@
         {
             "message": "Missing item type",
             "line": " Classroom_Scheduler\\public\\javascripts\\xlsx.js:1217"
-        },
-        {
-            "message": "Missing item type",
-            "line": " Classroom_Scheduler\\routes\\index.js:67"
         },
         {
             "message": "Missing item type\nThese are the external modules brought in for this application.\n The main modules used are xlsx, fs, j2xls, and underscore\n xlsx is an excel parser\n fs is used with j2xls to write the output\n underscore is used for sorting and managing lists/objects",

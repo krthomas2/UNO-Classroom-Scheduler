@@ -34,8 +34,8 @@ router.get('/getCalendarInfo', function(req, res){
         if (class_ids.length == class_list.length) {
           res.send(class_list);
         }
-      });
-    }
+      }
+
   });
 });
 
@@ -91,7 +91,7 @@ router.get('/classes', function(req, res, next) {
 /**
  * @function getaddclass
  * @description
- * Gets the form for adding a new class.  Has Room number, Capacity, and Special Traits.
+ * Gets the form for adding a new class.
  */
     /* Class add page */
 router.get('/getaddclass', function(req, res, next) {
@@ -160,7 +160,7 @@ router.get('/getClassInfo', function(req, res){//set values for class room data
   });
 });
 /**
- * @function editCLassData
+ * @function editClassData
  * @description
  * Sends the new data for the specified class to update the old entry.
  */
@@ -200,12 +200,22 @@ router.post('/editClassData', function(req,res){
   });
   res.redirect('/classes');
 });
+/**
+ * @function getremoveclassy
+ * @description
+ * Gets the remove classes page. used classy as the name as class is not safe for a variable.
+ */
     /* Remove class page */
 router.get('/getremoveclassy', function(req, res){
   dbactions.getClass(false, function(data){
     res.render('removeclassy', {rooms: data,title: "Classes"});
   });
 });
+/**
+ * @function removeclassydata
+ * @description
+ * Remove Specified class from database.
+ */
       /* Remove specified class from database */
 router.post('/removeclassydata', function(req,res){
   res.redirect('/classes');//should go to scheduler page when added
@@ -216,18 +226,33 @@ router.post('/removeclassydata', function(req,res){
 /* End of Classes CRUD operations */
 
 /* Groups Crud Operations */
+/**
+ * @function editgroup
+ * @description
+ * Renders the edit group page with the group data for selecting a group from a dropdown to populate the group fields.
+ */
   /* GET edit group page. */
 router.get('/editgroup', function(req, res, next) {
   dbactions.getClassGroup(false, function(data){
     res.render('editgroup', { title: 'Groups' , groups: data});
   });
 });
+/**
+ * @function getGroupInfo
+ * @description
+ * Get the specified group information.
+ */
     /*get edit group info for edit page */
 router.get('/getGroupInfo', function(req,res,next){
   dbactions.getClassGroup(req.query.id, function(data){
     res.send(data);
   });
 });
+/**
+ * @function editGroupData
+ * @description
+ * Send data to database for changed group
+ */
     /*Send data to database for changed group*/
 router.post('/editGroupData', function(req,res){
   var id = req.body._id;
@@ -238,19 +263,32 @@ router.post('/editGroupData', function(req,res){
   res.redirect('/editGroup');
 });
 /* End of Groups CRUD operations */
-
+/**
+ * @function createSchedule
+ * @description
+ * Automate the Schedule.
+ */
 /* Schedule Crud Operations */
   /* GET Create Schedule. */
 router.get('/createSchedule', function(req, res, next) {
   res.render('createSchedule', { title: 'Scheduler' });
 });
-
+/**
+ * @function getScheduleInfo
+ * @description
+ * Populate the Manual Schedule Edit page with the data matching the record to be edited.
+ */
       /*get edit schedule info for edit page */
 router.get('/getScheduleInfo', function(req,res,next){
   dbactions.getSchedule(req.query.id, function(data){
     res.send(data);
   });
 });
+/**
+ * @function editScheduleData
+ * @description
+ * Send the updated schedule information to the database
+ */
      /*Send data to database for changed schedule*/
 router.post('/editScheduleData', function(req,res){
   var id = req.body._id;
@@ -264,14 +302,29 @@ router.post('/editScheduleData', function(req,res){
 
 
 /* Rooms CRUD Operations */
+/**
+ * @function rooms
+ * @description
+ * Get the Add/Edit/Remove page for rooms
+ */
   /* Classroom Page with choices for add/edit/remove */
 router.get('/rooms', function(req, res, next) {
   res.render('rooms', { title: 'Rooms' });
 });
+/**
+ * @function getaddroom
+ * @description
+ * Gets the form for adding a new room
+ */
     /* Classroom add page*/
 router.get('/getaddroom', function(req, res, next) {
   res.render('addroom', { title: 'Rooms' });
 });
+/**
+ * @function addRoom
+ * @description
+ * Adds new room to database
+ */
       /* Send newly added classroom information to database */
 router.post('/addRoom', function(req,res){
   dbactions.insertClassroom(req.body,function(){
@@ -279,18 +332,33 @@ router.post('/addRoom', function(req,res){
   });
   res.redirect('/rooms');
 });
+/**
+ * @function editroom
+ * @description
+ * Gets the edit room form.
+ */
     /* Classroom edit page */
 router.get('/editroom',function(req,res){
   dbactions.getClassroom(false,function(data){
     res.render('editroom',{rooms: data, title:"Rooms"});
   });
 });
+/**
+ * @function getRoomInfo
+ * @description
+ * Gets the specified room information for edit page
+ */
       /* Get specified room information for edit page */
 router.get('/getRoomInfo', function(req, res){//set values for class room data
   dbactions.getClassroom(req.query.room_number, function(class_ids){
     res.send(class_ids);
   });
 });
+/**
+ * @function editRoomdata
+ * @description
+ * Sends the updated room data to the database.
+ */
       /* Send changed room data to database */
 router.post('/editRoomdata',function(req,res){
   var room_data = {
@@ -303,12 +371,22 @@ router.post('/editRoomdata',function(req,res){
   });
   res.redirect('/rooms');
 });
+/**
+ * @function getremoveroom
+ * @description
+ * Gets the remove classroom page with dropdown list of classrooms.
+ */
     /* Remove classroom page */
 router.get('/getremoveroom', function(req, res){
   dbactions.getClassroom(false, function(data){
     res.render('removeroom', {rooms: data, title: "Rooms"});
   });
 });
+/**
+ * @function removeroomdata
+ * @description
+ * Remove the specified room from the database
+ */
       /* Remove classroom from database */
 router.post('/removeroomdata', function(req,res){
   res.redirect('/rooms');//should go to scheduler page when added
