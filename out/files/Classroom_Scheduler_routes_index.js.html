@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Classroom_Scheduler\routes\index.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/downloadSchedule.html">downloadSchedule</a></li>
+                                <li><a href="../classes/generateSchedule.html">generateSchedule</a></li>
+                                <li><a href="../classes/index.js.html">index.js</a></li>
+                                <li><a href="../classes/upload.html">upload</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/body-parser.html">body-parser</a></li>
+                                <li><a href="../modules/cookie-parser.html">cookie-parser</a></li>
+                                <li><a href="../modules/DB_Transactions.js.html">DB_Transactions.js</a></li>
+                                <li><a href="../modules/express.html">express</a></li>
+                                <li><a href="../modules/fs.html">fs</a></li>
+                                <li><a href="../modules/index.js.html">index.js</a></li>
+                                <li><a href="../modules/json2xls.html">json2xls</a></li>
+                                <li><a href="../modules/morgan.html">morgan</a></li>
+                                <li><a href="../modules/multer.html">multer</a></li>
+                                <li><a href="../modules/path.html">path</a></li>
+                                <li><a href="../modules/underscore.html">underscore</a></li>
+                                <li><a href="../modules/xlsx.html">xlsx</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: Classroom_Scheduler\routes\index.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+var express = require(&#x27;express&#x27;);
+var router = express.Router();
+var dbactions = require(&#x27;../public/javascripts/DB_Transactions.js&#x27;);
+
+
+/* Get methods get a jade view to show the user
+ * Post methods push data to the database as post is more secure than get.
+ */
+/**
+ * @class index.js
+ * @description
+ * The routes for the application
+ */
+/**
+ * @function calendar
+ * @description
+ * Gets the calendar page and populates it with room choices
+ */
+router.get(&#x27;/calendar&#x27;, function(req, res){
+  dbactions.getClassroom(false, function(data){
+    res.render(&#x27;calendar&#x27;, {rooms: data,title: &quot;Calendar&quot;});
+  });
+});
+/**
+ * @function calendar
+ * @description
+ * Get the calendar info for the all class-groups in the specified room
+ */
+router.get(&#x27;/getCalendarInfo&#x27;, function(req, res){
+  var class_list = [];
+  dbactions.getScheduleByRoom(true, req.query.room_number, function(class_ids){
+    for (var x = 0; x &lt; class_ids.length; x++) {
+      dbactions.getClass(class_ids[x].Class_ID, function (classInfo) {
+        class_list.push(classInfo);
+        if (class_ids.length == class_list.length) {
+          res.send(class_list);
+        }
+      });
+    }
+  });
+});
+
+/**
+ * @function home
+ * @description
+ * Get the application Home page.  THis is where we envision UNO user logins to happen to control who has access to the scheduler menu.
+ */
+/* GET home page. */
+router.get(&#x27;/&#x27;, function(req, res, next) {
+  res.render(&#x27;index&#x27;, { title: &#x27;Home&#x27; });
+});
+
+/**
+ * @function editSchedule
+ * @description
+ * Gets the 
+ */
+/* GET edit schedule page. */
+router.get(&#x27;/editSchedule&#x27;, function(req, res, next) {
+  res.render(&#x27;editSchedule&#x27;, { title: &#x27;Groups&#x27; });
+});
+router.get(&#x27;/downloadOldSchedule&#x27;, function(req,res,next){
+  res.download(&#x27;./uploads/ScheduleOld.xlsx&#x27;);
+});
+
+
+/**********************************************************************************************************************/
+
+/* GET Upload Page. */
+router.get(&#x27;/upload&#x27;, function(req, res, next) {
+  res.render(&#x27;upload&#x27;, { title: &#x27;Upload&#x27; });
+});
+
+/* Classes CRUD Operations */
+  /* GET Classes Page with choices for add/edit/remove */
+router.get(&#x27;/classes&#x27;, function(req, res, next) {
+  res.render(&#x27;classes&#x27;, { title: &#x27;Classes&#x27; });
+});
+    /* Class add page */
+router.get(&#x27;/getaddclass&#x27;, function(req, res, next) {
+  res.render(&#x27;addclass&#x27;, { title: &#x27;Classes&#x27; });
+});
+
+      /* Send the new class to the database*/
+router.post(&#x27;/addClass&#x27;, function(req,res){
+  var class_data = {
+    &quot;Subject&quot;: req.body.Subject,
+    &quot;Course_ID&quot;: req.body.Catalog,
+    &quot;Section_ID&quot;: req.body.Section,
+    &quot;Class_ID&quot;: req.body.Class,
+    &quot;Course_Title&quot;: req.body.Title,
+    &quot;Lecture_Type&quot;: req.body.Component,
+    &quot;Class_Time&quot;: {
+      &quot;Start&quot;: req.body.MtgS,
+      &quot;End&quot;: req.body.MtgE,
+      &quot;Days&quot;: req.body.Pat
+    },
+    &quot;Instructor&quot;: {
+      First_Name: req.body.First,
+      Last_Name: req.body.Last
+    },
+    &quot;Class_Capacity&quot;: req.body.Cap,
+    &quot;Description&quot;: req.body.Descr,
+    &quot;Acad_Group&quot;: req.body.Acad,
+    &quot;Tot_Enrl&quot;: req.body.Tot,
+    &quot;Start_Date&quot;: req.body.Start,
+    &quot;End_Date&quot;: req.body.End,
+    &quot;Session&quot;: req.body.Session,
+    &quot;Location&quot;: req.body.Location,
+    &quot;Mode&quot;: req.body.Mode,
+    &quot;CrsAtr_Val&quot;: req.body.CrsAtr_Val,
+    &quot;Group_ID&quot;: req.body.Class
+  };
+  dbactions.insertClass(class_data, function(){
+    //empty for return
+  });
+  res.redirect(&#x27;/classes&#x27;);
+});
+/* Class edit page */
+router.get(&#x27;/editclass&#x27;,function(req,res){
+  dbactions.getClass(false,function(data){
+    res.render(&#x27;editClass&#x27;,{rooms: data, title:&quot;rooms&quot;});
+  });
+});
+      /* Get specified class information for edit page */
+router.get(&#x27;/getClassInfo&#x27;, function(req, res){//set values for class room data
+  dbactions.getClass(req.query.id, function(data){
+    res.send(data);
+  });
+});
+      /* Send edit class data to the database */
+router.post(&#x27;/editClassData&#x27;, function(req,res){
+  var class_data = {
+    &quot;Subject&quot;: req.body.Subject,
+    &quot;Course_ID&quot;: req.body.Catalog,
+    &quot;Section_ID&quot;: req.body.Section,
+    &quot;Class_ID&quot;: req.body.Class,
+    &quot;Course_Title&quot;: req.body.Title,
+    &quot;Lecture_Type&quot;: req.body.Component,
+    &quot;Class_Time&quot;: {
+      &quot;Start&quot;: req.body.MtgS,
+      &quot;End&quot;: req.body.MtgE,
+      &quot;Days&quot;: req.body.Pat
+    },
+    &quot;Instructor&quot;: {
+      First_Name: req.body.First,
+      Last_Name: req.body.Last
+    },
+    &quot;Class_Capacity&quot;: req.body.Cap,
+    &quot;Description&quot;: req.body.Descr,
+    &quot;Acad_Group&quot;: req.body.Acad,
+    &quot;Tot_Enrl&quot;: req.body.Tot,
+    &quot;Start_Date&quot;: req.body.Start,
+    &quot;End_Date&quot;: req.body.End,
+    &quot;Session&quot;: req.body.Session,
+    &quot;Location&quot;: req.body.Location,
+    &quot;Mode&quot;: req.body.Mode,
+    &quot;CrsAtr_Val&quot;: req.body.CrsAtr_Val,
+    &quot;Room_Assigned&quot;: req.body.Room_Assigned,
+    &quot;Group&quot;: req.body.group
+  };
+  dbactions.updateClass(req.body._id,class_data,function(){
+    //empty for return
+  });
+  res.redirect(&#x27;/classes&#x27;);
+});
+    /* Remove class page */
+router.get(&#x27;/getremoveclassy&#x27;, function(req, res){
+  dbactions.getClass(false, function(data){
+    res.render(&#x27;removeclassy&#x27;, {rooms: data,title: &quot;Classes&quot;});
+  });
+});
+      /* Remove specified class from database */
+router.post(&#x27;/removeclassydata&#x27;, function(req,res){
+  res.redirect(&#x27;/classes&#x27;);//should go to scheduler page when added
+  dbactions.removeClassroom(req.body.class_id,function(){
+    //empty function for callback
+  });
+});
+/* End of Classes CRUD operations */
+
+/* Groups Crud Operations */
+  /* GET edit group page. */
+router.get(&#x27;/editgroup&#x27;, function(req, res, next) {
+  dbactions.getClassGroup(false, function(data){
+    res.render(&#x27;editgroup&#x27;, { title: &#x27;Groups&#x27; , groups: data});
+  });
+});
+    /*get edit group info for edit page */
+router.get(&#x27;/getGroupInfo&#x27;, function(req,res,next){
+  dbactions.getClassGroup(req.query.id, function(data){
+    res.send(data);
+  });
+});
+    /*Send data to database for changed group*/
+router.post(&#x27;/editGroupData&#x27;, function(req,res){
+  var id = req.body._id;
+  delete req.body._id;//remove id to make push to database easier
+  dbactions.updateClassGroups(id,req.body, function(){
+    //blank for callback
+  });
+  res.redirect(&#x27;/editGroup&#x27;);
+});
+/* End of Groups CRUD operations */
+
+/* Schedule Crud Operations */
+  /* GET Create Schedule. */
+router.get(&#x27;/createSchedule&#x27;, function(req, res, next) {
+  res.render(&#x27;createSchedule&#x27;, { title: &#x27;Scheduler&#x27; });
+});
+
+      /*get edit schedule info for edit page */
+router.get(&#x27;/getScheduleInfo&#x27;, function(req,res,next){
+  dbactions.getSchedule(req.query.id, function(data){
+    res.send(data);
+  });
+});
+     /*Send data to database for changed schedule*/
+router.post(&#x27;/editScheduleData&#x27;, function(req,res){
+  var id = req.body._id;
+  delete req.body._id;//remove id to make push to database easier
+  dbactions.updateSched(id,req.body, function(){
+    //blank for callback
+  });
+  res.redirect(&#x27;/createSchedule&#x27;);
+});
+/* End of Schedule CRUD operations */
+
+
+/* Rooms CRUD Operations */
+  /* Classroom Page with choices for add/edit/remove */
+router.get(&#x27;/rooms&#x27;, function(req, res, next) {
+  res.render(&#x27;rooms&#x27;, { title: &#x27;Rooms&#x27; });
+});
+    /* Classroom add page*/
+router.get(&#x27;/getaddroom&#x27;, function(req, res, next) {
+  res.render(&#x27;addroom&#x27;, { title: &#x27;Rooms&#x27; });
+});
+      /* Send newly added classroom information to database */
+router.post(&#x27;/addRoom&#x27;, function(req,res){
+  dbactions.insertClassroom(req.body,function(){
+    //empty function for callback
+  });
+  res.redirect(&#x27;/rooms&#x27;);
+});
+    /* Classroom edit page */
+router.get(&#x27;/editroom&#x27;,function(req,res){
+  dbactions.getClassroom(false,function(data){
+    res.render(&#x27;editroom&#x27;,{rooms: data, title:&quot;Rooms&quot;});
+  });
+});
+      /* Get specified room information for edit page */
+router.get(&#x27;/getRoomInfo&#x27;, function(req, res){//set values for class room data
+  dbactions.getClassroom(req.query.room_number, function(class_ids){
+    res.send(class_ids);
+  });
+});
+      /* Send changed room data to database */
+router.post(&#x27;/editRoomdata&#x27;,function(req,res){
+  var room_data = {
+    &quot;Room_Number&quot;: req.body.Room_Number,
+    &quot;Max_Capacity&quot;: req.body.Max_Cap,
+    &quot;Spec_Trait&quot;: req.body.Spec
+  };
+  dbactions.updateClassroom(req.body.Room_ID,room_data,function(){
+    //empty for return
+  });
+  res.redirect(&#x27;/rooms&#x27;);
+});
+    /* Remove classroom page */
+router.get(&#x27;/getremoveroom&#x27;, function(req, res){
+  dbactions.getClassroom(false, function(data){
+    res.render(&#x27;removeroom&#x27;, {rooms: data, title: &quot;Rooms&quot;});
+  });
+});
+      /* Remove classroom from database */
+router.post(&#x27;/removeroomdata&#x27;, function(req,res){
+  res.redirect(&#x27;/rooms&#x27;);//should go to scheduler page when added
+  dbactions.removeClassroom(req.body.room_id,function(){
+    //empty function for callback
+  });
+});
+/* End of rooms CRUD operations */
+
+
+
+
+
+/* Clear the Schedule */
+router.get(&#x27;/clearSchedule&#x27;, function(req, res){
+  dbactions.clearSchedule(function(){
+    res.redirect(&#x27;/createSchedule&#x27;);
+  });
+});
+
+/* Purge database */
+router.get(&#x27;/clearScheduler&#x27;, function(req, res){
+  dbactions.clearScheduler(function(){
+    res.redirect(&#x27;/&#x27;);
+  });
+});
+module.exports = router;
+
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

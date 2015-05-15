@@ -6,14 +6,26 @@ var dbactions = require('../public/javascripts/DB_Transactions.js');
 /* Get methods get a jade view to show the user
  * Post methods push data to the database as post is more secure than get.
  */
-
-
+/**
+ * @class index.js
+ * @description
+ * The routes for the application
+ */
+/**
+ * @function calendar
+ * @description
+ * Gets the calendar page and populates it with room choices
+ */
 router.get('/calendar', function(req, res){
   dbactions.getClassroom(false, function(data){
     res.render('calendar', {rooms: data,title: "Calendar"});
   });
 });
-
+/**
+ * @function getCalendarInfo
+ * @description
+ * Get the calendar info for the all class-groups in the specified room
+ */
 router.get('/getCalendarInfo', function(req, res){
   var class_list = [];
   dbactions.getScheduleByRoom(true, req.query.room_number, function(class_ids){
@@ -28,39 +40,69 @@ router.get('/getCalendarInfo', function(req, res){
   });
 });
 
+/**
+ * @function home
+ * @description
+ * Get the application Home page.  This is where we envision UNO user logins to happen to control who has access to the scheduler menu.
+ */
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
-/**********************************************************************************************************************/
 
-
+/**
+ * @function editSchedule
+ * @description
+ * Gets the edit Schedule page
+ */
 /* GET edit schedule page. */
 router.get('/editSchedule', function(req, res, next) {
   res.render('editSchedule', { title: 'Groups' });
 });
+/**
+ * @function downloadOldSchedule
+ * @description
+ * Downloads the schedule that was uploaded for 3rd party comparison.
+ */
 router.get('/downloadOldSchedule', function(req,res,next){
   res.download('./uploads/ScheduleOld.xlsx');
 });
 
 
-/**********************************************************************************************************************/
-
+/**
+ * @function upload
+ * @description
+ * Routes to the upload Schedule page.
+ */
 /* GET Upload Page. */
 router.get('/upload', function(req, res, next) {
   res.render('upload', { title: 'Upload' });
 });
 
 /* Classes CRUD Operations */
+/**
+ * @function classes
+ * @description
+ * Get the actions for classes page. Add/Edit/Remove
+ */
   /* GET Classes Page with choices for add/edit/remove */
 router.get('/classes', function(req, res, next) {
   res.render('classes', { title: 'Classes' });
 });
+/**
+ * @function getaddclass
+ * @description
+ * Gets the form for adding a new class.  Has Room number, Capacity, and Special Traits.
+ */
     /* Class add page */
 router.get('/getaddclass', function(req, res, next) {
   res.render('addclass', { title: 'Classes' });
 });
-
+/**
+ * @function addClass
+ * @description
+ * Adds the new class data to the database
+ */
       /* Send the new class to the database*/
 router.post('/addClass', function(req,res){
   var class_data = {
@@ -96,18 +138,33 @@ router.post('/addClass', function(req,res){
   });
   res.redirect('/classes');
 });
+/**
+ * @function editclass
+ * @description
+ * Loads the edit class page where the user is prompted to pick a class ID # to edit.
+ */
 /* Class edit page */
 router.get('/editclass',function(req,res){
   dbactions.getClass(false,function(data){
     res.render('editClass',{rooms: data, title:"rooms"});
   });
 });
+/**
+ * @function getClassInfo
+ * @description
+ * Gets the classinformation for the selected class
+ */
       /* Get specified class information for edit page */
 router.get('/getClassInfo', function(req, res){//set values for class room data
   dbactions.getClass(req.query.id, function(data){
     res.send(data);
   });
 });
+/**
+ * @function editCLassData
+ * @description
+ * Sends the new data for the specified class to update the old entry.
+ */
       /* Send edit class data to the database */
 router.post('/editClassData', function(req,res){
   var class_data = {

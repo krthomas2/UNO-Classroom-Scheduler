@@ -7,6 +7,20 @@
             "classes": {},
             "fors": {},
             "namespaces": {}
+        },
+        "routes\\index.js": {
+            "name": "routes\\index.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "app.js": {
+            "name": "app.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
         }
     },
     "modules": {},
@@ -46,6 +60,22 @@
             "file": "public\\javascripts\\xlsx.js",
             "line": 1217,
             "class": ""
+        },
+        {
+            "file": "routes\\index.js",
+            "line": 35,
+            "class": ""
+        },
+        {
+            "file": "routes\\index.js",
+            "line": 47,
+            "class": ""
+        },
+        {
+            "file": "app.js",
+            "line": 2,
+            "description": "These are the external modules brought in for this application.\n The main modules used are xlsx, fs, j2xls, and underscore\n xlsx is an excel parser\n fs is used with j2xls to write the output\n underscore is used for sorting and managing lists/objects",
+            "class": ""
         }
     ],
     "warnings": [
@@ -76,6 +106,18 @@
         {
             "message": "Missing item type",
             "line": " public\\javascripts\\xlsx.js:1217"
+        },
+        {
+            "message": "Missing item type",
+            "line": " routes\\index.js:35"
+        },
+        {
+            "message": "Missing item type",
+            "line": " routes\\index.js:47"
+        },
+        {
+            "message": "Missing item type\nThese are the external modules brought in for this application.\n The main modules used are xlsx, fs, j2xls, and underscore\n xlsx is an excel parser\n fs is used with j2xls to write the output\n underscore is used for sorting and managing lists/objects",
+            "line": " app.js:2"
         }
     ]
 }
