@@ -330,6 +330,7 @@ app.get('/automateSchedule', function(req, res){
  * Returns: Nothing
  * Description:
  *   This function 0's out the Room Assigned and the availability of all rooms to make the scheduler start over from scratch.*/
+/*
 app.get('/unassignSchedule', function(req, res){
     dbactions.getClassStart(false, function (data) {
         for (x in data) {
@@ -350,6 +351,7 @@ app.get('/unassignSchedule', function(req, res){
     });
 });
 
+*/
 
 
 
